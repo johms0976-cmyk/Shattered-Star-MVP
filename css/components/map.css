@@ -1,0 +1,392 @@
+/* =============================================
+   MAP SCREEN STYLES
+   ============================================= */
+
+/* Map Container */
+.map-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: 
+        radial-gradient(ellipse at 50% 100%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0a1a 0%, #1a0f0a 100%);
+}
+
+/* Map Canvas - for drawing paths */
+#map-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Map Nodes Container */
+.map-nodes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* Individual Map Node */
+.map-node {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 3px solid var(--color-text-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.map-node::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all var(--transition-normal);
+}
+
+.map-node:hover:not(.visited):not(.locked) {
+    transform: translate(-50%, -50%) scale(1.15);
+    z-index: 10;
+}
+
+.map-node:hover:not(.visited):not(.locked)::before {
+    border-color: var(--color-neon-cyan);
+    animation: nodePulseRing 1.5s ease-in-out infinite;
+}
+
+@keyframes nodePulseRing {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Node States */
+.map-node.accessible {
+    border-color: var(--color-neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+    cursor: pointer;
+}
+
+.map-node.accessible::before {
+    border-color: rgba(0, 245, 255, 0.3);
+    animation: nodePulseRing 2s ease-in-out infinite;
+}
+
+.map-node.visited {
+    opacity: 0.4;
+    cursor: default;
+    border-style: dashed;
+}
+
+.map-node.visited:hover {
+    transform: translate(-50%, -50%);
+}
+
+.map-node.current {
+    border-color: var(--color-radiant-gold);
+    box-shadow: 0 0 30px var(--color-radiant-gold);
+    z-index: 5;
+}
+
+.map-node.current::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--color-radiant-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-radiant-gold);
+}
+
+.map-node.locked {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+}
+
+/* Node Types */
+.map-node.node-combat {
+    border-color: var(--color-hp);
+}
+
+.map-node.node-combat.accessible {
+    box-shadow: 0 0 20px rgba(255, 45, 85, 0.4);
+}
+
+.map-node.node-elite {
+    border-color: var(--color-rust-orange);
+    border-width: 4px;
+}
+
+.map-node.node-elite.accessible {
+    box-shadow: 0 0 25px rgba(255, 107, 53, 0.5);
+}
+
+.map-node.node-elite::after {
+    content: '☆';
+    position: absolute;
+    top: -15px;
+    font-size: 0.875rem;
+    color: var(--color-rust-orange);
+}
+
+.map-node.node-boss {
+    width: 80px;
+    height: 80px;
+    border-color: var(--color-blood-red);
+    border-width: 4px;
+    font-size: 2rem;
+}
+
+.map-node.node-boss.accessible {
+    box-shadow: 
+        0 0 30px rgba(255, 45, 85, 0.5),
+        inset 0 0 15px rgba(255, 45, 85, 0.2);
+    animation: bossNodePulse 2s ease-in-out infinite;
+}
+
+@keyframes bossNodePulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(255, 45, 85, 0.5); }
+    50% { box-shadow: 0 0 50px rgba(255, 45, 85, 0.8); }
+}
+
+.map-node.node-event {
+    border-color: var(--color-neon-purple);
+    border-radius: var(--radius-md);
+}
+
+.map-node.node-event.accessible {
+    box-shadow: 0 0 20px rgba(191, 0, 255, 0.4);
+}
+
+.map-node.node-shop {
+    border-color: var(--color-credits);
+}
+
+.map-node.node-shop.accessible {
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+}
+
+.map-node.node-rest {
+    border-color: var(--color-radiant-gold);
+}
+
+.map-node.node-rest.accessible {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.map-node.node-corrupted {
+    border-color: var(--color-corruption);
+    position: relative;
+    overflow: hidden;
+}
+
+.map-node.node-corrupted::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(191, 0, 255, 0.1) 10px,
+        rgba(191, 0, 255, 0.1) 20px
+    );
+    animation: corruptedNodePattern 20s linear infinite;
+}
+
+@keyframes corruptedNodePattern {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-20px, -20px); }
+}
+
+.map-node.node-corrupted.accessible {
+    box-shadow: 0 0 25px rgba(191, 0, 255, 0.5);
+}
+
+/* Node Icons */
+.node-icon {
+    position: relative;
+    z-index: 2;
+}
+
+/* Node Tooltip */
+.node-tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-void-black);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    z-index: 100;
+}
+
+.map-node:hover .node-tooltip {
+    opacity: 1;
+}
+
+/* Map Path Lines (drawn on canvas, but these are for reference) */
+.map-path {
+    stroke: var(--color-text-dim);
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 5, 5;
+}
+
+.map-path.accessible {
+    stroke: var(--color-neon-cyan);
+    stroke-width: 3;
+    stroke-dasharray: none;
+    filter: drop-shadow(0 0 5px var(--color-neon-cyan));
+}
+
+.map-path.visited {
+    stroke: var(--color-text-dim);
+    opacity: 0.3;
+}
+
+/* Act Progress Indicator */
+.act-progress {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.progress-track {
+    width: 4px;
+    height: 300px;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    position: relative;
+}
+
+.progress-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, var(--color-neon-cyan), var(--color-neon-purple));
+    border-radius: var(--radius-sm);
+    transition: height var(--transition-slow);
+}
+
+.progress-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: var(--color-surface-light);
+    border: 2px solid var(--color-text-dim);
+    border-radius: 50%;
+}
+
+.progress-marker.current {
+    border-color: var(--color-neon-cyan);
+    box-shadow: 0 0 10px var(--color-neon-cyan);
+}
+
+.progress-marker.boss {
+    width: 16px;
+    height: 16px;
+    border-color: var(--color-blood-red);
+}
+
+.progress-label {
+    font-size: 0.625rem;
+    color: var(--color-text-dim);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+}
+
+/* Map Legend */
+.map-legend {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.legend-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    border: 2px solid;
+}
+
+.legend-icon.combat { border-color: var(--color-hp); }
+.legend-icon.elite { border-color: var(--color-rust-orange); }
+.legend-icon.event { border-color: var(--color-neon-purple); }
+.legend-icon.shop { border-color: var(--color-credits); }
+.legend-icon.rest { border-color: var(--color-radiant-gold); }
+.legend-icon.boss { border-color: var(--color-blood-red); }
+
+.legend-label {
+    color: var(--color-text-secondary);
+}
+
+/* Floor Indicator */
+.floor-indicator {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--color-text-dim);
+    letter-spacing: 0.2em;
+}
