@@ -1,0 +1,449 @@
+/* =============================================
+   CARD STYLES
+   ============================================= */
+
+/* Card in Hand */
+.card {
+    position: relative;
+    width: 140px;
+    height: 200px;
+    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-void-black) 100%);
+    border: 2px solid var(--color-text-dim);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    transform-origin: bottom center;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+/* Fan layout in hand */
+.hand-area .card {
+    margin: 0 -20px;
+}
+
+.hand-area .card:first-child {
+    margin-left: 0;
+}
+
+.hand-area .card:last-child {
+    margin-right: 0;
+}
+
+/* Hover effects */
+.card:hover {
+    transform: translateY(-30px) scale(1.1);
+    z-index: 100;
+    border-color: var(--color-neon-cyan);
+    box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+}
+
+.card.playable:hover {
+    border-color: var(--color-radiant-gold);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+}
+
+.card.unplayable {
+    opacity: 0.6;
+    filter: grayscale(0.5);
+}
+
+.card.selected {
+    transform: translateY(-50px) scale(1.15);
+    border-color: var(--color-neon-cyan);
+    box-shadow: 0 0 30px var(--color-neon-cyan);
+    z-index: 101;
+}
+
+/* Card dragging */
+.card.dragging {
+    opacity: 0.8;
+    z-index: 200;
+    pointer-events: none;
+}
+
+/* Card types border colors */
+.card.type-attack {
+    border-color: var(--color-hp);
+}
+
+.card.type-attack .card-type-indicator {
+    background: var(--color-hp);
+}
+
+.card.type-skill {
+    border-color: var(--color-block);
+}
+
+.card.type-skill .card-type-indicator {
+    background: var(--color-block);
+}
+
+.card.type-power {
+    border-color: var(--color-radiant-gold);
+}
+
+.card.type-power .card-type-indicator {
+    background: var(--color-radiant-gold);
+}
+
+.card.type-corrupted {
+    border-color: var(--color-corruption);
+    box-shadow: 0 0 15px rgba(191, 0, 255, 0.3);
+}
+
+.card.type-corrupted .card-type-indicator {
+    background: var(--color-corruption);
+}
+
+/* Card rarities */
+.card.rarity-common {
+    --card-rarity-color: var(--color-text-secondary);
+}
+
+.card.rarity-uncommon {
+    --card-rarity-color: var(--color-neon-cyan);
+}
+
+.card.rarity-rare {
+    --card-rarity-color: var(--color-radiant-gold);
+}
+
+.card.rarity-legendary {
+    --card-rarity-color: var(--color-corruption);
+    background: linear-gradient(180deg, #2a1a3a 0%, #0a0a1a 100%);
+}
+
+/* Card Layout */
+.card-cost {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 36px;
+    height: 36px;
+    background: var(--color-energy);
+    border: 2px solid var(--color-void-black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-void-black);
+    font-weight: bold;
+    z-index: 10;
+}
+
+.card-cost.not-enough {
+    background: var(--color-text-dim);
+    color: var(--color-text-secondary);
+}
+
+.card-type-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.card-art {
+    height: 80px;
+    margin: var(--space-md);
+    margin-top: var(--space-lg);
+    background: var(--color-void-black);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-text-dim);
+    overflow: hidden;
+}
+
+.card-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-name {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--color-text-primary);
+    padding: 0 var(--space-sm);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    max-height: 2.4em;
+    overflow: hidden;
+}
+
+.card-description {
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: var(--space-xs) var(--space-sm);
+    line-height: 1.4;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-description .keyword {
+    color: var(--color-neon-cyan);
+    font-weight: 600;
+}
+
+.card-description .damage {
+    color: var(--color-hp);
+    font-weight: 600;
+}
+
+.card-description .block {
+    color: var(--color-block);
+    font-weight: 600;
+}
+
+.card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-rarity-indicator {
+    width: 40px;
+    height: 3px;
+    background: var(--card-rarity-color);
+    border-radius: var(--radius-sm);
+}
+
+/* Upgraded Card */
+.card.upgraded {
+    border-color: #4ade80;
+}
+
+.card.upgraded .card-name {
+    color: #4ade80;
+}
+
+.card.upgraded::after {
+    content: '+';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: #4ade80;
+}
+
+/* Card Preview (larger) */
+.card-preview {
+    width: 200px;
+    height: 280px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--z-tooltip);
+    pointer-events: none;
+}
+
+.card-preview .card-art {
+    height: 120px;
+}
+
+.card-preview .card-name {
+    font-size: 1rem;
+}
+
+.card-preview .card-description {
+    font-size: 0.8rem;
+}
+
+/* Card in Grid (deck view, rewards) */
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.card-grid .card {
+    margin: 0;
+}
+
+.card-grid .card:hover {
+    transform: scale(1.1);
+}
+
+/* Card Reward Selection */
+.card-reward-container {
+    display: flex;
+    gap: var(--space-xl);
+    justify-content: center;
+    padding: var(--space-xl);
+}
+
+.card-reward {
+    position: relative;
+}
+
+.card-reward .card {
+    transition: all var(--transition-normal);
+}
+
+.card-reward .card:hover {
+    transform: translateY(-20px) scale(1.1);
+}
+
+.card-reward-skip {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+}
+
+/* Shop Card */
+.shop-card {
+    position: relative;
+}
+
+.shop-card .card-price {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-credits);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    color: var(--color-credits);
+}
+
+.shop-card.cannot-afford .card {
+    filter: grayscale(0.5);
+    opacity: 0.6;
+}
+
+.shop-card.cannot-afford .card-price {
+    border-color: var(--color-text-dim);
+    color: var(--color-text-dim);
+}
+
+.shop-card.sold .card {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.shop-card.sold::after {
+    content: 'SOLD';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-hp);
+    text-shadow: 0 0 10px var(--color-hp);
+}
+
+/* Card Animation: Play */
+@keyframes cardPlay {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px) scale(0);
+        opacity: 0;
+    }
+}
+
+.card.playing {
+    animation: cardPlay 0.5s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Card Animation: Draw */
+@keyframes cardDraw {
+    0% {
+        transform: translateX(-200px) translateY(100px) rotate(-20deg) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) translateY(0) rotate(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.card.drawing {
+    animation: cardDraw 0.3s ease-out forwards;
+}
+
+/* Card Animation: Discard */
+@keyframes cardDiscard {
+    0% {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(200px) translateY(100px) rotate(20deg);
+        opacity: 0;
+    }
+}
+
+.card.discarding {
+    animation: cardDiscard 0.3s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Card Tooltip */
+.card-tooltip {
+    position: fixed;
+    background: var(--color-void-black);
+    border: 1px solid var(--color-neon-cyan);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    max-width: 250px;
+    z-index: var(--z-tooltip);
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+.card-tooltip h4 {
+    font-family: var(--font-display);
+    color: var(--color-neon-cyan);
+    margin-bottom: var(--space-sm);
+}
+
+.card-tooltip p {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Keyword styling */
+.keyword-overheat { color: var(--color-rust-orange); }
+.keyword-rage { color: var(--color-hp); }
+.keyword-exhaust { color: var(--color-text-dim); }
+.keyword-retain { color: var(--color-radiant-gold); }
+.keyword-innate { color: var(--color-neon-cyan); }
