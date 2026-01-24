@@ -37,8 +37,13 @@ class SaveManager {
      * @returns {boolean}
      */
     hasSave() {
+    try {
         return localStorage.getItem(this.RUN_SAVE_KEY) !== null;
+    } catch (error) {
+        console.warn('[SaveManager] localStorage not available:', error);
+        return false;
     }
+}
 
     /**
      * Save current run state
