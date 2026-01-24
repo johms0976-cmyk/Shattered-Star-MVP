@@ -1,0 +1,97 @@
+{
+  "cards": [
+    {
+      "id": "void_siphon",
+      "name": "Void Siphon",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Deal 5 damage. Gain 1 Corruption.",
+      "effects": [{"type": "damage", "value": 5}, {"type": "corruption", "value": 1}]
+    },
+    {
+      "id": "desperate_strike",
+      "name": "Desperate Strike",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "description": "Deal 4 damage. Take 2 damage.",
+      "effects": [{"type": "damage", "value": 4}, {"type": "self_damage", "value": 2}]
+    },
+    {
+      "id": "scrap_shield",
+      "name": "Scrap Shield",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Gain 6 Block. Exhaust.",
+      "effects": [{"type": "block", "value": 6}],
+      "exhaust": true
+    },
+    {
+      "id": "adrenaline",
+      "name": "Adrenaline",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "description": "Gain 1 Energy. Draw 2 cards. Exhaust.",
+      "effects": [{"type": "energy", "value": 1}, {"type": "draw", "value": 2}],
+      "exhaust": true
+    },
+    {
+      "id": "void_blade",
+      "name": "Void Blade",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "description": "Deal 14 damage. Gain 3 Corruption.",
+      "effects": [{"type": "damage", "value": 14}, {"type": "corruption", "value": 3}]
+    },
+    {
+      "id": "quick_patch",
+      "name": "Quick Patch",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Heal 4 HP. Exhaust.",
+      "effects": [{"type": "heal", "value": 4}],
+      "exhaust": true
+    },
+    {
+      "id": "ancient_knowledge",
+      "name": "Ancient Knowledge",
+      "type": "power",
+      "cost": 1,
+      "rarity": "rare",
+      "description": "Draw 1 additional card each turn.",
+      "effects": [{"type": "draw_per_turn", "value": 1}]
+    },
+    {
+      "id": "corruption_pulse",
+      "name": "Corruption Pulse",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "description": "Deal damage equal to your Corruption level.",
+      "effects": [{"type": "damage", "value": "corruption"}]
+    },
+    {
+      "id": "second_wind",
+      "name": "Second Wind",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "rare",
+      "description": "Gain Block equal to your missing HP.",
+      "effects": [{"type": "block", "value": "missing_hp"}]
+    },
+    {
+      "id": "dark_pact",
+      "name": "Dark Pact",
+      "type": "power",
+      "cost": 0,
+      "rarity": "rare",
+      "description": "Gain 2 Energy at the start of each turn. Gain 5 Corruption at the end of each combat.",
+      "effects": [{"type": "energy_per_turn", "value": 2}, {"type": "corruption_per_combat", "value": 5}]
+    }
+  ]
+}
