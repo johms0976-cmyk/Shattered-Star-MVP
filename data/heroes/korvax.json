@@ -1,0 +1,24 @@
+{
+  "id": "korvax",
+  "name": "Korvax Rend",
+  "title": "The Broken Titan",
+  "description": "A former shock trooper engineered for frontline devastation. His Overheat systems malfunction on Vharos, forcing him to battle both enemies and himself.",
+  "hp": 80,
+  "maxHp": 80,
+  "energy": 3,
+  "locked": false,
+  "startingArtifact": "thermal_regulator",
+  "archetypes": [
+    { "name": "Rage", "description": "Self-damage fuels power" },
+    { "name": "Overheat", "description": "Tech-berserker reactor management" },
+    { "name": "Titan", "description": "Defense and counters" }
+  ],
+  "portrait": "assets/images/heroes/korvax.svg",
+  "color": "#ff6b35",
+  "startingDeck": [
+    "strike", "strike", "strike", "strike",
+    "defend", "defend", "defend",
+    "thermal_vent", "rage_spike", "system_check"
+  ],
+  "lore": "Gruff, self-loathing, protective, distrustful. Korvax speaks in clipped sentences and avoids emotional conversations. Beneath the armor is a man who fears what he's capable of."
+}
