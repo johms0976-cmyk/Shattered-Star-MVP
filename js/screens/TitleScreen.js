@@ -63,11 +63,20 @@ export function setupTitleScreen(game) {
     }
     
     // Animate title on screen show
-    game.eventBus.on('screen:changed', ({ to }) => {
-        if (to === 'title-screen') {
-            animateTitleScreen();
-        }
-    });
+ game.eventBus.on('screen:changed', ({ to, from }) => {
+    if (to === 'title-screen') {
+        animateTitleScreen();
+
+        // Play title screen music
+        game.audioManager.playMusic('title_screen');
+    }
+
+    // Stop title music when leaving the title screen
+    if (from === 'title-screen' && to !== 'title-screen') {
+        game.audioManager.stopMusic();
+    }
+});
+
 }
 
 function setupVolumeControls(game) {
