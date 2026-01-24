@@ -1,0 +1,156 @@
+{
+  "heroId": "korvax",
+  "cards": [
+    {
+      "id": "strike",
+      "name": "Strike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Deal 6 damage.",
+      "effects": [{"type": "damage", "value": 6}],
+      "upgraded": false
+    },
+    {
+      "id": "defend",
+      "name": "Defend",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Gain 5 Block.",
+      "effects": [{"type": "block", "value": 5}],
+      "upgraded": false
+    },
+    {
+      "id": "thermal_vent",
+      "name": "Thermal Vent",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Gain 4 Block. Gain 1 Overheat.",
+      "effects": [{"type": "block", "value": 4}, {"type": "overheat", "value": 1}],
+      "upgraded": false
+    },
+    {
+      "id": "rage_spike",
+      "name": "Rage Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Deal 4 damage. If you took damage this turn, deal 8 instead.",
+      "effects": [{"type": "damage", "value": 4, "conditional": {"trigger": "took_damage", "value": 8}}],
+      "upgraded": false
+    },
+    {
+      "id": "system_check",
+      "name": "System Check",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "starter",
+      "description": "Draw 1 card. Exhaust.",
+      "effects": [{"type": "draw", "value": 1}],
+      "exhaust": true,
+      "upgraded": false
+    },
+    {
+      "id": "thermal_spike",
+      "name": "Thermal Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Deal 8 damage. Gain 2 Overheat.",
+      "effects": [{"type": "damage", "value": 8}, {"type": "overheat", "value": 2}],
+      "upgraded": false
+    },
+    {
+      "id": "rage_protocol",
+      "name": "Rage Protocol",
+      "type": "power",
+      "cost": 2,
+      "rarity": "uncommon",
+      "description": "Whenever you take damage, gain 1 Rage.",
+      "effects": [{"type": "trigger", "on": "take_damage", "apply": {"type": "rage", "value": 1}}],
+      "upgraded": false
+    },
+    {
+      "id": "meltdown",
+      "name": "Meltdown",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "rare",
+      "description": "Deal damage equal to your current Overheat x3. Reset Overheat to 0.",
+      "effects": [{"type": "damage", "value": "overheat", "multiplier": 3}, {"type": "reset_overheat"}],
+      "upgraded": false
+    },
+    {
+      "id": "titan_stance",
+      "name": "Titan Stance",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "description": "Gain 12 Block. Next turn, counter for 6 damage when hit.",
+      "effects": [{"type": "block", "value": 12}, {"type": "counter", "value": 6, "duration": 1}],
+      "upgraded": false
+    },
+    {
+      "id": "iron_will",
+      "name": "Iron Will",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Gain 8 Block.",
+      "effects": [{"type": "block", "value": 8}],
+      "upgraded": false
+    },
+    {
+      "id": "overcharge",
+      "name": "Overcharge",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "description": "Deal 12 damage. Gain 3 Overheat.",
+      "effects": [{"type": "damage", "value": 12}, {"type": "overheat", "value": 3}],
+      "upgraded": false
+    },
+    {
+      "id": "reactor_breach",
+      "name": "Reactor Breach",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "description": "Deal 6 damage to ALL enemies. Gain 2 Overheat.",
+      "effects": [{"type": "damage", "value": 6, "target": "all"}, {"type": "overheat", "value": 2}],
+      "upgraded": false
+    },
+    {
+      "id": "vent_heat",
+      "name": "Vent Heat",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Lose all Overheat. Gain Block equal to Overheat lost.",
+      "effects": [{"type": "block", "value": "overheat"}, {"type": "reset_overheat"}],
+      "upgraded": false
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "description": "Gain 1 Energy at the start of each turn. Take 2 damage at the end of each turn.",
+      "effects": [{"type": "energy_per_turn", "value": 1}, {"type": "damage_per_turn", "value": 2}],
+      "upgraded": false
+    },
+    {
+      "id": "armor_plating",
+      "name": "Armor Plating",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "description": "Gain 3 Block at the start of each turn.",
+      "effects": [{"type": "block_per_turn", "value": 3}],
+      "upgraded": false
+    }
+  ]
+}
