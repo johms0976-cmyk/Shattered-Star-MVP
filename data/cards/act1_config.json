@@ -1,0 +1,46 @@
+{
+  "act": 1,
+  "name": "Ashes of Ironspine",
+  "region": "Ironspine Wastes",
+  "description": "A rust desert littered with the carcasses of ancient war machines. The Rustborn Tribes scavenge here, fighting over scrap-tech and the secrets of Titan warfare.",
+  "biomeEffect": {
+    "name": "Scavenger's Luck",
+    "description": "Combat rewards include bonus scrap currency."
+  },
+  "nodeCount": {
+    "min": 15,
+    "max": 18
+  },
+  "nodeDistribution": {
+    "combat": 0.35,
+    "elite": 0.08,
+    "event": 0.25,
+    "shop": 0.08,
+    "rest": 0.10,
+    "treasure": 0.05,
+    "faction": 0.09
+  },
+  "paths": {
+    "minBranches": 2,
+    "maxBranches": 4,
+    "eliteMinDistance": 3,
+    "restMinDistance": 2
+  },
+  "rewards": {
+    "creditBase": 15,
+    "creditVariance": 10,
+    "cardChoices": 3,
+    "eliteArtifactChance": 0.5
+  },
+  "corruption": {
+    "baseGain": 1,
+    "eventModifier": 1.0
+  },
+  "boss": "scrap_king",
+  "ambientHazards": [
+    "sandstorms",
+    "radiation_pockets",
+    "unstable_structures"
+  ],
+  "factions": ["rustborn", "syndicate"]
+}
