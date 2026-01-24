@@ -1,6 +1,8 @@
 /**
  * SaveManager - Handles game persistence using LocalStorage
  * Manages save slots, auto-save, and data validation
+ * 
+ * FIXED: All localStorage access wrapped in try-catch for Safari Private Browsing compatibility
  */
 import eventBus, { GameEvents } from './EventBus.js';
 import gameState from './GameState.js';
@@ -15,6 +17,73 @@ class SaveManager {
         
         this.autoSaveInterval = null;
         this.autoSaveDelay = 30000; // 30 seconds
+        
+        // Check if localStorage is available
+        this.storageAvailable = this.checkStorageAvailable();
+    }
+
+    /**
+     * Check if localStorage is available and working
+     * @returns {boolean}
+     */
+    checkStorageAvailable() {
+        try {
+            const testKey = '__storage_test__';
+            localStorage.setItem(testKey, testKey);
+            localStorage.removeItem(testKey);
+            return true;
+        } catch (e) {
+            console.warn('[SaveManager] localStorage not available:', e.message);
+            return false;
+        }
+    }
+
+    /**
+     * Safe localStorage getItem
+     * @param {string} key 
+     * @returns {string|null}
+     */
+    safeGetItem(key) {
+        if (!this.storageAvailable) return null;
+        try {
+            return localStorage.getItem(key);
+        } catch (error) {
+            console.warn(`[SaveManager] Failed to get ${key}:`, error);
+            return null;
+        }
+    }
+
+    /**
+     * Safe localStorage setItem
+     * @param {string} key 
+     * @param {string} value 
+     * @returns {boolean} Success
+     */
+    safeSetItem(key, value) {
+        if (!this.storageAvailable) return false;
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (error) {
+            console.warn(`[SaveManager] Failed to set ${key}:`, error);
+            return false;
+        }
+    }
+
+    /**
+     * Safe localStorage removeItem
+     * @param {string} key 
+     * @returns {boolean} Success
+     */
+    safeRemoveItem(key) {
+        if (!this.storageAvailable) return false;
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (error) {
+            console.warn(`[SaveManager] Failed to remove ${key}:`, error);
+            return false;
+        }
     }
 
     /**
@@ -37,19 +106,20 @@ class SaveManager {
      * @returns {boolean}
      */
     hasSave() {
-    try {
-        return localStorage.getItem(this.RUN_SAVE_KEY) !== null;
-    } catch (error) {
-        console.warn('[SaveManager] localStorage not available:', error);
-        return false;
+        const save = this.safeGetItem(this.RUN_SAVE_KEY);
+        return save !== null;
     }
-}
 
     /**
      * Save current run state
      * @returns {boolean} Success
      */
     saveRun() {
+        if (!this.storageAvailable) {
+            console.warn('[SaveManager] Cannot save - storage not available');
+            return false;
+        }
+        
         try {
             if (!gameState.get('runActive')) return false;
             
@@ -58,17 +128,32 @@ class SaveManager {
             const saveData = {
                 state: gameState.export(),
                 timestamp: Date.now(),
-                version: gameState.get('version')
+                version: gameState.get('version'),
+                checksum: null
             };
             
-            localStorage.setItem(this.RUN_SAVE_KEY, JSON.stringify(saveData));
+            // Calculate checksum for integrity
+            const dataString = JSON.stringify(saveData.state);
+            saveData.checksum = this.calculateChecksum(dataString);
             
-            eventBus.emit(GameEvents.SAVE_COMPLETE, { timestamp: saveData.timestamp });
-            return true;
+            const success = this.safeSetItem(this.RUN_SAVE_KEY, JSON.stringify(saveData));
+            
+            if (success) {
+                eventBus.emit(GameEvents.SAVE_COMPLETE, { timestamp: saveData.timestamp });
+            }
+            
+            return success;
         } catch (error) {
             console.error('[SaveManager] Failed to save run:', error);
             return false;
         }
+    }
+
+    /**
+     * Quick save (called on visibility change)
+     */
+    quickSave() {
+        return this.saveRun();
     }
 
     /**
@@ -79,7 +164,7 @@ class SaveManager {
         try {
             eventBus.emit(GameEvents.LOAD_START);
             
-            const saveData = localStorage.getItem(this.RUN_SAVE_KEY);
+            const saveData = this.safeGetItem(this.RUN_SAVE_KEY);
             if (!saveData) return null;
             
             const parsed = JSON.parse(saveData);
@@ -87,7 +172,7 @@ class SaveManager {
             // Validate save data
             if (!this.validateSave(parsed)) {
                 console.warn('[SaveManager] Invalid save data, clearing');
-                this.clearRun();
+                this.clearSave();
                 return null;
             }
             
@@ -103,8 +188,30 @@ class SaveManager {
     /**
      * Clear current run save
      */
+    clearSave() {
+        this.safeRemoveItem(this.RUN_SAVE_KEY);
+    }
+
+    /**
+     * Alias for clearSave
+     */
     clearRun() {
-        localStorage.removeItem(this.RUN_SAVE_KEY);
+        this.clearSave();
+    }
+
+    /**
+     * Calculate checksum for save integrity
+     * @param {string} data 
+     * @returns {string}
+     */
+    calculateChecksum(data) {
+        let hash = 0;
+        for (let i = 0; i < data.length; i++) {
+            const char = data.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return hash.toString(16);
     }
 
     /**
@@ -117,6 +224,17 @@ class SaveManager {
         if (!saveData.state) return false;
         if (!saveData.state.hero) return false;
         if (typeof saveData.state.hero.hp !== 'number') return false;
+        
+        // Verify checksum if present
+        if (saveData.checksum) {
+            const dataString = JSON.stringify(saveData.state);
+            const expectedChecksum = this.calculateChecksum(dataString);
+            if (saveData.checksum !== expectedChecksum) {
+                console.warn('[SaveManager] Save data integrity check failed');
+                return false;
+            }
+        }
+        
         return true;
     }
 
@@ -130,7 +248,7 @@ class SaveManager {
      */
     getProfile() {
         try {
-            const profile = localStorage.getItem(this.PROFILE_KEY);
+            const profile = this.safeGetItem(this.PROFILE_KEY);
             if (profile) {
                 return JSON.parse(profile);
             }
@@ -171,6 +289,14 @@ class SaveManager {
                 shade: { runs: 0, wins: 0, bestFloor: 0 }
             },
             
+            // Daily challenge
+            dailyChallenge: {
+                seed: null,
+                completed: false,
+                streak: 0,
+                lastCompleted: null
+            },
+            
             // Achievements unlocked
             achievements: [],
             
@@ -203,7 +329,7 @@ class SaveManager {
      */
     saveProfile(profile) {
         profile.lastPlayed = Date.now();
-        localStorage.setItem(this.PROFILE_KEY, JSON.stringify(profile));
+        this.safeSetItem(this.PROFILE_KEY, JSON.stringify(profile));
     }
 
     /**
@@ -265,8 +391,6 @@ class SaveManager {
             echoes += 50;
         }
         
-        // First-time bonuses (handled separately)
-        
         return echoes;
     }
 
@@ -280,7 +404,7 @@ class SaveManager {
      */
     getUnlocks() {
         try {
-            const unlocks = localStorage.getItem(this.UNLOCKS_KEY);
+            const unlocks = this.safeGetItem(this.UNLOCKS_KEY);
             if (unlocks) {
                 return JSON.parse(unlocks);
             }
@@ -351,7 +475,7 @@ class SaveManager {
             unlocks[category] = true;
         }
         
-        localStorage.setItem(this.UNLOCKS_KEY, JSON.stringify(unlocks));
+        this.safeSetItem(this.UNLOCKS_KEY, JSON.stringify(unlocks));
     }
 
     // ==========================================
@@ -364,7 +488,7 @@ class SaveManager {
      */
     getSettings() {
         try {
-            const settings = localStorage.getItem(this.SETTINGS_KEY);
+            const settings = this.safeGetItem(this.SETTINGS_KEY);
             if (settings) {
                 return { ...this.getDefaultSettings(), ...JSON.parse(settings) };
             }
@@ -380,12 +504,14 @@ class SaveManager {
      */
     getDefaultSettings() {
         return {
+            masterVolume: 0.8,
             musicVolume: 0.7,
             sfxVolume: 0.8,
             uiVolume: 0.8,
-            textSpeed: 'normal', // 'slow', 'normal', 'fast', 'instant'
+            ambienceVolume: 0.6,
+            textSpeed: 'normal',
             screenShake: true,
-            corruptionEffects: true,
+            corruptionEffects: 'full',
             showDamageNumbers: true,
             confirmEndTurn: false,
             showTooltips: true,
@@ -393,7 +519,8 @@ class SaveManager {
             autoEndTurn: false,
             reducedMotion: false,
             highContrast: false,
-            colorblindMode: 'none', // 'none', 'protanopia', 'deuteranopia', 'tritanopia'
+            colorblindMode: 'none',
+            whisperFrequency: 'normal',
             language: 'en'
         };
     }
@@ -403,8 +530,9 @@ class SaveManager {
      * @param {Object} settings 
      */
     saveSettings(settings) {
-        localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(settings));
+        this.safeSetItem(this.SETTINGS_KEY, JSON.stringify(settings));
         gameState.batch({ settings });
+        eventBus.emit('settings:changed', settings);
     }
 
     /**
@@ -456,13 +584,13 @@ class SaveManager {
      * @returns {string} JSON string
      */
     exportAll() {
+        const runSave = this.safeGetItem(this.RUN_SAVE_KEY);
+        
         const exportData = {
             profile: this.getProfile(),
             unlocks: this.getUnlocks(),
             settings: this.getSettings(),
-            currentRun: localStorage.getItem(this.RUN_SAVE_KEY) 
-                ? JSON.parse(localStorage.getItem(this.RUN_SAVE_KEY)) 
-                : null,
+            currentRun: runSave ? JSON.parse(runSave) : null,
             exportDate: Date.now(),
             version: gameState.get('version')
         };
@@ -484,7 +612,7 @@ class SaveManager {
             }
             
             if (data.unlocks) {
-                localStorage.setItem(this.UNLOCKS_KEY, JSON.stringify(data.unlocks));
+                this.safeSetItem(this.UNLOCKS_KEY, JSON.stringify(data.unlocks));
             }
             
             if (data.settings) {
@@ -492,7 +620,7 @@ class SaveManager {
             }
             
             if (data.currentRun) {
-                localStorage.setItem(this.RUN_SAVE_KEY, JSON.stringify(data.currentRun));
+                this.safeSetItem(this.RUN_SAVE_KEY, JSON.stringify(data.currentRun));
             }
             
             return true;
@@ -506,10 +634,10 @@ class SaveManager {
      * Clear all save data (nuclear option)
      */
     clearAll() {
-        localStorage.removeItem(this.RUN_SAVE_KEY);
-        localStorage.removeItem(this.PROFILE_KEY);
-        localStorage.removeItem(this.UNLOCKS_KEY);
-        localStorage.removeItem(this.SETTINGS_KEY);
+        this.safeRemoveItem(this.RUN_SAVE_KEY);
+        this.safeRemoveItem(this.PROFILE_KEY);
+        this.safeRemoveItem(this.UNLOCKS_KEY);
+        this.safeRemoveItem(this.SETTINGS_KEY);
     }
 
     /**
@@ -517,11 +645,17 @@ class SaveManager {
      * @returns {number} Size in bytes
      */
     getSaveSize() {
+        if (!this.storageAvailable) return 0;
+        
         let total = 0;
-        for (const key in localStorage) {
-            if (key.startsWith(this.STORAGE_PREFIX)) {
-                total += localStorage.getItem(key).length * 2; // UTF-16
+        try {
+            for (const key in localStorage) {
+                if (key.startsWith(this.STORAGE_PREFIX)) {
+                    total += localStorage.getItem(key).length * 2; // UTF-16
+                }
             }
+        } catch (error) {
+            console.warn('[SaveManager] Could not calculate save size:', error);
         }
         return total;
     }
