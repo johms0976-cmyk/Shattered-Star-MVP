@@ -1,15 +1,17 @@
 /**
  * HeroSelectScreen - Hero selection screen handler
+ * Shattered Star
  */
 
 let selectedHeroId = null;
 
 export function setupHeroSelect(game) {
-    const heroCardsContainer = document.getElementById('hero-cards');
     const btnBack = document.getElementById('btn-back-title');
     const btnStartRun = document.getElementById('btn-start-run');
-    
-    // Back button
+
+    // -----------------------------
+    // Back to title
+    // -----------------------------
     if (btnBack) {
         btnBack.addEventListener('click', () => {
             game.audioManager.playSFX('ui_click');
@@ -17,18 +19,22 @@ export function setupHeroSelect(game) {
             selectedHeroId = null;
         });
     }
-    
-    // Start run button
+
+    // -----------------------------
+    // Start run
+    // -----------------------------
     if (btnStartRun) {
         btnStartRun.addEventListener('click', () => {
-            if (selectedHeroId) {
-                game.audioManager.playSFX('ui_confirm');
-                game.startNewRun(selectedHeroId);
-            }
+            if (!selectedHeroId) return;
+
+            game.audioManager.playSFX('ui_confirm');
+            game.startNewRun(selectedHeroId);
         });
     }
-    
-    // Setup when screen is shown
+
+    // -----------------------------
+    // Screen enter hook
+    // -----------------------------
     game.eventBus.on('screen:changed', ({ to }) => {
         if (to === 'hero-select-screen') {
             renderHeroCards(game);
@@ -36,86 +42,108 @@ export function setupHeroSelect(game) {
     });
 }
 
+/**
+ * Render hero cards
+ */
 function renderHeroCards(game) {
     const container = document.getElementById('hero-cards');
+    const btnStartRun = document.getElementById('btn-start-run');
+
     if (!container) return;
-    
-    // Get available heroes from data loader
+
     const heroes = game.dataLoader.getAllHeroes();
-    
+
     container.innerHTML = heroes.map(hero => `
-        <div class="hero-card ${hero.locked ? 'locked' : ''}" 
-             data-hero-id="${hero.id}"
-             ${hero.locked ? 'data-locked="true"' : ''}>
+        <div class="hero-card ${hero.locked ? 'locked' : ''}"
+             data-hero-id="${hero.id}">
+             
             <div class="hero-card-portrait">
                 <div class="hero-silhouette ${hero.id}"></div>
             </div>
+
             <div class="hero-card-info">
                 <h3 class="hero-card-name">${hero.name}</h3>
                 <p class="hero-card-title">${hero.title}</p>
             </div>
-            ${hero.locked ? '<div class="locked-overlay"><span>🔒</span></div>' : ''}
+
+            ${hero.locked ? `
+                <div class="locked-overlay">
+                    <span>🔒</span>
+                </div>
+            ` : ''}
         </div>
     `).join('');
-    
-    // Add click handlers
-    container.querySelectorAll('.hero-card:not([data-locked])').forEach(card => {
+
+    // Attach interactions ONLY to unlocked heroes
+    container.querySelectorAll('.hero-card:not(.locked)').forEach(card => {
+        const heroId = card.dataset.heroId;
+
         card.addEventListener('click', () => {
-            selectHero(game, card.dataset.heroId);
+            selectHero(game, heroId);
         });
-        
+
         card.addEventListener('mouseenter', () => {
-            previewHero(game, card.dataset.heroId);
+            if (!selectedHeroId) {
+                displayHeroDetails(game, heroId);
+            }
         });
     });
-    
-    // Reset selection
+
+    // Reset selection state
     selectedHeroId = null;
-    document.getElementById('btn-start-run').disabled = true;
+    if (btnStartRun) btnStartRun.disabled = true;
     clearHeroDetails();
 }
 
+/**
+ * Select hero
+ */
 function selectHero(game, heroId) {
     game.audioManager.playSFX('ui_click');
-    
-    // Update visual selection
+
     document.querySelectorAll('.hero-card').forEach(card => {
         card.classList.remove('selected');
     });
-    document.querySelector(`[data-hero-id="${heroId}"]`)?.classList.add('selected');
-    
+
+    const selectedCard = document.querySelector(
+        `.hero-card[data-hero-id="${heroId}"]`
+    );
+
+    if (selectedCard) {
+        selectedCard.classList.add('selected');
+    }
+
     selectedHeroId = heroId;
-    document.getElementById('btn-start-run').disabled = false;
-    
+
+    const btnStartRun = document.getElementById('btn-start-run');
+    if (btnStartRun) btnStartRun.disabled = false;
+
     displayHeroDetails(game, heroId);
 }
 
-function previewHero(game, heroId) {
-    if (!selectedHeroId) {
-        displayHeroDetails(game, heroId);
-    }
-}
-
+/**
+ * Display hero details panel
+ */
 function displayHeroDetails(game, heroId) {
     const hero = game.dataLoader.getHero(heroId);
     if (!hero) return;
-    
-    // Update portrait
+
+    // Portrait
     const portrait = document.getElementById('hero-portrait');
     if (portrait) {
         portrait.className = `hero-portrait ${heroId}`;
         portrait.innerHTML = `<div class="hero-portrait-inner"></div>`;
     }
-    
-    // Update text info
-    document.getElementById('hero-name').textContent = hero.name;
-    document.getElementById('hero-title').textContent = hero.title;
-    document.getElementById('hero-desc').textContent = hero.description;
-    
-    // Update stats
-    const statsContainer = document.getElementById('hero-stats');
-    if (statsContainer) {
-        statsContainer.innerHTML = `
+
+    // Text
+    setText('hero-name', hero.name);
+    setText('hero-title', hero.title);
+    setText('hero-desc', hero.description);
+
+    // Stats
+    const stats = document.getElementById('hero-stats');
+    if (stats) {
+        stats.innerHTML = `
             <div class="stat-row">
                 <span class="stat-label">HP</span>
                 <span class="stat-value">${hero.hp}</span>
@@ -130,17 +158,17 @@ function displayHeroDetails(game, heroId) {
             </div>
         `;
     }
-    
-    // Update archetypes
-    const archetypesContainer = document.getElementById('hero-archetypes');
-    if (archetypesContainer && hero.archetypes) {
-        archetypesContainer.innerHTML = `
+
+    // Archetypes
+    const archetypes = document.getElementById('hero-archetypes');
+    if (archetypes && hero.archetypes?.length) {
+        archetypes.innerHTML = `
             <h4>Archetypes</h4>
             <div class="archetype-list">
-                ${hero.archetypes.map(arch => `
+                ${hero.archetypes.map(a => `
                     <div class="archetype">
-                        <span class="archetype-name">${arch.name}</span>
-                        <span class="archetype-desc">${arch.description}</span>
+                        <span class="archetype-name">${a.name}</span>
+                        <span class="archetype-desc">${a.description}</span>
                     </div>
                 `).join('')}
             </div>
@@ -148,16 +176,34 @@ function displayHeroDetails(game, heroId) {
     }
 }
 
+/**
+ * Clear hero details panel
+ */
 function clearHeroDetails() {
-    document.getElementById('hero-name').textContent = 'Select a Hero';
-    document.getElementById('hero-title').textContent = '';
-    document.getElementById('hero-desc').textContent = 'Choose your operative for this descent into the void.';
-    document.getElementById('hero-stats').innerHTML = '';
-    document.getElementById('hero-archetypes').innerHTML = '';
-    
+    setText('hero-name', 'Select a Hero');
+    setText('hero-title', '');
+    setText(
+        'hero-desc',
+        'Choose your operative for this descent into the void.'
+    );
+
+    const stats = document.getElementById('hero-stats');
+    if (stats) stats.innerHTML = '';
+
+    const archetypes = document.getElementById('hero-archetypes');
+    if (archetypes) archetypes.innerHTML = '';
+
     const portrait = document.getElementById('hero-portrait');
     if (portrait) {
         portrait.className = 'hero-portrait';
         portrait.innerHTML = '';
     }
+}
+
+/**
+ * Utility
+ */
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
 }
