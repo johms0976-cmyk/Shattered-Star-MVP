@@ -13,12 +13,12 @@ class MapGenerator {
         // Map configuration
         this.config = {
             nodesPerAct: {
-                1: 15,
-                2: 18,
-                3: 12
+                1: 40,
+                2: 60,
+                3: 40
             },
-            minPaths: 2,
-            maxPaths: 4,
+            minPaths: 1,
+            maxPaths: 3,
             nodeTypes: {
                 combat: { weight: 40, icon: '⚔️', name: 'Combat' },
                 elite: { weight: 10, icon: '💀', name: 'Elite' },
