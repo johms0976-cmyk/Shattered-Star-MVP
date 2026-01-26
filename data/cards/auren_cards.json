@@ -1,1 +1,168 @@
+{
+  "heroId": "auren",
+  "mechanics": ["judgment", "radiance", "corruption"],
+  "cards": [
+
+    // =========================
+    // STARTER CARDS
+    // =========================
+
+    {
+      "id": "radiant_strike",
+      "name": "Radiant Strike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Deal 6 damage. If you have Block, gain 1 Judgment.",
+      "effects": [
+        { "type": "damage", "value": 6 },
+        { "type": "judgment", "value": 1, "conditional": { "trigger": "has_block" } }
+      ],
+      "upgrade_pure": { "damage": 8 },
+      "upgrade_corrupt": { "gain_corruption": 1 }
+    },
+
+    {
+      "id": "solemn_defense",
+      "name": "Solemn Defense",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "description": "Gain 5 Block. If you took damage last turn, gain 1 Judgment.",
+      "effects": [
+        { "type": "block", "value": 5 },
+        { "type": "judgment", "value": 1, "conditional": { "trigger": "took_damage_last_turn" } }
+      ],
+      "upgrade_pure": { "block": 8 },
+      "upgrade_corrupt": { "corruption": 1 }
+    },
+
+    // =========================
+    // COMMON
+    // =========================
+
+    {
+      "id": "aegis_pulse",
+      "name": "Aegis Pulse",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Gain 8 Block. Excess Block becomes Judgment.",
+      "effects": [
+        { "type": "block", "value": 8 },
+        { "type": "block_to_judgment" }
+      ],
+      "upgrade_pure": { "block": 11 },
+      "upgrade_corrupt": { "corruption": 1 }
+    },
+
+    {
+      "id": "searing_verdict",
+      "name": "Searing Verdict",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "description": "Deal 7 damage. Consume Judgment for +3 damage each.",
+      "effects": [
+        { "type": "damage", "value": 7 },
+        { "type": "consume_judgment", "bonus_damage_per_stack": 3 }
+      ],
+      "upgrade_pure": { "bonus_damage_per_stack": 4 },
+      "upgrade_corrupt": { "corruption_per_stack": 1 }
+    },
+
+    // =========================
+    // UNCOMMON
+    // =========================
+
+    {
+      "id": "judicators_stance",
+      "name": "Judicator’s Stance",
+      "type": "power",
+      "cost": 2,
+      "rarity": "uncommon",
+      "description": "Whenever you gain Block, gain 1 Judgment.",
+      "effects": [
+        {
+          "type": "trigger",
+          "on": "gain_block",
+          "apply": { "type": "judgment", "value": 1 }
+        }
+      ],
+      "upgrade_pure": { "judgment_per_trigger": 2 },
+      "upgrade_corrupt": { "corruption_on_trigger": 1 }
+    },
+
+    {
+      "id": "shield_of_truth",
+      "name": "Shield of Truth",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "description": "Gain 10 Block. Enemies attacking you take 3 damage.",
+      "effects": [
+        { "type": "block", "value": 10 },
+        { "type": "thorns", "value": 3 }
+      ],
+      "upgrade_pure": { "block": 14 },
+      "upgrade_corrupt": { "thorns": 5 }
+    },
+
+    // =========================
+    // RARE
+    // =========================
+
+    {
+      "id": "first_light_broken",
+      "name": "First Light, Broken",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "description": "Gain 2 Judgment per turn. Spending Judgment gives Corruption.",
+      "effects": [
+        { "type": "judgment_per_turn", "value": 2 },
+        {
+          "type": "trigger",
+          "on": "spend_judgment",
+          "apply": { "type": "corruption", "value": 1 }
+        }
+      ],
+      "upgrade_pure": { "judgment_per_turn": 3 },
+      "upgrade_corrupt": { "energy_on_spend": 1 }
+    },
+
+    {
+      "id": "final_absolution",
+      "name": "Final Absolution",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "rare",
+      "description": "Deal damage equal to your Block + Judgment. Lose both.",
+      "effects": [
+        { "type": "damage", "value": "block_plus_judgment" },
+        { "type": "reset_block" },
+        { "type": "consume_judgment", "consume_all": true }
+      ],
+      "upgrade_pure": { "retain_block": true },
+      "upgrade_corrupt": { "corruption_bonus_damage": 2 }
+    },
+
+    {
+      "id": "martyrs_resolve",
+      "name": "Martyr’s Resolve",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "rare",
+      "description": "Lose 10 HP. Gain Block equal to HP lost. Draw 2 cards.",
+      "effects": [
+        { "type": "self_damage", "value": 10 },
+        { "type": "block", "value": 10 },
+        { "type": "draw", "value": 2 }
+      ],
+      "upgrade_pure": { "self_damage": 7 },
+      "upgrade_corrupt": { "corruption": 2 }
+    }
+
+  ]
+}
 
