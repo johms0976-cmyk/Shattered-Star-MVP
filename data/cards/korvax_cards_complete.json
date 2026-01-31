@@ -1,0 +1,526 @@
+{
+  "heroId": "korvax",
+  "version": "1.0.0",
+  "cardCount": 43,
+  "rarityDistribution": {
+    "starter": 5,
+    "common": 15,
+    "uncommon": 12,
+    "rare": 8,
+    "legendary": 3
+  },
+  "cards": [
+    {
+      "id": "strike",
+      "name": "Strike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "archetype": "basic",
+      "description": "Deal 6 damage.",
+      "effects": [{"type": "damage", "value": 6}],
+      "flavorText": "Standard-issue. Reliable. Boring."
+    },
+    {
+      "id": "defend",
+      "name": "Defend",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "archetype": "basic",
+      "description": "Gain 5 Block.",
+      "effects": [{"type": "block", "value": 5}],
+      "flavorText": "The armor holds. For now."
+    },
+    {
+      "id": "thermal_vent",
+      "name": "Thermal Vent",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "archetype": "overheat",
+      "description": "Gain 4 Block. Gain 1 Overheat.",
+      "effects": [{"type": "block", "value": 4}, {"type": "overheat", "value": 1}],
+      "flavorText": "Redirecting excess heat to defensive systems."
+    },
+    {
+      "id": "rage_spike",
+      "name": "Rage Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "archetype": "rage",
+      "description": "Deal 4 damage. If you took damage this turn, deal 8 instead.",
+      "effects": [{"type": "damage", "value": 4, "conditional": {"trigger": "took_damage", "value": 8}}],
+      "flavorText": "Pain is just fuel with a different name."
+    },
+    {
+      "id": "system_check",
+      "name": "System Check",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "starter",
+      "archetype": "basic",
+      "description": "Draw 1 card. Exhaust.",
+      "effects": [{"type": "draw", "value": 1}],
+      "exhaust": true,
+      "flavorText": "Running diagnostics... errors found: 47."
+    },
+
+    {
+      "id": "thermal_spike",
+      "name": "Thermal Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Deal 8 damage. Gain 2 Overheat.",
+      "effects": [{"type": "damage", "value": 8}, {"type": "overheat", "value": 2}],
+      "flavorText": "The reactor screams. So do they."
+    },
+    {
+      "id": "iron_will",
+      "name": "Iron Will",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "titan",
+      "description": "Gain 8 Block.",
+      "effects": [{"type": "block", "value": 8}],
+      "flavorText": "Built to endure what flesh cannot."
+    },
+    {
+      "id": "overcharge",
+      "name": "Overcharge",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Deal 12 damage. Gain 3 Overheat.",
+      "effects": [{"type": "damage", "value": 12}, {"type": "overheat", "value": 3}],
+      "flavorText": "Warning lights are just suggestions."
+    },
+    {
+      "id": "vent_heat",
+      "name": "Vent Heat",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Lose all Overheat. Gain Block equal to Overheat lost.",
+      "effects": [{"type": "block", "value": "overheat"}, {"type": "reset_overheat"}],
+      "flavorText": "Controlled release. A rare moment of restraint."
+    },
+    {
+      "id": "reckless_charge",
+      "name": "Reckless Charge",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "archetype": "rage",
+      "description": "Deal 7 damage. Take 3 damage.",
+      "effects": [{"type": "damage", "value": 7}, {"type": "self_damage", "value": 3}],
+      "flavorText": "Forward is the only direction that matters."
+    },
+    {
+      "id": "scrap_armor",
+      "name": "Scrap Armor",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "titan",
+      "description": "Gain 5 Block. Gain 1 Armor.",
+      "effects": [{"type": "block", "value": 5}, {"type": "armor", "value": 1}],
+      "flavorText": "Welded from the fallen. They protect him still."
+    },
+    {
+      "id": "fuel_the_fire",
+      "name": "Fuel the Fire",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "rage",
+      "description": "Take 4 damage. Gain 2 Rage. Draw 1 card.",
+      "effects": [{"type": "self_damage", "value": 4}, {"type": "rage", "value": 2}, {"type": "draw", "value": 1}],
+      "flavorText": "Every wound is a promise of violence."
+    },
+    {
+      "id": "smash",
+      "name": "Smash",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "archetype": "titan",
+      "description": "Deal 10 damage. If the enemy intends to attack, deal 14 instead.",
+      "effects": [{"type": "damage", "value": 10, "conditional": {"trigger": "enemy_attacking", "value": 14}}],
+      "flavorText": "Let them come."
+    },
+    {
+      "id": "emergency_coolant",
+      "name": "Emergency Coolant",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Lose 3 Overheat.",
+      "effects": [{"type": "overheat", "value": -3}],
+      "flavorText": "Buying time. Not much, but enough."
+    },
+    {
+      "id": "heavy_strike",
+      "name": "Heavy Strike",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "archetype": "titan",
+      "description": "Deal 14 damage.",
+      "effects": [{"type": "damage", "value": 14}],
+      "flavorText": "No tricks. Just force."
+    },
+    {
+      "id": "searing_blow",
+      "name": "Searing Blow",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Deal 6 damage. Deal additional damage equal to your Overheat.",
+      "effects": [{"type": "damage", "value": 6}, {"type": "damage_bonus", "source": "overheat"}],
+      "flavorText": "Heat transfer: efficient and brutal."
+    },
+    {
+      "id": "battle_cry",
+      "name": "Battle Cry",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "rage",
+      "description": "Gain 1 Rage. Draw 2 cards.",
+      "effects": [{"type": "rage", "value": 1}, {"type": "draw", "value": 2}],
+      "flavorText": "The sound that comes out isn't quite human anymore."
+    },
+    {
+      "id": "brace",
+      "name": "Brace",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "titan",
+      "description": "Gain 7 Block. If you have Armor, gain 3 additional Block.",
+      "effects": [{"type": "block", "value": 7}, {"type": "block_bonus", "condition": "has_armor", "value": 3}],
+      "flavorText": "Feet planted. Systems locked. Ready."
+    },
+    {
+      "id": "spark",
+      "name": "Spark",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "archetype": "overheat",
+      "description": "Deal 3 damage. Gain 1 Overheat.",
+      "effects": [{"type": "damage", "value": 3}, {"type": "overheat", "value": 1}],
+      "flavorText": "Small flame. Big potential."
+    },
+    {
+      "id": "wounded_fury",
+      "name": "Wounded Fury",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "archetype": "rage",
+      "description": "Deal damage equal to your missing HP (max 20).",
+      "effects": [{"type": "damage", "value": "missing_hp", "max": 20}],
+      "flavorText": "The closer to death, the more dangerous."
+    },
+
+    {
+      "id": "rage_protocol",
+      "name": "Rage Protocol",
+      "type": "power",
+      "cost": 2,
+      "rarity": "uncommon",
+      "archetype": "rage",
+      "description": "Whenever you take damage, gain 1 Rage.",
+      "effects": [{"type": "trigger", "on": "take_damage", "apply": {"type": "rage", "value": 1}}],
+      "flavorText": "Pain receptors rerouted. Now they fuel something else."
+    },
+    {
+      "id": "titan_stance",
+      "name": "Titan Stance",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "archetype": "titan",
+      "description": "Gain 12 Block. Next turn, counter for 6 damage when hit.",
+      "effects": [{"type": "block", "value": 12}, {"type": "counter", "value": 6, "duration": 1}],
+      "flavorText": "The old war machines fought this way. So does he."
+    },
+    {
+      "id": "reactor_breach",
+      "name": "Reactor Breach",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "archetype": "overheat",
+      "description": "Deal 6 damage to ALL enemies. Gain 2 Overheat.",
+      "effects": [{"type": "damage", "value": 6, "target": "all"}, {"type": "overheat", "value": 2}],
+      "flavorText": "Controlled explosion. Emphasis on 'controlled.'"
+    },
+    {
+      "id": "armor_plating",
+      "name": "Armor Plating",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "titan",
+      "description": "Gain 3 Block at the start of each turn.",
+      "effects": [{"type": "block_per_turn", "value": 3}],
+      "flavorText": "Layer after layer. The Titans knew how to build."
+    },
+    {
+      "id": "blood_rage",
+      "name": "Blood Rage",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "rage",
+      "description": "Deal 8 damage. Deal additional damage equal to your Rage.",
+      "effects": [{"type": "damage", "value": 8}, {"type": "damage_bonus", "source": "rage"}],
+      "flavorText": "The angrier he gets, the harder he hits."
+    },
+    {
+      "id": "runaway_reactor",
+      "name": "Runaway Reactor",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "overheat",
+      "description": "Gain 1 Overheat at the start of each turn. Overheat cards deal +2 damage.",
+      "effects": [{"type": "overheat_per_turn", "value": 1}, {"type": "damage_boost", "condition": "overheat_card", "value": 2}],
+      "flavorText": "The containment protocols failed years ago."
+    },
+    {
+      "id": "retaliate",
+      "name": "Retaliate",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "titan",
+      "description": "Gain 5 Block. Whenever you're attacked this turn, deal 4 damage back.",
+      "effects": [{"type": "block", "value": 5}, {"type": "thorns", "value": 4, "duration": 1}],
+      "flavorText": "Every blow returned twofold."
+    },
+    {
+      "id": "self_destruct_sequence",
+      "name": "Self-Destruct Sequence",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "uncommon",
+      "archetype": "overheat",
+      "description": "Deal 20 damage. Take 8 damage. Gain 4 Overheat.",
+      "effects": [{"type": "damage", "value": 20}, {"type": "self_damage", "value": 8}, {"type": "overheat", "value": 4}],
+      "flavorText": "Warning: This action cannot be undone."
+    },
+    {
+      "id": "pain_threshold",
+      "name": "Pain Threshold",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "rage",
+      "description": "Take 1 less damage from all sources.",
+      "effects": [{"type": "damage_reduction", "value": 1}],
+      "flavorText": "The nerves stopped screaming. Now they barely whisper."
+    },
+    {
+      "id": "thermal_lance",
+      "name": "Thermal Lance",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "archetype": "overheat",
+      "description": "Deal 15 damage. If Overheat is 5+, this costs 1 less.",
+      "effects": [{"type": "damage", "value": 15}, {"type": "cost_reduction", "condition": "overheat >= 5", "value": 1}],
+      "flavorText": "Focused heat cuts through anything."
+    },
+    {
+      "id": "unbreakable",
+      "name": "Unbreakable",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "archetype": "titan",
+      "description": "Gain 16 Block. Gain 2 Armor.",
+      "effects": [{"type": "block", "value": 16}, {"type": "armor", "value": 2}],
+      "flavorText": "They called the old Titans immortal. They were almost right."
+    },
+    {
+      "id": "hemorrhage",
+      "name": "Hemorrhage",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "archetype": "rage",
+      "description": "Deal 5 damage. Apply 3 Bleed. Take 2 damage.",
+      "effects": [{"type": "damage", "value": 5}, {"type": "bleed", "value": 3}, {"type": "self_damage", "value": 2}],
+      "flavorText": "His blood runs hot. Theirs runs out."
+    },
+
+    {
+      "id": "meltdown",
+      "name": "Meltdown",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "rare",
+      "archetype": "overheat",
+      "description": "Deal damage equal to your Overheat x3. Reset Overheat to 0. Take 5 damage.",
+      "effects": [{"type": "damage", "value": "overheat", "multiplier": 3}, {"type": "reset_overheat"}, {"type": "self_damage", "value": 5}],
+      "flavorText": "The warnings blared. Korvax ignored them."
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "archetype": "rage",
+      "description": "Gain 1 Energy at the start of each turn. Take 2 damage at the end of each turn.",
+      "effects": [{"type": "energy_per_turn", "value": 1}, {"type": "damage_per_turn", "value": 2}],
+      "flavorText": "The safeties disengaged. There's no going back."
+    },
+    {
+      "id": "immovable_object",
+      "name": "Immovable Object",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "archetype": "titan",
+      "description": "Whenever you gain Block, gain 2 additional Block. Gain 2 Armor.",
+      "effects": [{"type": "block_bonus_passive", "value": 2}, {"type": "armor", "value": 2}],
+      "flavorText": "Mountains move before he does."
+    },
+    {
+      "id": "chain_reaction",
+      "name": "Chain Reaction",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "rare",
+      "archetype": "overheat",
+      "description": "Deal 8 damage. If this kills an enemy, gain 3 Energy and 2 Overheat.",
+      "effects": [{"type": "damage", "value": 8}, {"type": "on_kill", "apply": [{"type": "energy", "value": 3}, {"type": "overheat", "value": 2}]}],
+      "flavorText": "One spark ignites the next."
+    },
+    {
+      "id": "avatar_of_war",
+      "name": "Avatar of War",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "archetype": "rage",
+      "description": "Whenever you play an Attack, gain 1 Rage. Rage now also increases damage dealt.",
+      "effects": [{"type": "trigger", "on": "play_attack", "apply": {"type": "rage", "value": 1}}, {"type": "rage_damage_bonus"}],
+      "flavorText": "He was built for one purpose. Now he fulfills it."
+    },
+    {
+      "id": "fortify",
+      "name": "Fortify",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "rare",
+      "archetype": "titan",
+      "description": "Block is not removed at the start of your next turn. Gain 10 Block.",
+      "effects": [{"type": "block_retain"}, {"type": "block", "value": 10}],
+      "flavorText": "The Titans could hold a position for decades. So can he."
+    },
+    {
+      "id": "meltdown_protocol",
+      "name": "Meltdown Protocol",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "archetype": "overheat",
+      "description": "At 10+ Overheat, deal 10 damage to ALL enemies at the end of your turn. Then lose 5 Overheat.",
+      "effects": [{"type": "trigger", "condition": "overheat >= 10", "on": "end_turn", "apply": [{"type": "damage", "value": 10, "target": "all"}, {"type": "overheat", "value": -5}]}],
+      "flavorText": "Controlled catastrophe. His specialty."
+    },
+    {
+      "id": "last_stand",
+      "name": "Last Stand",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "rare",
+      "archetype": "rage",
+      "description": "If HP is below 25%, gain 3 Energy and 3 Rage. Exhaust.",
+      "effects": [{"type": "conditional", "condition": "hp < 25%", "apply": [{"type": "energy", "value": 3}, {"type": "rage", "value": 3}]}],
+      "exhaust": true,
+      "flavorText": "Cornered machines are the most dangerous."
+    },
+
+    {
+      "id": "titans_core",
+      "name": "Titan's Core",
+      "type": "power",
+      "cost": 3,
+      "rarity": "legendary",
+      "archetype": "overheat",
+      "description": "Overheat no longer damages you. At the end of each turn, if Overheat is 10+, deal 15 damage to ALL enemies.",
+      "effects": [
+        {"type": "immunity", "to": "overheat_damage"},
+        {"type": "trigger", "condition": "overheat >= 10", "on": "end_turn", "apply": {"type": "damage", "value": 15, "target": "all"}}
+      ],
+      "unlockCondition": "Defeat the Rust Titan Herald",
+      "flavorText": "Salvaged from the heart of a fallen god-machine. It still burns with ancient fury.",
+      "loreConnection": "Rust Titan Herald"
+    },
+    {
+      "id": "korvax_prime_protocol",
+      "name": "Korvax Prime Protocol",
+      "type": "power",
+      "cost": 2,
+      "rarity": "legendary",
+      "archetype": "rage",
+      "description": "Whenever you take damage, deal that much damage to a random enemy. Gain 2 Rage at the start of each turn.",
+      "effects": [
+        {"type": "trigger", "on": "take_damage", "apply": {"type": "damage", "value": "damage_taken", "target": "random"}},
+        {"type": "rage_per_turn", "value": 2}
+      ],
+      "unlockCondition": "Complete Korvax's personal storyline",
+      "flavorText": "Dr. Veyla's final gift—or final curse. The original combat protocol, unshackled.",
+      "loreConnection": "Korvax's Creator"
+    },
+    {
+      "id": "invincible_fortress",
+      "name": "Invincible Fortress",
+      "type": "power",
+      "cost": 4,
+      "rarity": "legendary",
+      "archetype": "titan",
+      "description": "Gain 5 Armor. Block no longer expires. At the start of each turn, gain Block equal to your Armor x3.",
+      "effects": [
+        {"type": "armor", "value": 5},
+        {"type": "block_permanent"},
+        {"type": "trigger", "on": "turn_start", "apply": {"type": "block", "value": "armor", "multiplier": 3}}
+      ],
+      "unlockCondition": "Win a run taking less than 100 total damage",
+      "flavorText": "They built the Titans to be immortal. Korvax finally understands how.",
+      "loreConnection": "Ancient Titan Technology"
+    }
+  ],
+  "statusEffects": {
+    "overheat": {
+      "description": "Building reactor heat. At 10+, suffer increasing penalties. Reset with Vent or Meltdown cards.",
+      "thresholds": [
+        {"value": 5, "effect": "Minor damage increase"},
+        {"value": 10, "effect": "Take 2 damage per turn"},
+        {"value": 15, "effect": "Take 5 damage per turn, cards cost +1"}
+      ]
+    },
+    "rage": {
+      "description": "Accumulated fury. Increases damage dealt. Some cards consume Rage for powerful effects.",
+      "scaling": "+1 damage per Rage stack"
+    },
+    "armor": {
+      "description": "Permanent damage reduction. Each point of Armor reduces incoming damage by 1."
+    }
+  }
+}
