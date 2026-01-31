@@ -1,0 +1,582 @@
+{
+  "version": "1.0.0",
+  "relicCount": 60,
+  "rarityDistribution": {
+    "common": 20,
+    "uncommon": 20,
+    "rare": 14,
+    "legendary": 6
+  },
+  "relics": [
+    {
+      "id": "scrap_plating",
+      "name": "Scrap Plating",
+      "rarity": "common",
+      "category": "defensive",
+      "description": "Gain 3 Block at the start of each combat.",
+      "effect": {"type": "combat_start_block", "value": 3},
+      "flavorText": "Salvaged from a fallen Rustborn. Still warm."
+    },
+    {
+      "id": "energy_cell",
+      "name": "Energy Cell",
+      "rarity": "common",
+      "category": "energy",
+      "description": "Start each combat with 1 additional Energy.",
+      "effect": {"type": "bonus_energy", "value": 1, "duration": 1},
+      "flavorText": "Pre-Collapse tech. Still holds a charge after centuries."
+    },
+    {
+      "id": "medical_kit",
+      "name": "Medical Kit",
+      "rarity": "common",
+      "category": "healing",
+      "description": "Heal 5 HP after each combat.",
+      "effect": {"type": "post_combat_heal", "value": 5},
+      "flavorText": "Standard issue. Most of the supplies are expired."
+    },
+    {
+      "id": "rust_charm",
+      "name": "Rust Charm",
+      "rarity": "common",
+      "category": "faction",
+      "description": "Rustborn enemies deal 1 less damage.",
+      "effect": {"type": "enemy_damage_reduction", "faction": "rustborn", "value": 1},
+      "flavorText": "A trinket blessed by a Rust Prophet. They'd kill to get it back."
+    },
+    {
+      "id": "cracked_lens",
+      "name": "Cracked Lens",
+      "rarity": "common",
+      "category": "utility",
+      "description": "See enemy intents 1 turn in advance.",
+      "effect": {"type": "intent_preview", "turns": 1},
+      "flavorText": "The crack reveals more than the whole ever did."
+    },
+    {
+      "id": "lucky_coin",
+      "name": "Lucky Coin",
+      "rarity": "common",
+      "category": "credits",
+      "description": "Gain 10% more credits from all sources.",
+      "effect": {"type": "credit_bonus", "percent": 10},
+      "flavorText": "From an old gambling den. The previous owner's luck ran out."
+    },
+    {
+      "id": "worn_boots",
+      "name": "Worn Boots",
+      "rarity": "common",
+      "category": "utility",
+      "description": "The first card you play each turn costs 1 less.",
+      "effect": {"type": "first_card_discount", "value": 1},
+      "flavorText": "Built for long marches. The original owner didn't make it."
+    },
+    {
+      "id": "data_chip",
+      "name": "Data Chip",
+      "rarity": "common",
+      "category": "utility",
+      "description": "Start each combat with 1 extra card in hand.",
+      "effect": {"type": "bonus_starting_cards", "value": 1},
+      "flavorText": "Contains combat subroutines. Partially corrupted."
+    },
+    {
+      "id": "adrenaline_injector",
+      "name": "Adrenaline Injector",
+      "rarity": "common",
+      "category": "offensive",
+      "description": "The first Attack you play each combat deals +3 damage.",
+      "effect": {"type": "first_attack_bonus", "value": 3},
+      "flavorText": "One shot per fight. Make it count."
+    },
+    {
+      "id": "makeshift_armor",
+      "name": "Makeshift Armor",
+      "rarity": "common",
+      "category": "defensive",
+      "description": "Gain 1 Armor at the start of each combat.",
+      "effect": {"type": "combat_start_armor", "value": 1},
+      "flavorText": "Scrap welded to scrap. Better than nothing."
+    },
+    {
+      "id": "corrupted_shard",
+      "name": "Corrupted Shard",
+      "rarity": "common",
+      "category": "corruption",
+      "description": "Deal +2 damage, but gain 1 Corruption after each combat.",
+      "effect": [{"type": "damage_bonus", "value": 2}, {"type": "post_combat_corruption", "value": 1}],
+      "flavorText": "It whispers. You try not to listen."
+    },
+    {
+      "id": "water_flask",
+      "name": "Water Flask",
+      "rarity": "common",
+      "category": "healing",
+      "description": "Heal 2 HP at the start of each combat.",
+      "effect": {"type": "combat_start_heal", "value": 2},
+      "flavorText": "Clean water is worth more than gold on Vharos."
+    },
+    {
+      "id": "signal_flare",
+      "name": "Signal Flare",
+      "rarity": "common",
+      "category": "utility",
+      "description": "Once per combat, draw 2 cards when HP drops below 50%.",
+      "effect": {"type": "low_hp_draw", "threshold": 50, "value": 2, "uses": 1},
+      "flavorText": "Emergency beacon. Now repurposed for survival."
+    },
+    {
+      "id": "targeting_module",
+      "name": "Targeting Module",
+      "rarity": "common",
+      "category": "offensive",
+      "description": "Attacks against Vulnerable enemies deal +2 damage.",
+      "effect": {"type": "vulnerable_damage_bonus", "value": 2},
+      "flavorText": "Exploit weakness. It's the Vharos way."
+    },
+    {
+      "id": "echo_stone",
+      "name": "Echo Stone",
+      "rarity": "common",
+      "category": "utility",
+      "description": "The first card you discard each turn is shuffled back into your draw pile.",
+      "effect": {"type": "discard_recycle", "count": 1},
+      "flavorText": "Time loops in miniature. Useful, if unsettling."
+    },
+    {
+      "id": "venom_vial",
+      "name": "Venom Vial",
+      "rarity": "common",
+      "category": "offensive",
+      "description": "Apply 1 Poison whenever you apply a debuff.",
+      "effect": {"type": "debuff_poison", "value": 1},
+      "flavorText": "Extracted from Thicket creatures. Handle with care."
+    },
+    {
+      "id": "prayer_beads",
+      "name": "Prayer Beads",
+      "rarity": "common",
+      "category": "faction",
+      "description": "First Light Remnant vendors offer 15% discounts.",
+      "effect": {"type": "faction_discount", "faction": "first_light", "percent": 15},
+      "flavorText": "Old faith, old symbols. Still respected in some places."
+    },
+    {
+      "id": "shock_absorber",
+      "name": "Shock Absorber",
+      "rarity": "common",
+      "category": "defensive",
+      "description": "Reduce damage from the first attack each combat by 3.",
+      "effect": {"type": "first_hit_reduction", "value": 3},
+      "flavorText": "Industrial damper. Keeps the worst hits manageable."
+    },
+    {
+      "id": "salvage_kit",
+      "name": "Salvage Kit",
+      "rarity": "common",
+      "category": "credits",
+      "description": "Gain 5 credits whenever you Exhaust a card.",
+      "effect": {"type": "exhaust_credits", "value": 5},
+      "flavorText": "One person's trash, another's trade goods."
+    },
+    {
+      "id": "void_fragment",
+      "name": "Void Fragment",
+      "rarity": "common",
+      "category": "corruption",
+      "description": "Cards that cost 0 deal +3 damage.",
+      "effect": {"type": "zero_cost_damage", "value": 3},
+      "flavorText": "A sliver of nothing. Somehow, it hurts."
+    },
+
+    {
+      "id": "void_shard",
+      "name": "Void Shard",
+      "rarity": "uncommon",
+      "category": "energy",
+      "description": "+1 Energy each turn, but gain 3 Corruption at the end of each combat.",
+      "effect": [{"type": "bonus_energy", "value": 1}, {"type": "post_combat_corruption", "value": 3}],
+      "flavorText": "Power from the void. The cost comes later."
+    },
+    {
+      "id": "ancient_core",
+      "name": "Ancient Core",
+      "rarity": "uncommon",
+      "category": "utility",
+      "description": "Draw 1 extra card each turn.",
+      "effect": {"type": "bonus_draw", "value": 1},
+      "flavorText": "Architect technology. Still functional after eons."
+    },
+    {
+      "id": "rage_crystal",
+      "name": "Rage Crystal",
+      "rarity": "uncommon",
+      "category": "offensive",
+      "description": "Gain 1 Strength whenever you take damage.",
+      "effect": {"type": "damage_taken_strength", "value": 1},
+      "flavorText": "Pain becomes power. A dangerous exchange."
+    },
+    {
+      "id": "temporal_anchor",
+      "name": "Temporal Anchor",
+      "rarity": "uncommon",
+      "category": "utility",
+      "description": "Retain 1 card at the end of each turn.",
+      "effect": {"type": "retain_cards", "value": 1},
+      "flavorText": "Holds moments in place. Lyria would understand."
+    },
+    {
+      "id": "astral_prism",
+      "name": "Astral Prism",
+      "rarity": "uncommon",
+      "category": "offensive",
+      "description": "Your multi-hit attacks deal +1 damage per hit.",
+      "effect": {"type": "multi_hit_bonus", "value": 1},
+      "flavorText": "Splits damage into fractals. Each one cuts."
+    },
+    {
+      "id": "blood_vial",
+      "name": "Blood Vial",
+      "rarity": "uncommon",
+      "category": "healing",
+      "description": "Heal 3 HP whenever you kill an enemy.",
+      "effect": {"type": "kill_heal", "value": 3},
+      "flavorText": "Not quite vampire tech. Close enough."
+    },
+    {
+      "id": "stealth_cloak",
+      "name": "Stealth Cloak",
+      "rarity": "uncommon",
+      "category": "defensive",
+      "description": "At the start of each combat, gain Invisible for 1 turn.",
+      "effect": {"type": "combat_start_invisible", "duration": 1},
+      "flavorText": "Standard Faceless equipment. Where did you get this?"
+    },
+    {
+      "id": "thermal_regulator",
+      "name": "Thermal Regulator",
+      "rarity": "uncommon",
+      "category": "special",
+      "heroSpecific": "korvax",
+      "description": "Overheat threshold increased by 5. Start combat with 2 Overheat.",
+      "effect": [{"type": "overheat_threshold", "value": 5}, {"type": "combat_start_overheat", "value": 2}],
+      "flavorText": "Korvax's original regulator. Barely functional, deeply personal."
+    },
+    {
+      "id": "astral_conduit",
+      "name": "Astral Conduit",
+      "rarity": "uncommon",
+      "category": "special",
+      "heroSpecific": "lyria",
+      "description": "Whenever you Scry, draw 1 card.",
+      "effect": {"type": "scry_draw", "value": 1},
+      "flavorText": "Lyria's focus. The future flows through it."
+    },
+    {
+      "id": "radiant_medallion",
+      "name": "Radiant Medallion",
+      "rarity": "uncommon",
+      "category": "faction",
+      "description": "First Light abilities deal +3 damage. Gain 1 Corruption per combat.",
+      "effect": [{"type": "faction_damage_bonus", "faction": "first_light", "value": 3}, {"type": "post_combat_corruption", "value": 1}],
+      "flavorText": "The Light burns brighter near the void."
+    },
+    {
+      "id": "toxic_blade",
+      "name": "Toxic Blade",
+      "rarity": "uncommon",
+      "category": "offensive",
+      "description": "Attacks apply 2 Poison.",
+      "effect": {"type": "attack_poison", "value": 2},
+      "flavorText": "Thicket-forged. The venom never stops working."
+    },
+    {
+      "id": "protective_ward",
+      "name": "Protective Ward",
+      "rarity": "uncommon",
+      "category": "defensive",
+      "description": "Block is 25% more effective.",
+      "effect": {"type": "block_multiplier", "percent": 25},
+      "flavorText": "Old barrier technology. The wards still hold."
+    },
+    {
+      "id": "merchant_seal",
+      "name": "Merchant's Seal",
+      "rarity": "uncommon",
+      "category": "credits",
+      "description": "All items in shops cost 20% less.",
+      "effect": {"type": "shop_discount", "percent": 20},
+      "flavorText": "Trade guild membership. Still honored by survivors."
+    },
+    {
+      "id": "combat_stimulant",
+      "name": "Combat Stimulant",
+      "rarity": "uncommon",
+      "category": "energy",
+      "description": "Once per combat, gain 2 Energy when HP drops below 30%.",
+      "effect": {"type": "low_hp_energy", "threshold": 30, "value": 2, "uses": 1},
+      "flavorText": "Fight or flight. This ensures fight."
+    },
+    {
+      "id": "void_eye",
+      "name": "Void Eye",
+      "rarity": "uncommon",
+      "category": "corruption",
+      "description": "At 50%+ Corruption, draw 1 extra card per turn.",
+      "effect": {"type": "corruption_bonus_draw", "threshold": 50, "value": 1},
+      "flavorText": "The deeper you fall, the more you see."
+    },
+    {
+      "id": "resonance_crystal",
+      "name": "Resonance Crystal",
+      "rarity": "uncommon",
+      "category": "utility",
+      "description": "Power cards cost 1 less.",
+      "effect": {"type": "power_cost_reduction", "value": 1},
+      "flavorText": "Amplifies permanent effects. Handle carefully."
+    },
+    {
+      "id": "titan_scale",
+      "name": "Titan Scale",
+      "rarity": "uncommon",
+      "category": "defensive",
+      "description": "Gain 2 Armor. Cannot be removed.",
+      "effect": {"type": "permanent_armor", "value": 2},
+      "flavorText": "A scale from something ancient. Something that shouldn't exist."
+    },
+    {
+      "id": "refractor_lens",
+      "name": "Refractor Lens",
+      "rarity": "uncommon",
+      "category": "offensive",
+      "description": "Attacks deal +1 damage for each buff you have.",
+      "effect": {"type": "buff_damage_scaling", "value": 1},
+      "flavorText": "Focuses your advantages into pure force."
+    },
+    {
+      "id": "echo_amplifier",
+      "name": "Echo Amplifier",
+      "rarity": "uncommon",
+      "category": "utility",
+      "description": "Whenever you play 3 cards in a turn, draw 1 card.",
+      "effect": {"type": "cards_played_draw", "threshold": 3, "value": 1},
+      "flavorText": "Actions echo through time. This catches them."
+    },
+    {
+      "id": "corrupted_heart",
+      "name": "Corrupted Heart",
+      "rarity": "uncommon",
+      "category": "corruption",
+      "description": "Heal 1 HP whenever you gain Corruption.",
+      "effect": {"type": "corruption_heal", "value": 1},
+      "flavorText": "The void sustains as it consumes."
+    },
+
+    {
+      "id": "shard_of_first_light",
+      "name": "Shard of First Light",
+      "rarity": "rare",
+      "category": "special",
+      "heroSpecific": "auren",
+      "description": "Radiance deals 50% more damage. Start combat with 2 Radiance on all enemies.",
+      "effect": [{"type": "radiance_multiplier", "percent": 50}, {"type": "combat_start_radiance", "value": 2, "target": "all"}],
+      "flavorText": "Auren's shattered faith, made manifest."
+    },
+    {
+      "id": "mask_of_echoes",
+      "name": "Mask of Echoes",
+      "rarity": "rare",
+      "category": "special",
+      "heroSpecific": "shade",
+      "description": "Copy the first enemy ability each combat. Gain Invisible after playing a copied ability.",
+      "effect": [{"type": "copy_enemy_ability", "uses": 1}, {"type": "copied_ability_invisible"}],
+      "flavorText": "Shade's only possession. They don't remember finding it."
+    },
+    {
+      "id": "architects_compass",
+      "name": "Architect's Compass",
+      "rarity": "rare",
+      "category": "utility",
+      "description": "See all paths on the map. ? nodes reveal their contents.",
+      "effect": {"type": "map_reveal_all"},
+      "flavorText": "They mapped everything. Even the things that shouldn't exist."
+    },
+    {
+      "id": "temporal_shard",
+      "name": "Temporal Shard",
+      "rarity": "rare",
+      "category": "utility",
+      "description": "Once per combat, return to the start of the previous turn.",
+      "effect": {"type": "turn_rewind", "uses": 1},
+      "flavorText": "A frozen moment. Use it wisely."
+    },
+    {
+      "id": "reality_stabilizer",
+      "name": "Reality Stabilizer",
+      "rarity": "rare",
+      "category": "corruption",
+      "description": "Corruption gain is reduced by 50%.",
+      "effect": {"type": "corruption_reduction", "percent": 50},
+      "flavorText": "A piece of what held the seals together. Still working."
+    },
+    {
+      "id": "void_heart",
+      "name": "Void Heart",
+      "rarity": "rare",
+      "category": "corruption",
+      "description": "+2 Energy per turn. Gain 5 Corruption per combat. Cannot be unequipped.",
+      "effect": [{"type": "bonus_energy", "value": 2}, {"type": "post_combat_corruption", "value": 5}],
+      "cursed": true,
+      "flavorText": "Power beyond measure. The price is your soul."
+    },
+    {
+      "id": "chrono_accelerator",
+      "name": "Chrono Accelerator",
+      "rarity": "rare",
+      "category": "energy",
+      "description": "Gain 1 Energy the first time you play 5 cards in a turn.",
+      "effect": {"type": "cards_played_energy", "threshold": 5, "value": 1},
+      "flavorText": "Time compression tech. Dangerously unstable."
+    },
+    {
+      "id": "lifedrinker",
+      "name": "Lifedrinker",
+      "rarity": "rare",
+      "category": "healing",
+      "description": "Heal 1 HP for every 5 damage dealt.",
+      "effect": {"type": "damage_heal_ratio", "ratio": 5},
+      "flavorText": "Vampiric technology. The Hollow Covenant perfected it."
+    },
+    {
+      "id": "overcharge_capacitor",
+      "name": "Overcharge Capacitor",
+      "rarity": "rare",
+      "category": "offensive",
+      "description": "Whenever you gain Energy, deal 3 damage to a random enemy.",
+      "effect": {"type": "energy_gain_damage", "value": 3, "target": "random"},
+      "flavorText": "Excess power has to go somewhere."
+    },
+    {
+      "id": "soul_cage",
+      "name": "Soul Cage",
+      "rarity": "rare",
+      "category": "defensive",
+      "description": "When you would die, survive with 1 HP and gain 30 Block. Once per run.",
+      "effect": {"type": "death_prevention", "heal": 1, "block": 30, "uses": 1},
+      "flavorText": "Traps the moment of death. Buys you time."
+    },
+    {
+      "id": "whisper_blade",
+      "name": "Whisper Blade",
+      "rarity": "rare",
+      "category": "offensive",
+      "description": "Deal +5 damage to enemies with debuffs.",
+      "effect": {"type": "debuff_damage_bonus", "value": 5},
+      "flavorText": "Faceless assassin's tool. Strikes the weak points."
+    },
+    {
+      "id": "herald_fragment",
+      "name": "Herald Fragment",
+      "rarity": "rare",
+      "category": "faction",
+      "description": "Deal +50% damage to Herald enemies. Take +25% damage from Heralds.",
+      "effect": [{"type": "faction_damage_bonus", "faction": "herald", "percent": 50}, {"type": "faction_damage_taken", "faction": "herald", "percent": 25}],
+      "flavorText": "Part of a Herald's essence. They want it back."
+    },
+    {
+      "id": "null_stone",
+      "name": "Null Stone",
+      "rarity": "rare",
+      "category": "defensive",
+      "description": "Immune to the first debuff applied each combat.",
+      "effect": {"type": "debuff_immunity", "uses": 1, "per": "combat"},
+      "flavorText": "Absolute negation. Once per fight."
+    },
+    {
+      "id": "perfect_form",
+      "name": "Perfect Form",
+      "rarity": "rare",
+      "category": "utility",
+      "description": "Cards cannot be exhausted unless they say Exhaust.",
+      "effect": {"type": "exhaust_protection"},
+      "flavorText": "Preserve everything. Lose nothing."
+    },
+
+    {
+      "id": "seal_fragment_matter",
+      "name": "Fragment of the Matter Seal",
+      "rarity": "legendary",
+      "category": "cosmic",
+      "description": "Gain 5 Armor permanently. All damage you take is reduced by 2.",
+      "effect": [{"type": "permanent_armor", "value": 5}, {"type": "flat_damage_reduction", "value": 2}],
+      "unlockCondition": "Reinforce the Matter Seal",
+      "flavorText": "The Rust Titan's prison, shattered. This piece remembers solidity."
+    },
+    {
+      "id": "seal_fragment_time",
+      "name": "Fragment of the Time Seal",
+      "rarity": "legendary",
+      "category": "cosmic",
+      "description": "At the start of Act 3, you may restart the run with your current deck.",
+      "effect": {"type": "new_game_plus", "trigger": "act3_start"},
+      "unlockCondition": "Reinforce the Time Seal",
+      "flavorText": "The Witness's burden, broken. This piece remembers beginnings."
+    },
+    {
+      "id": "seal_fragment_light",
+      "name": "Fragment of the Light Seal",
+      "rarity": "legendary",
+      "category": "cosmic",
+      "description": "Corruption can never exceed 75%. Gain 15 Corruption now.",
+      "effect": [{"type": "corruption_cap", "value": 75}, {"type": "corruption", "value": 15}],
+      "unlockCondition": "Reinforce the Light Seal",
+      "flavorText": "The Seraph's sacrifice, undone. This piece remembers meaning."
+    },
+    {
+      "id": "seal_fragment_identity",
+      "name": "Fragment of the Identity Seal",
+      "rarity": "legendary",
+      "category": "cosmic",
+      "description": "Once per combat, become a copy of the current enemy for 2 turns (gain their abilities).",
+      "effect": {"type": "enemy_mimicry", "duration": 2, "uses": 1},
+      "unlockCondition": "Reinforce the Identity Seal",
+      "flavorText": "The Whisper King's mask, cracked. This piece remembers selfhood."
+    },
+    {
+      "id": "xalkoraths_eye",
+      "name": "Xal'Korath's Eye",
+      "rarity": "legendary",
+      "category": "corruption",
+      "description": "Your Corruption level grants +1% damage per point. Corruption cannot be reduced.",
+      "effect": [{"type": "corruption_damage_scaling", "percent_per_point": 1}, {"type": "corruption_permanent"}],
+      "unlockCondition": "Achieve 100% Corruption without dying",
+      "flavorText": "The World-Eater sees through you now. You see through it."
+    },
+    {
+      "id": "architects_codex",
+      "name": "Architect's Codex",
+      "rarity": "legendary",
+      "category": "utility",
+      "description": "Start each combat with a random Rare card in hand. All card rewards offer +1 choice.",
+      "effect": [{"type": "combat_start_random_rare"}, {"type": "reward_extra_choice", "value": 1}],
+      "unlockCondition": "Discover the Forbidden Archive",
+      "flavorText": "The complete knowledge of a dead civilization. Heavy reading."
+    }
+  ],
+  "heroStartingRelics": {
+    "korvax": "thermal_regulator",
+    "lyria": "astral_conduit",
+    "auren": "shard_of_first_light",
+    "shade": "mask_of_echoes"
+  },
+  "bossRelicPools": {
+    "act1": ["architects_compass", "temporal_shard", "reality_stabilizer", "chrono_accelerator"],
+    "act2": ["void_heart", "lifedrinker", "overcharge_capacitor", "soul_cage"],
+    "act3": ["seal_fragment_matter", "seal_fragment_time", "seal_fragment_light", "seal_fragment_identity"]
+  },
+  "eventRelicPools": {
+    "void_shrine": ["void_shard", "void_eye", "void_heart", "corrupted_heart"],
+    "merchant": ["merchant_seal", "lucky_coin", "salvage_kit"],
+    "combat_shrine": ["rage_crystal", "toxic_blade", "whisper_blade", "refractor_lens"]
+  }
+}
