@@ -307,7 +307,7 @@ export function setupEventScreen(game) {
             }
             
             game.state.set('combat.enemies', enemies);
-            game.screenManager.transitionTo('combat-screen');
+            forceScreenTransition(game, 'combat-screen');
         }, 1500);
     }
     
@@ -367,8 +367,73 @@ export function setupEventScreen(game) {
         game.mapGenerator.completeCurrentNode();
         game.eventBus.emit('map:updated');
         
-        // Return to map
-        game.screenManager.transitionTo('map-screen');
+        // Return to map using force transition
+        forceScreenTransition(game, 'map-screen');
+    }
+    
+    /**
+     * Force screen transition (same pattern as other screens)
+     */
+    function forceScreenTransition(game, targetScreenId) {
+        console.log(`[EventScreen] forceScreenTransition to: ${targetScreenId}`);
+        
+        const eventScreen = document.getElementById('event-screen');
+        const targetScreen = document.getElementById(targetScreenId);
+        
+        if (!targetScreen) {
+            console.error(`[EventScreen] Target screen not found: ${targetScreenId}`);
+            return;
+        }
+        
+        // Hide the event screen
+        if (eventScreen) {
+            eventScreen.classList.remove('active', 'fade-in');
+            eventScreen.style.cssText = '';
+        }
+        
+        // Try normal ScreenManager transition
+        try {
+            if (game.screenManager) {
+                game.screenManager.transitioning = false;
+                game.screenManager.transitionTo(targetScreenId);
+            }
+        } catch (e) {
+            console.error('[EventScreen] screenManager.transitionTo failed:', e);
+        }
+        
+        // Force the transition
+        setTimeout(() => {
+            document.querySelectorAll('.screen').forEach(screen => {
+                if (screen.id !== targetScreenId) {
+                    screen.classList.remove('active', 'fade-in');
+                    screen.style.cssText = '';
+                }
+            });
+            
+            targetScreen.classList.remove('fade-out');
+            targetScreen.classList.add('active');
+            targetScreen.style.cssText = `
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                z-index: 1000 !important;
+                pointer-events: auto !important;
+            `;
+            
+            if (game.screenManager) {
+                game.screenManager.previousScreen = game.screenManager.currentScreen;
+                game.screenManager.currentScreen = targetScreenId;
+                game.screenManager.transitioning = false;
+            }
+            
+            game.eventBus.emit('screen:changed', { to: targetScreenId, from: 'event-screen' });
+            game.eventBus.emit('screen:show', targetScreenId);
+        }, 100);
     }
     
     return { initializeEventScreen, renderEvent };
