@@ -29,6 +29,7 @@
     gap: var(--space-xl);
     padding: var(--space-xl);
     padding-bottom: var(--space-2xl);
+    padding-top: 60px !important;
 }
 
 .enemy {
@@ -42,6 +43,8 @@
     border-radius: var(--radius-md);
     min-width: 120px;
     transition: all var(--transition-fast);
+    overflow: visible !important;
+    z-index: 1;
 }
 
 /* FIX: Targetable enemy state */
@@ -90,6 +93,9 @@
     background: var(--color-surface);
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
 }
 
 .intent-icon {
