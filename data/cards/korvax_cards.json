@@ -1,0 +1,554 @@
+{
+  "heroId": "korvax",
+  "cards": [
+    {
+      "id": "strike",
+      "name": "Strike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "target": "enemy",
+      "description": "Deal 6 damage.",
+      "effects": [{"type": "damage", "value": 6}]
+    },
+    {
+      "id": "defend",
+      "name": "Defend",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "target": "self",
+      "description": "Gain 5 Block.",
+      "effects": [{"type": "block", "value": 5}]
+    },
+    {
+      "id": "thermal_vent",
+      "name": "Thermal Vent",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "target": "self",
+      "description": "Gain 4 Block. Gain 1 Overheat.",
+      "effects": [
+        {"type": "block", "value": 4},
+        {"type": "status", "status": "overheat", "value": 1, "target": "self"}
+      ]
+    },
+    {
+      "id": "rage_spike",
+      "name": "Rage Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "target": "enemy",
+      "description": "Deal 4 damage. Deal 8 instead if you took damage this turn.",
+      "effects": [{"type": "damage", "value": 4, "conditional": {"trigger": "took_damage_this_turn", "value": 8}}]
+    },
+    {
+      "id": "system_check",
+      "name": "System Check",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "starter",
+      "target": "self",
+      "description": "Draw 1 card. Exhaust.",
+      "effects": [{"type": "draw", "value": 1}],
+      "exhaust": true
+    },
+    {
+      "id": "thermal_spike",
+      "name": "Thermal Spike",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 8 damage. Gain 2 Overheat.",
+      "effects": [
+        {"type": "damage", "value": 8},
+        {"type": "status", "status": "overheat", "value": 2, "target": "self"}
+      ]
+    },
+    {
+      "id": "iron_will",
+      "name": "Iron Will",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "self",
+      "description": "Gain 8 Block.",
+      "effects": [{"type": "block", "value": 8}]
+    },
+    {
+      "id": "overcharge",
+      "name": "Overcharge",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 12 damage. Gain 3 Overheat.",
+      "effects": [
+        {"type": "damage", "value": 12},
+        {"type": "status", "status": "overheat", "value": 3, "target": "self"}
+      ]
+    },
+    {
+      "id": "vent_heat",
+      "name": "Vent Heat",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "self",
+      "description": "Lose all Overheat. Gain Block equal to Overheat lost.",
+      "effects": [
+        {"type": "block", "value": "overheat"},
+        {"type": "reset_status", "status": "overheat"}
+      ]
+    },
+    {
+      "id": "fuel_the_fire",
+      "name": "Fuel the Fire",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 3 damage. Deal +1 damage for each Overheat.",
+      "effects": [{"type": "damage", "value": 3, "scaling": {"source": "overheat", "multiplier": 1}}]
+    },
+    {
+      "id": "reckless_swing",
+      "name": "Reckless Swing",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 10 damage. Take 3 damage.",
+      "effects": [
+        {"type": "damage", "value": 10},
+        {"type": "self_damage", "value": 3}
+      ]
+    },
+    {
+      "id": "heavy_plating",
+      "name": "Heavy Plating",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "common",
+      "target": "self",
+      "description": "Gain 14 Block.",
+      "effects": [{"type": "block", "value": 14}]
+    },
+    {
+      "id": "enrage",
+      "name": "Enrage",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "self",
+      "description": "Gain 2 Rage.",
+      "effects": [{"type": "status", "status": "rage", "value": 2, "target": "self"}]
+    },
+    {
+      "id": "pummel",
+      "name": "Pummel",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 2 damage 4 times.",
+      "effects": [{"type": "damage", "value": 2, "hits": 4}]
+    },
+    {
+      "id": "intimidate",
+      "name": "Intimidate",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "all_enemies",
+      "description": "Apply 1 Weak to ALL enemies.",
+      "effects": [{"type": "status", "status": "weak", "value": 1, "target": "all_enemies"}]
+    },
+    {
+      "id": "crush",
+      "name": "Crush",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 14 damage. Apply 1 Vulnerable.",
+      "effects": [
+        {"type": "damage", "value": 14},
+        {"type": "status", "status": "vulnerable", "value": 1, "target": "enemy"}
+      ]
+    },
+    {
+      "id": "body_slam",
+      "name": "Body Slam",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal damage equal to your current Block.",
+      "effects": [{"type": "damage", "value": "block"}]
+    },
+    {
+      "id": "cleave",
+      "name": "Cleave",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "all_enemies",
+      "description": "Deal 8 damage to ALL enemies.",
+      "effects": [{"type": "damage", "value": 8, "target": "all"}]
+    },
+    {
+      "id": "reactor_breach",
+      "name": "Reactor Breach",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "all_enemies",
+      "description": "Deal 8 damage to ALL enemies. Gain 2 Overheat.",
+      "effects": [
+        {"type": "damage", "value": 8, "target": "all"},
+        {"type": "status", "status": "overheat", "value": 2, "target": "self"}
+      ]
+    },
+    {
+      "id": "titan_stance",
+      "name": "Titan Stance",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 12 Block. Gain 6 Counter.",
+      "effects": [
+        {"type": "block", "value": 12},
+        {"type": "status", "status": "counter", "value": 6, "target": "self"}
+      ]
+    },
+    {
+      "id": "rage_protocol",
+      "name": "Rage Protocol",
+      "type": "power",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Whenever you take damage, gain 1 Rage.",
+      "effects": [{"type": "passive", "trigger": "on_damage_taken", "apply": {"type": "status", "status": "rage", "value": 1}}]
+    },
+    {
+      "id": "armor_plating",
+      "name": "Armor Plating",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 3 Block at the start of each turn.",
+      "effects": [{"type": "passive", "trigger": "turn_start", "apply": {"type": "block", "value": 3}}]
+    },
+    {
+      "id": "bloodlust",
+      "name": "Bloodlust",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Deal 7 damage. If enemy dies, gain 2 Rage.",
+      "effects": [
+        {"type": "damage", "value": 7},
+        {"type": "conditional", "trigger": "enemy_dies", "apply": {"type": "status", "status": "rage", "value": 2}}
+      ]
+    },
+    {
+      "id": "heat_sink",
+      "name": "Heat Sink",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Reduce Overheat by 3. Gain 1 Energy.",
+      "effects": [
+        {"type": "modify_status", "status": "overheat", "value": -3},
+        {"type": "energy", "value": 1}
+      ]
+    },
+    {
+      "id": "flame_barrier",
+      "name": "Flame Barrier",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 10 Block. Deal 4 damage to attackers this turn.",
+      "effects": [
+        {"type": "block", "value": 10},
+        {"type": "status", "status": "thorns", "value": 4, "duration": 1, "target": "self"}
+      ]
+    },
+    {
+      "id": "unstoppable",
+      "name": "Unstoppable",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 2 Armor (permanent damage reduction).",
+      "effects": [{"type": "status", "status": "armor", "value": 2, "target": "self"}]
+    },
+    {
+      "id": "provoke",
+      "name": "Provoke",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Apply 2 Vulnerable. Gain 2 Rage.",
+      "effects": [
+        {"type": "status", "status": "vulnerable", "value": 2, "target": "enemy"},
+        {"type": "status", "status": "rage", "value": 2, "target": "self"}
+      ]
+    },
+    {
+      "id": "immolate",
+      "name": "Immolate",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "all_enemies",
+      "description": "Deal 10 damage to ALL. Apply 2 Burn to ALL.",
+      "effects": [
+        {"type": "damage", "value": 10, "target": "all"},
+        {"type": "status", "status": "burn", "value": 2, "target": "all_enemies"}
+      ]
+    },
+    {
+      "id": "battle_trance",
+      "name": "Battle Trance",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Draw 3 cards. Cannot draw more this turn.",
+      "effects": [
+        {"type": "draw", "value": 3},
+        {"type": "status", "status": "no_draw", "duration": 1, "target": "self"}
+      ]
+    },
+    {
+      "id": "seeing_red",
+      "name": "Seeing Red",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 2 Energy. Exhaust.",
+      "effects": [{"type": "energy", "value": 2}],
+      "exhaust": true
+    },
+    {
+      "id": "shockwave",
+      "name": "Shockwave",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "all_enemies",
+      "description": "Apply 2 Weak and 2 Vulnerable to ALL. Exhaust.",
+      "effects": [
+        {"type": "status", "status": "weak", "value": 2, "target": "all_enemies"},
+        {"type": "status", "status": "vulnerable", "value": 2, "target": "all_enemies"}
+      ],
+      "exhaust": true
+    },
+    {
+      "id": "rupture",
+      "name": "Rupture",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Whenever you lose HP from a card, gain 1 Strength.",
+      "effects": [{"type": "passive", "trigger": "on_self_damage", "apply": {"type": "status", "status": "strength", "value": 1}}]
+    },
+    {
+      "id": "metallicize",
+      "name": "Metallicize",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "At the end of your turn, gain 3 Block.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": {"type": "block", "value": 3}}]
+    },
+    {
+      "id": "combust",
+      "name": "Combust",
+      "type": "power",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "At end of turn, lose 1 HP and deal 5 damage to ALL enemies.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": [
+        {"type": "self_damage", "value": 1},
+        {"type": "damage", "value": 5, "target": "all"}
+      ]}]
+    },
+    {
+      "id": "meltdown",
+      "name": "Meltdown",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "rare",
+      "target": "all_enemies",
+      "description": "Deal damage equal to Overheat x4 to ALL. Reset Overheat.",
+      "effects": [
+        {"type": "damage", "value": 0, "scaling": {"source": "overheat", "multiplier": 4}, "target": "all"},
+        {"type": "reset_status", "status": "overheat"}
+      ]
+    },
+    {
+      "id": "berserk",
+      "name": "Berserk",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Gain 1 Energy each turn. Gain 1 Vulnerable each turn.",
+      "effects": [
+        {"type": "passive", "trigger": "turn_start", "apply": [
+          {"type": "energy", "value": 1},
+          {"type": "status", "status": "vulnerable", "value": 1, "target": "self"}
+        ]}
+      ]
+    },
+    {
+      "id": "limit_break",
+      "name": "Limit Break",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Double your Strength. Exhaust.",
+      "effects": [{"type": "double_status", "status": "strength"}],
+      "exhaust": true
+    },
+    {
+      "id": "brutality",
+      "name": "Brutality",
+      "type": "power",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "At start of turn, lose 1 HP and draw 1 card.",
+      "effects": [{"type": "passive", "trigger": "turn_start", "apply": [
+        {"type": "self_damage", "value": 1},
+        {"type": "draw", "value": 1}
+      ]}]
+    },
+    {
+      "id": "juggernaut",
+      "name": "Juggernaut",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "self",
+      "description": "When you gain Block, deal 3 damage to random enemy.",
+      "effects": [{"type": "passive", "trigger": "on_gain_block", "apply": {"type": "damage", "value": 3, "target": "random_enemy"}}]
+    },
+    {
+      "id": "demon_form",
+      "name": "Demon Form",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "target": "self",
+      "description": "At start of each turn, gain 2 Strength.",
+      "effects": [{"type": "passive", "trigger": "turn_start", "apply": {"type": "status", "status": "strength", "value": 2}}]
+    },
+    {
+      "id": "feed",
+      "name": "Feed",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "rare",
+      "target": "enemy",
+      "description": "Deal 10 damage. If fatal, gain 3 Max HP. Exhaust.",
+      "effects": [
+        {"type": "damage", "value": 10},
+        {"type": "conditional", "trigger": "enemy_dies", "apply": {"type": "max_hp", "value": 3}}
+      ],
+      "exhaust": true
+    },
+    {
+      "id": "impervious",
+      "name": "Impervious",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Gain 30 Block. Exhaust.",
+      "effects": [{"type": "block", "value": 30}],
+      "exhaust": true
+    },
+    {
+      "id": "offering",
+      "name": "Offering",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Lose 6 HP. Gain 2 Energy. Draw 3 cards. Exhaust.",
+      "effects": [
+        {"type": "self_damage", "value": 6},
+        {"type": "energy", "value": 2},
+        {"type": "draw", "value": 3}
+      ],
+      "exhaust": true
+    },
+    {
+      "id": "reaper",
+      "name": "Reaper",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "all_enemies",
+      "description": "Deal 4 damage to ALL. Heal for unblocked damage dealt.",
+      "effects": [{"type": "damage", "value": 4, "target": "all", "lifesteal": true}]
+    },
+    {
+      "id": "barricade",
+      "name": "Barricade",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Block is not removed at the start of your turn.",
+      "effects": [{"type": "passive", "status": "retain_block"}]
+    },
+    {
+      "id": "critical_mass",
+      "name": "Critical Mass",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "legendary",
+      "target": "enemy",
+      "description": "Deal 5 damage. If Overheat 10+, deal 30 instead. Reset Overheat.",
+      "effects": [
+        {"type": "damage", "value": 5, "conditional": {"trigger": "overheat_10", "value": 30}},
+        {"type": "conditional", "trigger": "overheat_10", "apply": {"type": "reset_status", "status": "overheat"}}
+      ]
+    },
+    {
+      "id": "titans_wrath",
+      "name": "Titan's Wrath",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "legendary",
+      "target": "enemy",
+      "description": "Deal 20 damage +5 per Rage. Lose all Rage.",
+      "effects": [
+        {"type": "damage", "value": 20, "scaling": {"source": "rage", "multiplier": 5}},
+        {"type": "reset_status", "status": "rage"}
+      ]
+    }
+  ]
+}

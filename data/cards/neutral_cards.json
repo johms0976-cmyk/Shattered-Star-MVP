@@ -1,0 +1,465 @@
+{
+  "cards": [
+    {
+      "id": "void_siphon",
+      "name": "Void Siphon",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 5 damage. Gain 1 Corruption.",
+      "effects": [
+        {"type": "damage", "value": 5},
+        {"type": "corruption", "value": 1}
+      ]
+    },
+    {
+      "id": "desperate_strike",
+      "name": "Desperate Strike",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 4 damage. Take 2 damage.",
+      "effects": [
+        {"type": "damage", "value": 4},
+        {"type": "self_damage", "value": 2}
+      ]
+    },
+    {
+      "id": "scrap_shield",
+      "name": "Scrap Shield",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "self",
+      "description": "Gain 6 Block. Exhaust.",
+      "effects": [{"type": "block", "value": 6}],
+      "exhaust": true
+    },
+    {
+      "id": "quick_patch",
+      "name": "Quick Patch",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "self",
+      "description": "Heal 4 HP. Exhaust.",
+      "effects": [{"type": "heal", "value": 4}],
+      "exhaust": true
+    },
+    {
+      "id": "improvised_weapon",
+      "name": "Improvised Weapon",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 3 damage. Draw 1 card.",
+      "effects": [
+        {"type": "damage", "value": 3},
+        {"type": "draw", "value": 1}
+      ]
+    },
+    {
+      "id": "bandage",
+      "name": "Bandage",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "common",
+      "target": "self",
+      "description": "Heal 2 HP.",
+      "effects": [{"type": "heal", "value": 2}]
+    },
+    {
+      "id": "trip",
+      "name": "Trip",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Apply 2 Vulnerable.",
+      "effects": [{"type": "status", "status": "vulnerable", "value": 2, "target": "enemy"}]
+    },
+    {
+      "id": "flash_bang",
+      "name": "Flash Bang",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "target": "all_enemies",
+      "description": "Apply 1 Weak to ALL enemies. Draw 1 card.",
+      "effects": [
+        {"type": "status", "status": "weak", "value": 1, "target": "all_enemies"},
+        {"type": "draw", "value": 1}
+      ]
+    },
+    {
+      "id": "throwing_knife",
+      "name": "Throwing Knife",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "common",
+      "target": "enemy",
+      "description": "Deal 4 damage.",
+      "effects": [{"type": "damage", "value": 4}]
+    },
+    {
+      "id": "finesse",
+      "name": "Finesse",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "common",
+      "target": "self",
+      "description": "Gain 2 Block. Draw 1 card.",
+      "effects": [
+        {"type": "block", "value": 2},
+        {"type": "draw", "value": 1}
+      ]
+    },
+    {
+      "id": "adrenaline",
+      "name": "Adrenaline",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 1 Energy. Draw 2 cards. Exhaust.",
+      "effects": [
+        {"type": "energy", "value": 1},
+        {"type": "draw", "value": 2}
+      ],
+      "exhaust": true
+    },
+    {
+      "id": "void_blade",
+      "name": "Void Blade",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Deal 14 damage. Gain 3 Corruption.",
+      "effects": [
+        {"type": "damage", "value": 14},
+        {"type": "corruption", "value": 3}
+      ]
+    },
+    {
+      "id": "corruption_pulse",
+      "name": "Corruption Pulse",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Deal damage equal to your Corruption level.",
+      "effects": [{"type": "damage", "value": "corruption"}]
+    },
+    {
+      "id": "second_wind",
+      "name": "Second Wind",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain Block equal to your missing HP.",
+      "effects": [{"type": "block", "value": "missing_hp"}]
+    },
+    {
+      "id": "calculated_gamble",
+      "name": "Calculated Gamble",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Discard your hand. Draw that many cards.",
+      "effects": [
+        {"type": "discard_hand"},
+        {"type": "draw", "value": "discarded_count"}
+      ],
+      "exhaust": true
+    },
+    {
+      "id": "panacea",
+      "name": "Panacea",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 1 Artifact. Exhaust.",
+      "effects": [{"type": "status", "status": "artifact", "value": 1, "target": "self"}],
+      "exhaust": true
+    },
+    {
+      "id": "piercing_wail",
+      "name": "Piercing Wail",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "all_enemies",
+      "description": "ALL enemies lose 6 Strength this turn. Exhaust.",
+      "effects": [{"type": "status", "status": "strength", "value": -6, "target": "all_enemies", "duration": 1}],
+      "exhaust": true
+    },
+    {
+      "id": "concentrate",
+      "name": "Concentrate",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Gain 2 Energy. Discard 2 cards.",
+      "effects": [
+        {"type": "energy", "value": 2},
+        {"type": "discard", "value": 2}
+      ]
+    },
+    {
+      "id": "neutralize",
+      "name": "Neutralize",
+      "type": "attack",
+      "cost": 0,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Deal 3 damage. Apply 1 Weak.",
+      "effects": [
+        {"type": "damage", "value": 3},
+        {"type": "status", "status": "weak", "value": 1, "target": "enemy"}
+      ]
+    },
+    {
+      "id": "sucker_punch",
+      "name": "Sucker Punch",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Deal 7 damage. Apply 1 Weak.",
+      "effects": [
+        {"type": "damage", "value": 7},
+        {"type": "status", "status": "weak", "value": 1, "target": "enemy"}
+      ]
+    },
+    {
+      "id": "leg_sweep",
+      "name": "Leg Sweep",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Apply 2 Weak. Gain 11 Block.",
+      "effects": [
+        {"type": "status", "status": "weak", "value": 2, "target": "enemy"},
+        {"type": "block", "value": 11}
+      ]
+    },
+    {
+      "id": "terror",
+      "name": "Terror",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "enemy",
+      "description": "Apply 99 Vulnerable. Exhaust.",
+      "effects": [{"type": "status", "status": "vulnerable", "value": 99, "target": "enemy"}],
+      "exhaust": true
+    },
+    {
+      "id": "setup",
+      "name": "Setup",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "target": "self",
+      "description": "Put a card from hand on top of draw pile.",
+      "effects": [{"type": "put_on_top"}]
+    },
+    {
+      "id": "dark_pact",
+      "name": "Dark Pact",
+      "type": "power",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Gain 2 Energy each turn. Gain 5 Corruption per combat.",
+      "effects": [
+        {"type": "passive", "trigger": "turn_start", "apply": {"type": "energy", "value": 2}},
+        {"type": "passive", "trigger": "combat_end", "apply": {"type": "corruption", "value": 5}}
+      ]
+    },
+    {
+      "id": "ancient_knowledge",
+      "name": "Ancient Knowledge",
+      "type": "power",
+      "cost": 1,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Draw 1 additional card each turn.",
+      "effects": [{"type": "passive", "trigger": "turn_start", "apply": {"type": "draw", "value": 1}}]
+    },
+    {
+      "id": "apotheosis",
+      "name": "Apotheosis",
+      "type": "skill",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Upgrade ALL cards for the rest of combat. Exhaust.",
+      "effects": [{"type": "upgrade_all"}],
+      "exhaust": true
+    },
+    {
+      "id": "hand_of_greed",
+      "name": "Hand of Greed",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "enemy",
+      "description": "Deal 20 damage. If fatal, gain 20 Credits.",
+      "effects": [
+        {"type": "damage", "value": 20},
+        {"type": "conditional", "trigger": "enemy_dies", "apply": {"type": "credits", "value": 20}}
+      ]
+    },
+    {
+      "id": "master_of_strategy",
+      "name": "Master of Strategy",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Draw 3 cards. Exhaust.",
+      "effects": [{"type": "draw", "value": 3}],
+      "exhaust": true
+    },
+    {
+      "id": "violence",
+      "name": "Violence",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Put 3 random Attack cards from draw pile into hand. Exhaust.",
+      "effects": [{"type": "draw_type", "cardType": "attack", "value": 3, "from": "draw_pile"}],
+      "exhaust": true
+    },
+    {
+      "id": "panache",
+      "name": "Panache",
+      "type": "power",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Every 5 cards played, deal 10 damage to ALL enemies.",
+      "effects": [{"type": "passive", "trigger": "cards_played_5", "apply": {"type": "damage", "value": 10, "target": "all"}}]
+    },
+    {
+      "id": "sadistic_nature",
+      "name": "Sadistic Nature",
+      "type": "power",
+      "cost": 0,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Whenever you apply a debuff, deal 5 damage.",
+      "effects": [{"type": "passive", "trigger": "on_apply_debuff", "apply": {"type": "damage", "value": 5, "target": "enemy"}}]
+    },
+    {
+      "id": "void_embrace",
+      "name": "Void Embrace",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "target": "self",
+      "description": "Gain +1 damage for every 10 Corruption.",
+      "effects": [{"type": "passive", "apply": {"type": "damage_bonus", "scaling": {"source": "corruption", "divisor": 10}}}]
+    },
+    {
+      "id": "corruption_manifest",
+      "name": "Corruption Manifest",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "rare",
+      "target": "enemy",
+      "description": "Deal 8 damage. Apply Poison equal to your Corruption / 10.",
+      "effects": [
+        {"type": "damage", "value": 8},
+        {"type": "status", "status": "poison", "value": "corruption_div_10", "target": "enemy"}
+      ]
+    },
+    {
+      "id": "echo_form",
+      "name": "Echo Form",
+      "type": "power",
+      "cost": 3,
+      "rarity": "legendary",
+      "target": "self",
+      "description": "Ethereal. The first card you play each turn is played twice.",
+      "effects": [{"type": "passive", "trigger": "first_card", "apply": {"type": "repeat_card"}}],
+      "ethereal": true
+    },
+    {
+      "id": "void_conduit",
+      "name": "Void Conduit",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "legendary",
+      "target": "all_enemies",
+      "description": "Deal 30 damage to ALL. Gain 10 Corruption.",
+      "effects": [
+        {"type": "damage", "value": 30, "target": "all"},
+        {"type": "corruption", "value": 10}
+      ]
+    }
+  ],
+  "curses": [
+    {
+      "id": "doubt",
+      "name": "Doubt",
+      "type": "curse",
+      "cost": -1,
+      "rarity": "curse",
+      "description": "At end of turn, gain 1 Weak.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": {"type": "status", "status": "weak", "value": 1, "target": "self"}}],
+      "unplayable": true
+    },
+    {
+      "id": "decay",
+      "name": "Decay",
+      "type": "curse",
+      "cost": -1,
+      "rarity": "curse",
+      "description": "At end of turn, take 2 damage.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": {"type": "self_damage", "value": 2}}],
+      "unplayable": true
+    },
+    {
+      "id": "regret",
+      "name": "Regret",
+      "type": "curse",
+      "cost": -1,
+      "rarity": "curse",
+      "description": "At end of turn, lose HP equal to cards in hand.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": {"type": "self_damage", "value": "hand_size"}}],
+      "unplayable": true
+    },
+    {
+      "id": "pain",
+      "name": "Pain",
+      "type": "curse",
+      "cost": -1,
+      "rarity": "curse",
+      "description": "Whenever you play a card, lose 1 HP.",
+      "effects": [{"type": "passive", "trigger": "card_played", "apply": {"type": "self_damage", "value": 1}}],
+      "unplayable": true
+    },
+    {
+      "id": "void_whisper",
+      "name": "Void Whisper",
+      "type": "curse",
+      "cost": -1,
+      "rarity": "curse",
+      "description": "Unplayable. At end of turn, gain 1 Corruption.",
+      "effects": [{"type": "passive", "trigger": "turn_end", "apply": {"type": "corruption", "value": 1}}],
+      "unplayable": true
+    }
+  ]
+}
