@@ -1,0 +1,958 @@
+/* =============================================
+   MOBILE-RESPONSIVE SCREEN FIXES
+   Shattered Star - v0.2.6
+   Fixes for Combat, Shop, and Event screens
+   ============================================= */
+
+/* =============================================
+   COMBAT SCREEN - MOBILE RESPONSIVE
+   ============================================= */
+
+#combat-screen {
+    overflow: hidden;
+}
+
+.combat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-sm);
+    overflow: hidden;
+    min-height: 0; /* Allow flex shrinking */
+}
+
+/* Enemy Area - Scrollable horizontally on mobile */
+.enemy-area {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-sm);
+    min-height: 140px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+.enemy-area::-webkit-scrollbar {
+    height: 4px;
+}
+
+.enemy-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 100, 100, 0.5);
+    border-radius: 2px;
+}
+
+/* Enemy units - responsive sizing */
+.enemy {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    min-width: 100px;
+    max-width: 140px;
+}
+
+.enemy-sprite {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+/* Player Area - Compact on mobile */
+.player-area {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-sm);
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid var(--border-color);
+}
+
+.player-character {
+    margin-bottom: var(--space-sm);
+}
+
+.player-sprite {
+    width: 70px;
+    height: 70px;
+}
+
+.player-stats-combat {
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+}
+
+/* Hand Area - Scrollable horizontally */
+.hand-area,
+.hand-container {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    min-height: 160px;
+    max-height: 200px;
+}
+
+.hand-area::-webkit-scrollbar,
+.hand-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.hand-area::-webkit-scrollbar-thumb,
+.hand-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 245, 255, 0.5);
+    border-radius: 2px;
+}
+
+/* Combat Cards - Responsive sizing */
+.combat-card,
+.card {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    width: 100px;
+    height: 140px;
+    font-size: 0.75rem;
+}
+
+.combat-card .card-cost,
+.card .card-cost {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+    top: -6px;
+    left: -6px;
+}
+
+.combat-card .card-name,
+.card .card-name {
+    font-size: 0.75rem;
+}
+
+.combat-card .card-description,
+.card .card-desc {
+    font-size: 0.65rem;
+    line-height: 1.3;
+}
+
+/* Combat UI Bar - Responsive */
+.combat-ui {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-sm);
+    gap: var(--space-sm);
+    flex-wrap: nowrap;
+}
+
+.energy-display {
+    font-size: 1.25rem;
+    white-space: nowrap;
+}
+
+.end-turn-btn {
+    padding: var(--space-xs) var(--space-md);
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.deck-piles {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.pile {
+    font-size: 0.7rem;
+    padding: var(--space-xs);
+    min-width: 45px;
+    text-align: center;
+}
+
+.pile-count {
+    font-size: 1rem;
+    display: block;
+}
+
+.pile-label {
+    font-size: 0.55rem;
+    display: block;
+}
+
+/* =============================================
+   SHOP SCREEN - MOBILE RESPONSIVE
+   ============================================= */
+
+#shop-screen {
+    overflow: hidden;
+}
+
+.shop-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-md);
+    overflow: hidden;
+    min-height: 0;
+}
+
+.shop-header {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.shop-header h2,
+.shop-title {
+    font-size: 1.5rem;
+}
+
+.shop-credits {
+    font-size: 1.25rem;
+}
+
+/* Shop Sections - Scrollable container */
+.shop-sections {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--space-md);
+    min-height: 0;
+}
+
+.shop-sections::-webkit-scrollbar {
+    width: 6px;
+}
+
+.shop-sections::-webkit-scrollbar-thumb {
+    background: rgba(0, 245, 255, 0.3);
+    border-radius: 3px;
+}
+
+.shop-section {
+    flex: 0 0 auto;
+}
+
+.shop-section h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-sm);
+    color: var(--color-credits);
+    border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+    padding-bottom: var(--space-xs);
+}
+
+/* Shop Items Grid - Responsive */
+.shop-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-sm);
+}
+
+.shop-item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-sm);
+    font-size: 0.85rem;
+    min-height: 80px;
+}
+
+.shop-item .item-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xs);
+}
+
+.shop-item .item-info {
+    flex: 1;
+}
+
+.shop-item .item-name {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.shop-item .item-desc {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    line-height: 1.3;
+}
+
+.shop-item .item-price {
+    font-size: 0.9rem;
+    margin-top: var(--space-xs);
+    color: var(--color-credits);
+}
+
+.shop-item.unaffordable {
+    opacity: 0.5;
+}
+
+/* Leave Button - Fixed at bottom */
+.leave-btn,
+#btn-leave-shop {
+    flex: 0 0 auto;
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    background: transparent;
+    border: 2px solid var(--color-neon-cyan);
+    color: var(--color-neon-cyan);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 100%;
+    text-align: center;
+}
+
+.leave-btn:hover,
+#btn-leave-shop:hover {
+    background: rgba(0, 245, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+/* =============================================
+   EVENT SCREEN - MOBILE RESPONSIVE
+   ============================================= */
+
+#event-screen {
+    overflow: hidden;
+}
+
+.event-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--space-md);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    text-align: center;
+}
+
+.event-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.event-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 245, 255, 0.3);
+    border-radius: 3px;
+}
+
+.event-image {
+    width: 120px;
+    height: 120px;
+    min-height: 120px;
+    flex-shrink: 0;
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-md);
+}
+
+.event-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.event-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.event-text {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+    max-width: 100%;
+}
+
+.event-choices {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    max-width: 400px;
+}
+
+.event-choice {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+}
+
+/* =============================================
+   REST SCREEN - MOBILE RESPONSIVE
+   ============================================= */
+
+#rest-screen {
+    overflow: hidden;
+}
+
+.rest-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.rest-visual {
+    margin-bottom: var(--space-md);
+}
+
+.campfire {
+    width: 100px;
+    height: 100px;
+}
+
+.fire-icon {
+    font-size: 3.5rem;
+}
+
+.rest-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.rest-flavor {
+    font-size: 0.85rem;
+    margin-bottom: var(--space-md);
+}
+
+.rest-options {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rest-option {
+    width: 140px;
+    padding: var(--space-md);
+}
+
+.rest-option .option-icon {
+    font-size: 2rem;
+}
+
+.rest-option .option-text {
+    font-size: 1rem;
+}
+
+.rest-option .option-desc {
+    font-size: 0.75rem;
+}
+
+/* =============================================
+   REWARD SCREEN - MOBILE RESPONSIVE
+   ============================================= */
+
+#reward-screen {
+    overflow: hidden;
+}
+
+.reward-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.reward-container h2 {
+    font-size: 1.75rem;
+    margin-bottom: var(--space-md);
+}
+
+.rewards,
+.reward-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: var(--space-md);
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    width: 100%;
+}
+
+.reward-item .reward-icon {
+    font-size: 1.5rem;
+}
+
+.reward-item .reward-text {
+    font-size: 1rem;
+}
+
+.proceed-btn,
+#btn-proceed {
+    padding: var(--space-sm) var(--space-xl);
+    font-size: 1.25rem;
+}
+
+/* =============================================
+   MOBILE BREAKPOINT OVERRIDES
+   ============================================= */
+
+@media (max-width: 768px) {
+    /* ===== COMBAT ===== */
+    .combat-container {
+        padding: var(--space-xs);
+    }
+    
+    .enemy-area {
+        min-height: 120px;
+        padding: var(--space-xs);
+        justify-content: flex-start;
+    }
+    
+    .enemy {
+        min-width: 80px;
+        max-width: 100px;
+    }
+    
+    .enemy-sprite {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .enemy-name {
+        font-size: 0.7rem;
+    }
+    
+    .enemy-intent {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+    }
+    
+    .enemy-hp-bar {
+        height: 6px;
+    }
+    
+    .player-area {
+        padding: var(--space-xs);
+    }
+    
+    .player-sprite {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .hand-area,
+    .hand-container {
+        min-height: 130px;
+        max-height: 160px;
+        padding: var(--space-xs);
+    }
+    
+    .combat-card,
+    .card {
+        width: 85px;
+        height: 120px;
+    }
+    
+    .combat-card .card-cost,
+    .card .card-cost {
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
+        top: -4px;
+        left: -4px;
+    }
+    
+    .combat-card .card-name,
+    .card .card-name {
+        font-size: 0.65rem;
+    }
+    
+    .combat-card .card-description,
+    .card .card-desc {
+        font-size: 0.55rem;
+    }
+    
+    .combat-ui {
+        padding: var(--space-xs);
+        gap: var(--space-xs);
+    }
+    
+    .energy-display {
+        font-size: 1rem;
+    }
+    
+    .end-turn-btn {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.85rem;
+    }
+    
+    .pile {
+        min-width: 40px;
+        padding: 2px;
+    }
+    
+    .pile-count {
+        font-size: 0.85rem;
+    }
+    
+    .pile-label {
+        font-size: 0.5rem;
+    }
+    
+    /* ===== SHOP ===== */
+    .shop-container {
+        padding: var(--space-sm);
+    }
+    
+    .shop-header h2,
+    .shop-title {
+        font-size: 1.25rem;
+    }
+    
+    .shop-credits {
+        font-size: 1rem;
+    }
+    
+    .shop-items {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--space-xs);
+    }
+    
+    .shop-item {
+        padding: var(--space-xs);
+        font-size: 0.75rem;
+        min-height: 70px;
+    }
+    
+    .shop-item .item-icon {
+        font-size: 1.25rem;
+    }
+    
+    .shop-item .item-name {
+        font-size: 0.75rem;
+    }
+    
+    .shop-item .item-desc {
+        font-size: 0.65rem;
+    }
+    
+    .shop-item .item-price {
+        font-size: 0.8rem;
+    }
+    
+    .leave-btn,
+    #btn-leave-shop {
+        font-size: 1rem;
+        padding: var(--space-sm);
+    }
+    
+    /* ===== EVENT ===== */
+    .event-container {
+        padding: var(--space-sm);
+    }
+    
+    .event-image {
+        width: 100px;
+        height: 100px;
+        min-height: 100px;
+    }
+    
+    .event-title {
+        font-size: 1.25rem;
+    }
+    
+    .event-text {
+        font-size: 0.85rem;
+    }
+    
+    .event-choice {
+        padding: var(--space-sm);
+        font-size: 0.85rem;
+    }
+    
+    /* ===== REST ===== */
+    .campfire {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .fire-icon {
+        font-size: 3rem;
+    }
+    
+    .rest-container h2 {
+        font-size: 1.25rem;
+    }
+    
+    .rest-options {
+        gap: var(--space-sm);
+    }
+    
+    .rest-option {
+        width: 120px;
+        padding: var(--space-sm);
+    }
+    
+    .rest-option .option-icon {
+        font-size: 1.5rem;
+    }
+    
+    .rest-option .option-text {
+        font-size: 0.9rem;
+    }
+    
+    .rest-option .option-desc {
+        font-size: 0.7rem;
+    }
+    
+    /* ===== REWARD ===== */
+    .reward-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .reward-item {
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .reward-item .reward-icon {
+        font-size: 1.25rem;
+    }
+    
+    .reward-item .reward-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* =============================================
+   SMALL MOBILE (iPhone SE, etc.)
+   ============================================= */
+
+@media (max-width: 375px) {
+    /* Combat */
+    .enemy-area {
+        min-height: 100px;
+    }
+    
+    .enemy-sprite {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .hand-area,
+    .hand-container {
+        min-height: 110px;
+        max-height: 130px;
+    }
+    
+    .combat-card,
+    .card {
+        width: 70px;
+        height: 100px;
+    }
+    
+    .combat-ui {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* Shop */
+    .shop-items {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Rest */
+    .rest-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .rest-option {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* =============================================
+   LANDSCAPE MODE FIXES
+   ============================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    /* Combat - Horizontal layout */
+    .combat-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .enemy-area {
+        flex: 1 1 50%;
+        min-height: auto;
+        max-height: 45vh;
+    }
+    
+    .player-area {
+        flex: 1 1 50%;
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .hand-area,
+    .hand-container {
+        flex: 1 1 100%;
+        min-height: 80px;
+        max-height: 100px;
+    }
+    
+    .combat-card,
+    .card {
+        width: 60px;
+        height: 85px;
+    }
+    
+    /* Shop */
+    .shop-sections {
+        max-height: 50vh;
+    }
+    
+    /* Event */
+    .event-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .event-image {
+        width: 80px;
+        height: 80px;
+        min-height: 80px;
+        margin-right: var(--space-md);
+    }
+    
+    .event-content {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    /* Rest */
+    .rest-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .campfire {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* =============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================= */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Larger tap targets */
+    .combat-card,
+    .card {
+        min-width: 80px;
+    }
+    
+    .enemy {
+        min-width: 90px;
+    }
+    
+    .shop-item {
+        min-height: 75px;
+    }
+    
+    .event-choice {
+        min-height: 50px;
+    }
+    
+    .rest-option {
+        min-height: 80px;
+    }
+    
+    /* Active states for touch feedback */
+    .combat-card:active,
+    .card:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    
+    .shop-item:active {
+        transform: scale(0.98);
+        background: rgba(0, 245, 255, 0.15);
+    }
+    
+    .event-choice:active {
+        transform: scale(0.98);
+        background: rgba(0, 245, 255, 0.2);
+    }
+    
+    /* Smooth scrolling momentum */
+    .enemy-area,
+    .hand-area,
+    .hand-container,
+    .shop-sections,
+    .event-container,
+    .rest-container,
+    .reward-container {
+        scroll-behavior: smooth;
+    }
+}
+
+/* =============================================
+   iOS SAFE AREA SUPPORT
+   ============================================= */
+
+@supports (padding: max(0px)) {
+    .combat-container {
+        padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+    }
+    
+    .shop-container {
+        padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+    }
+    
+    .event-container {
+        padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+    }
+    
+    .rest-container {
+        padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+    }
+    
+    .reward-container {
+        padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+    }
+}
