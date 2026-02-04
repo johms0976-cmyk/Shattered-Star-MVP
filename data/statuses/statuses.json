@@ -1,0 +1,316 @@
+{
+  "statuses": {
+    "universal": [
+      {
+        "id": "vulnerable",
+        "name": "Vulnerable",
+        "description": "Take 50% more damage from attacks.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "🎯",
+        "color": "#ff6600"
+      },
+      {
+        "id": "weak",
+        "name": "Weak",
+        "description": "Deal 25% less damage with attacks.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "💫",
+        "color": "#888888"
+      },
+      {
+        "id": "frail",
+        "name": "Frail",
+        "description": "Gain 25% less Block from cards.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "💔",
+        "color": "#9966cc"
+      },
+      {
+        "id": "poison",
+        "name": "Poison",
+        "description": "Take damage equal to stacks at end of turn. Stacks decrease by 1.",
+        "type": "debuff",
+        "stackType": "intensity",
+        "icon": "☠️",
+        "color": "#00cc00"
+      },
+      {
+        "id": "bleed",
+        "name": "Bleed",
+        "description": "Take damage equal to stacks at end of turn. Stacks decrease by 1.",
+        "type": "debuff",
+        "stackType": "intensity",
+        "icon": "🩸",
+        "color": "#cc0000"
+      },
+      {
+        "id": "burn",
+        "name": "Burn",
+        "description": "Take damage equal to stacks at end of turn. Stacks halve each turn.",
+        "type": "debuff",
+        "stackType": "intensity",
+        "icon": "🔥",
+        "color": "#ff4400"
+      },
+      {
+        "id": "slow",
+        "name": "Slow",
+        "description": "Skip every other action.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "🐌",
+        "color": "#6666aa"
+      },
+      {
+        "id": "stun",
+        "name": "Stun",
+        "description": "Cannot act this turn.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "⭐",
+        "color": "#ffff00"
+      },
+      {
+        "id": "strength",
+        "name": "Strength",
+        "description": "Deal additional damage with attacks.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "💪",
+        "color": "#ff4444"
+      },
+      {
+        "id": "dexterity",
+        "name": "Dexterity",
+        "description": "Gain additional Block from cards.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "🛡️",
+        "color": "#44ff44"
+      },
+      {
+        "id": "regen",
+        "name": "Regeneration",
+        "description": "Heal HP equal to stacks at end of turn. Stacks decrease by 1.",
+        "type": "buff",
+        "stackType": "intensity",
+        "icon": "💚",
+        "color": "#00ff88"
+      },
+      {
+        "id": "thorns",
+        "name": "Thorns",
+        "description": "Deal damage back to attackers.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "🌹",
+        "color": "#ff66cc"
+      },
+      {
+        "id": "intangible",
+        "name": "Intangible",
+        "description": "Reduce ALL damage to 1.",
+        "type": "buff",
+        "stackType": "duration",
+        "icon": "👻",
+        "color": "#aaaaff"
+      },
+      {
+        "id": "artifact",
+        "name": "Artifact",
+        "description": "Negate the next debuff applied.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "🔮",
+        "color": "#ffaa00"
+      }
+    ],
+    "korvax": [
+      {
+        "id": "overheat",
+        "name": "Overheat",
+        "description": "Building reactor heat. At 5+: +2 damage. At 10+: Take 3 damage/turn. At 15: Meltdown!",
+        "type": "resource",
+        "stackType": "intensity",
+        "maxStacks": 15,
+        "persistent": true,
+        "thresholds": {
+          "5": "Minor damage bonus (+2)",
+          "10": "Take 3 damage per turn",
+          "15": "Meltdown - massive damage, reset"
+        },
+        "icon": "🌡️",
+        "color": "#ff4400"
+      },
+      {
+        "id": "rage",
+        "name": "Rage",
+        "description": "Gain +1 damage per stack. Build by taking damage.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "😤",
+        "color": "#ff0000"
+      },
+      {
+        "id": "armor",
+        "name": "Armor",
+        "description": "Reduce incoming damage by this amount (permanent).",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "🔩",
+        "color": "#888888"
+      },
+      {
+        "id": "counter",
+        "name": "Counter",
+        "description": "Deal damage back when attacked. Resets each turn.",
+        "type": "buff",
+        "stackType": "intensity",
+        "icon": "⚔️",
+        "color": "#ffcc00"
+      },
+      {
+        "id": "titanStance",
+        "name": "Titan Stance",
+        "description": "Take 50% less damage. Cannot play Attack cards.",
+        "type": "buff",
+        "stackType": "duration",
+        "icon": "🗿",
+        "color": "#666666"
+      }
+    ],
+    "lyria": [
+      {
+        "id": "astralCharge",
+        "name": "Astral Charge",
+        "description": "Empowers Astral abilities. Consumed when used.",
+        "type": "resource",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "✨",
+        "color": "#8844ff"
+      },
+      {
+        "id": "temporalFlux",
+        "name": "Temporal Flux",
+        "description": "Alter the flow of time. Various effects based on source.",
+        "type": "buff",
+        "stackType": "intensity",
+        "icon": "⏰",
+        "color": "#4488ff"
+      },
+      {
+        "id": "voidInstability",
+        "name": "Void Instability",
+        "description": "Reality warps around you. Unpredictable effects.",
+        "type": "debuff",
+        "stackType": "intensity",
+        "icon": "🌀",
+        "color": "#880088"
+      }
+    ],
+    "auren": [
+      {
+        "id": "radiance",
+        "name": "Radiance",
+        "description": "Holy light that damages enemies at turn end.",
+        "type": "buff",
+        "stackType": "intensity",
+        "icon": "☀️",
+        "color": "#ffdd00"
+      },
+      {
+        "id": "aegis",
+        "name": "Aegis",
+        "description": "Persistent shield that doesn't reset at turn start.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "🛡️",
+        "color": "#ffffff"
+      },
+      {
+        "id": "divineMark",
+        "name": "Divine Mark",
+        "description": "Marked enemies take extra damage from Radiant attacks.",
+        "type": "debuff",
+        "stackType": "duration",
+        "icon": "✝️",
+        "color": "#ffff88"
+      }
+    ],
+    "shade": [
+      {
+        "id": "stealth",
+        "name": "Stealth",
+        "description": "Cannot be targeted. Breaks when you attack.",
+        "type": "buff",
+        "stackType": "duration",
+        "icon": "👤",
+        "color": "#333333"
+      },
+      {
+        "id": "echo",
+        "name": "Echo",
+        "description": "A copy of an ability that fades after use.",
+        "type": "buff",
+        "stackType": "intensity",
+        "icon": "👥",
+        "color": "#666699"
+      }
+    ],
+    "corruption": [
+      {
+        "id": "voidTouch",
+        "name": "Void Touch",
+        "description": "Attacks apply Corruption to enemies.",
+        "type": "buff",
+        "stackType": "intensity",
+        "persistent": true,
+        "icon": "👁️",
+        "color": "#8800ff"
+      },
+      {
+        "id": "voidMark",
+        "name": "Void Mark",
+        "description": "Take extra damage from all sources.",
+        "type": "debuff",
+        "stackType": "intensity",
+        "icon": "🔮",
+        "color": "#8800ff"
+      },
+      {
+        "id": "corruption",
+        "name": "Corruption",
+        "description": "The void's influence. At high levels, triggers dangerous effects.",
+        "type": "resource",
+        "stackType": "intensity",
+        "maxStacks": 100,
+        "persistent": true,
+        "thresholds": {
+          "25": "Minor distortion, occasional whispers",
+          "50": "Corrupted cards may appear",
+          "75": "Reality fractures, entities notice",
+          "100": "Transformation or death"
+        },
+        "icon": "👁️",
+        "color": "#8800ff"
+      }
+    ]
+  },
+  "statusInteractions": {
+    "strengthAndWeak": "Strength adds flat damage before Weak's percentage reduction",
+    "vulnerableAndArmor": "Armor reduces damage before Vulnerable's increase",
+    "intangiblePriority": "Intangible always reduces damage to 1, overriding other effects",
+    "artifactBlocking": "Artifact prevents debuff application entirely"
+  }
+}
