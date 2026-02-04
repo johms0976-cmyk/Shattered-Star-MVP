@@ -1,0 +1,399 @@
+{
+  "bosses": [
+    {
+      "id": "scrap_king",
+      "name": "The Scrap-King",
+      "title": "Warlord of the Wastes",
+      "hp": 80,
+      "maxHp": 80,
+      "type": "boss",
+      "act": 1,
+      "image": "assets/images/enemies/scrap_king.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Warlord",
+          "hpThreshold": 100,
+          "dialogue": "You dare challenge the King of Rust?",
+          "intents": [
+            {"type": "attack", "damage": 10},
+            {"type": "summon", "enemy": "rustborn_raider"},
+            {"type": "attack", "damage": 15}
+          ]
+        },
+        {
+          "name": "Phase 2 - Armored",
+          "hpThreshold": 60,
+          "dialogue": "Time to show you real power!",
+          "onEnter": {"type": "buff", "effect": "armor", "value": 5},
+          "intents": [
+            {"type": "defend", "block": 12},
+            {"type": "attack", "damage": 18},
+            {"type": "buff", "effect": "strength", "value": 2}
+          ]
+        },
+        {
+          "name": "Phase 3 - Berserk",
+          "hpThreshold": 30,
+          "dialogue": "I'll tear you apart!",
+          "onEnter": {"type": "buff", "effect": "strength", "value": 3},
+          "intents": [
+            {"type": "attack", "damage": 22},
+            {"type": "attack", "damage": 16},
+            {"type": "attack", "damage": 25}
+          ]
+        }
+      ],
+      "description": "A Rustborn warlord who unified three tribes through fear and brute strength.",
+      "dialogue": {
+        "intro": "You dare challenge the King of Rust?",
+        "phase2": "Time to show you real power!",
+        "phase3": "I'll tear you apart!",
+        "defeat": "The wastes... will remember..."
+      },
+      "rewards": {
+        "credits": [50, 75],
+        "cardRarity": "rare",
+        "artifactChance": 1.0
+      }
+    },
+    {
+      "id": "rust_titan",
+      "name": "The Rust Titan",
+      "title": "Herald of Iron",
+      "hp": 120,
+      "maxHp": 120,
+      "type": "boss",
+      "act": 2,
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Guardian",
+          "hpThreshold": 100,
+          "dialogue": "I AM THE SEAL'S GUARDIAN...",
+          "intents": [
+            {"type": "attack", "damage": 15},
+            {"type": "defend", "block": 20},
+            {"type": "summon", "enemy": "scrap_golem"}
+          ]
+        },
+        {
+          "name": "Phase 2 - Absorbing",
+          "hpThreshold": 50,
+          "dialogue": "MATTER... RETURNS... TO ME...",
+          "onEnter": {"type": "heal", "value": 15},
+          "intents": [
+            {"type": "heal", "value": 10},
+            {"type": "attack", "damage": 20},
+            {"type": "buff", "effect": "armor", "value": 5}
+          ]
+        },
+        {
+          "name": "Phase 3 - Meltdown",
+          "hpThreshold": 25,
+          "dialogue": "MELTDOWN... PROTOCOL...",
+          "onEnter": {"type": "buff", "effect": "strength", "value": 5},
+          "intents": [
+            {"type": "attack", "damage": 30},
+            {"type": "attack", "damage": 25, "target": "all"},
+            {"type": "attack", "damage": 20}
+          ]
+        }
+      ],
+      "description": "A mountain of rust and rage, absorbing scrap to grow larger.",
+      "dialogue": {
+        "intro": "I AM THE SEAL'S GUARDIAN...",
+        "phase2": "MATTER... RETURNS... TO ME...",
+        "phase3": "MELTDOWN... PROTOCOL...",
+        "defeat": "THE SEAL... WEAKENS..."
+      },
+      "rewards": {
+        "credits": [75, 100],
+        "cardRarity": "rare",
+        "artifactChance": 1.0
+      }
+    },
+    {
+      "id": "illusion_weaver",
+      "name": "The Illusion Weaver",
+      "title": "Shattered Mind",
+      "hp": 70,
+      "maxHp": 70,
+      "type": "boss",
+      "act": 1,
+      "region": "eclipse",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Illusions",
+          "hpThreshold": 100,
+          "dialogue": "Which one is real? Can you tell?",
+          "onEnter": {"type": "summon", "enemy": "illusion_clone", "count": 2},
+          "intents": [
+            {"type": "attack", "damage": 8},
+            {"type": "debuff", "effect": "weak", "value": 1},
+            {"type": "summon", "enemy": "illusion_clone"}
+          ]
+        },
+        {
+          "name": "Phase 2 - Distortion",
+          "hpThreshold": 50,
+          "dialogue": "Reality bends to my will!",
+          "intents": [
+            {"type": "attack_debuff", "damage": 12, "effect": "frail", "value": 2},
+            {"type": "debuff", "effect": "vulnerable", "value": 2},
+            {"type": "buff", "effect": "intangible", "value": 1}
+          ]
+        },
+        {
+          "name": "Phase 3 - Convergence",
+          "hpThreshold": 25,
+          "dialogue": "We are ONE!",
+          "onEnter": {"type": "absorb_illusions"},
+          "intents": [
+            {"type": "attack", "damage": 20},
+            {"type": "attack", "damage": 15, "hits": 2},
+            {"type": "attack", "damage": 25}
+          ]
+        }
+      ],
+      "description": "A Choir acolyte who lost themselves in visions.",
+      "dialogue": {
+        "intro": "Which one is real? Can you tell?",
+        "phase2": "Reality bends to my will!",
+        "phase3": "We are ONE!",
+        "defeat": "The visions... they were all... me..."
+      },
+      "rewards": {
+        "credits": [50, 75],
+        "cardRarity": "rare",
+        "artifactChance": 1.0
+      }
+    },
+    {
+      "id": "fallen_paladin",
+      "name": "Ser Valdris",
+      "title": "The Fallen Paladin",
+      "hp": 90,
+      "maxHp": 90,
+      "type": "boss",
+      "act": 1,
+      "region": "highlands",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Discipline",
+          "hpThreshold": 100,
+          "dialogue": "By the First Light, you shall be judged!",
+          "intents": [
+            {"type": "defend", "block": 15},
+            {"type": "attack", "damage": 12},
+            {"type": "buff", "effect": "strength", "value": 2}
+          ]
+        },
+        {
+          "name": "Phase 2 - Radiance",
+          "hpThreshold": 60,
+          "dialogue": "Feel the Light's judgment!",
+          "onEnter": {"type": "buff", "effect": "thorns", "value": 5},
+          "intents": [
+            {"type": "attack_debuff", "damage": 15, "effect": "burn", "value": 3},
+            {"type": "defend", "block": 20},
+            {"type": "attack", "damage": 18}
+          ]
+        },
+        {
+          "name": "Phase 3 - Corruption Revealed",
+          "hpThreshold": 30,
+          "dialogue": "The void... it shows me truth...",
+          "onEnter": {"type": "debuff", "effect": "corruption", "value": 5, "target": "player"},
+          "intents": [
+            {"type": "attack", "damage": 20},
+            {"type": "attack_debuff", "damage": 14, "effect": "corruption", "value": 3},
+            {"type": "attack", "damage": 25}
+          ]
+        }
+      ],
+      "description": "Auren's former mentor, now corrupted by void energies.",
+      "heroSpecific": {
+        "auren": {
+          "extraDialogue": "Auren... I tried to save you from this fate...",
+          "redemptionChoice": true
+        }
+      },
+      "dialogue": {
+        "intro": "By the First Light, you shall be judged!",
+        "phase2": "Feel the Light's judgment!",
+        "phase3": "The void... it shows me truth...",
+        "defeat": "Perhaps... in death... I am redeemed..."
+      },
+      "rewards": {
+        "credits": [60, 85],
+        "cardRarity": "rare",
+        "artifactChance": 1.0
+      }
+    },
+    {
+      "id": "xalkorath",
+      "name": "Xal'Korath",
+      "title": "The World-Eater",
+      "hp": 200,
+      "maxHp": 200,
+      "type": "boss",
+      "act": 3,
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Tendrils",
+          "hpThreshold": 100,
+          "dialogue": "YOU CARRY MY FRAGMENTS WITHIN YOU...",
+          "intents": [
+            {"type": "attack", "damage": 12, "hits": 3},
+            {"type": "debuff", "effect": "corruption", "value": 5},
+            {"type": "attack", "damage": 20}
+          ]
+        },
+        {
+          "name": "Phase 2 - The Gaze",
+          "hpThreshold": 70,
+          "dialogue": "I HAVE SEEN EVERY ENDING...",
+          "onEnter": {"type": "special", "action": "reveal_intents"},
+          "intents": [
+            {"type": "attack", "damage": 35},
+            {"type": "debuff", "effect": "vulnerable", "value": 2},
+            {"type": "debuff", "effect": "corruption", "value": 10}
+          ]
+        },
+        {
+          "name": "Phase 3 - The Mouth",
+          "hpThreshold": 40,
+          "dialogue": "REALITY IS A WOUND I WILL CLOSE...",
+          "onEnter": {"type": "special", "action": "devour_block"},
+          "intents": [
+            {"type": "attack", "damage": 25},
+            {"type": "attack", "damage": 25},
+            {"type": "debuff", "effect": "weak", "value": 2}
+          ]
+        },
+        {
+          "name": "Phase 4 - The Core",
+          "hpThreshold": 20,
+          "dialogue": "BECOME ONE WITH THE VOID...",
+          "onEnter": {"type": "buff", "effect": "strength", "value": 10},
+          "intents": [
+            {"type": "attack", "damage": 40},
+            {"type": "debuff", "effect": "corruption", "value": 15},
+            {"type": "attack", "damage": 50}
+          ]
+        }
+      ],
+      "description": "The cosmic entity that has haunted Vharos for millennia. The recursive error in the Pattern.",
+      "dialogue": {
+        "intro": "YOU CARRY MY FRAGMENTS WITHIN YOU...",
+        "phase2": "I HAVE SEEN EVERY ENDING...",
+        "phase3": "REALITY IS A WOUND I WILL CLOSE...",
+        "phase4": "BECOME ONE WITH THE VOID...",
+        "defeat": "THIS... IS NOT... THE END..."
+      },
+      "specialMechanics": {
+        "corruptionScaling": true,
+        "phaseShiftDamage": 10,
+        "voidBurst": {"threshold": 75, "damage": 20}
+      },
+      "rewards": {
+        "credits": [100, 150],
+        "cardRarity": "legendary",
+        "artifactChance": 1.0,
+        "ending": true
+      }
+    },
+    {
+      "id": "maskweaver",
+      "name": "The Maskweaver",
+      "title": "Face of a Thousand",
+      "hp": 60,
+      "maxHp": 60,
+      "type": "boss",
+      "act": 1,
+      "region": "thicket",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Phase 1 - Shadows",
+          "hpThreshold": 100,
+          "dialogue": "Behind every face... another face.",
+          "intents": [
+            {"type": "attack", "damage": 7, "hits": 2},
+            {"type": "buff", "effect": "stealth", "value": 1},
+            {"type": "debuff", "effect": "weak", "value": 2}
+          ]
+        },
+        {
+          "name": "Phase 2 - Theft",
+          "hpThreshold": 45,
+          "dialogue": "Your techniques belong to ME now!",
+          "intents": [
+            {"type": "special", "action": "copy_card"},
+            {"type": "attack", "damage": 15},
+            {"type": "debuff", "effect": "frail", "value": 2}
+          ]
+        },
+        {
+          "name": "Phase 3 - True Face",
+          "hpThreshold": 25,
+          "dialogue": "LOOK UPON MY TRUE SELF!",
+          "onEnter": {"type": "special", "action": "reveal_horror"},
+          "intents": [
+            {"type": "attack", "damage": 22},
+            {"type": "attack_debuff", "damage": 18, "effect": "vulnerable", "value": 99},
+            {"type": "attack", "damage": 25}
+          ]
+        }
+      ],
+      "description": "A Syndicate lieutenant who has worn too many faces.",
+      "heroSpecific": {
+        "shade": {
+          "extraDialogue": "We are the same, you and I... copies of copies...",
+          "identityChoice": true
+        }
+      },
+      "dialogue": {
+        "intro": "Behind every face... another face.",
+        "phase2": "Your techniques belong to ME now!",
+        "phase3": "LOOK UPON MY TRUE SELF!",
+        "defeat": "The masks... they were all I had..."
+      },
+      "rewards": {
+        "credits": [55, 80],
+        "cardRarity": "rare",
+        "artifactChance": 1.0
+      }
+    }
+  ],
+  "minions": [
+    {
+      "id": "rustborn_raider",
+      "reference": "act1_enemies.json"
+    },
+    {
+      "id": "scrap_golem",
+      "reference": "act1_enemies.json"
+    },
+    {
+      "id": "illusion_clone",
+      "name": "Illusion Clone",
+      "hp": 1,
+      "maxHp": 1,
+      "type": "minion",
+      "intents": [
+        {"type": "attack", "damage": 5}
+      ],
+      "description": "A false copy that shatters when struck."
+    }
+  ]
+}

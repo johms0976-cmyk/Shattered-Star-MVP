@@ -1,0 +1,304 @@
+{
+  "act": 1,
+  "enemies": [
+    {
+      "id": "rustborn_raider",
+      "name": "Rustborn Raider",
+      "hp": 20,
+      "maxHp": 20,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "sequential",
+      "intents": [
+        {"type": "attack", "damage": 6},
+        {"type": "attack", "damage": 8},
+        {"type": "buff", "effect": "strength", "value": 2}
+      ],
+      "description": "A scavenger warrior from the Rustborn Tribes.",
+      "drops": {"credits": [5, 15], "cardChance": 0.3}
+    },
+    {
+      "id": "scrap_golem",
+      "name": "Scrap Golem",
+      "hp": 35,
+      "maxHp": 35,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "sequential",
+      "intents": [
+        {"type": "defend", "block": 8},
+        {"type": "attack", "damage": 12},
+        {"type": "attack", "damage": 10}
+      ],
+      "description": "A construct assembled from ancient machinery.",
+      "drops": {"credits": [10, 20], "cardChance": 0.35}
+    },
+    {
+      "id": "sand_crawler",
+      "name": "Sand Crawler",
+      "hp": 15,
+      "maxHp": 15,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "weighted",
+      "intents": [
+        {"type": "attack", "damage": 4, "weight": 2},
+        {"type": "attack", "damage": 4, "weight": 2},
+        {"type": "debuff", "effect": "weak", "value": 1, "weight": 1}
+      ],
+      "description": "A mutated creature lurking beneath the rust sands.",
+      "drops": {"credits": [3, 10], "cardChance": 0.2}
+    },
+    {
+      "id": "rust_prophet",
+      "name": "Rust Prophet",
+      "hp": 28,
+      "maxHp": 28,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "conditional",
+      "intents": [
+        {"type": "buff", "effect": "strength", "value": 2, "target": "allies"},
+        {"type": "attack", "damage": 9},
+        {"type": "debuff", "effect": "vulnerable", "value": 2}
+      ],
+      "conditionalIntents": [
+        {
+          "type": "first_turn",
+          "intent": {"type": "buff", "effect": "strength", "value": 2, "target": "allies"}
+        },
+        {
+          "type": "player_no_block",
+          "intent": {"type": "attack", "damage": 12}
+        }
+      ],
+      "description": "A tribal mystic who preaches the gospel of rust and decay.",
+      "drops": {"credits": [12, 22], "cardChance": 0.4}
+    },
+    {
+      "id": "feral_titan_shard",
+      "name": "Feral Titan Shard",
+      "hp": 45,
+      "maxHp": 45,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "conditional",
+      "intents": [
+        {"type": "attack", "damage": 15},
+        {"type": "defend", "block": 12},
+        {"type": "attack", "damage": 20}
+      ],
+      "conditionalIntents": [
+        {
+          "type": "hp_below",
+          "value": 50,
+          "intent": {"type": "attack", "damage": 25}
+        }
+      ],
+      "description": "A fragment of an ancient war machine, still dangerous.",
+      "drops": {"credits": [15, 25], "cardChance": 0.45}
+    },
+    {
+      "id": "rust_hound",
+      "name": "Rust Hound",
+      "hp": 12,
+      "maxHp": 12,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "sequential",
+      "intents": [
+        {"type": "attack", "damage": 3, "hits": 2},
+        {"type": "attack", "damage": 5}
+      ],
+      "description": "A feral beast adapted to the wastelands.",
+      "drops": {"credits": [2, 8], "cardChance": 0.15}
+    },
+    {
+      "id": "scrap_collector",
+      "name": "Scrap Collector",
+      "hp": 22,
+      "maxHp": 22,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "adaptive",
+      "intents": [
+        {"type": "attack", "damage": 7},
+        {"type": "defend", "block": 6},
+        {"type": "attack", "damage": 10}
+      ],
+      "adaptiveRules": [
+        {
+          "trigger": "player_aggressive",
+          "intent": {"type": "defend", "block": 10}
+        },
+        {
+          "trigger": "player_defensive",
+          "intent": {"type": "attack", "damage": 12}
+        }
+      ],
+      "description": "A cunning Rustborn who salvages battlefield scraps.",
+      "drops": {"credits": [8, 18], "cardChance": 0.3}
+    },
+    {
+      "id": "void_touched",
+      "name": "Void-Touched",
+      "hp": 30,
+      "maxHp": 30,
+      "type": "normal",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "sequential",
+      "intents": [
+        {"type": "attack", "damage": 8},
+        {"type": "debuff", "effect": "corruption", "value": 3},
+        {"type": "attack", "damage": 12}
+      ],
+      "description": "A former human corrupted by void energies.",
+      "drops": {"credits": [10, 20], "cardChance": 0.4}
+    },
+    {
+      "id": "scrap_kings_champion",
+      "name": "Scrap-King's Champion",
+      "hp": 65,
+      "maxHp": 65,
+      "type": "elite",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "conditional",
+      "intents": [
+        {"type": "attack", "damage": 12},
+        {"type": "buff", "effect": "strength", "value": 3},
+        {"type": "attack", "damage": 18},
+        {"type": "defend", "block": 15}
+      ],
+      "conditionalIntents": [
+        {
+          "type": "hp_below",
+          "value": 40,
+          "intent": {"type": "attack", "damage": 22}
+        },
+        {
+          "type": "player_hp_below",
+          "value": 30,
+          "intent": {"type": "attack", "damage": 25}
+        }
+      ],
+      "description": "The Scrap-King's most loyal enforcer.",
+      "drops": {"credits": [25, 40], "cardChance": 0.8, "artifactChance": 0.25}
+    },
+    {
+      "id": "corrupted_scavenger",
+      "name": "Corrupted Scavenger",
+      "hp": 55,
+      "maxHp": 55,
+      "type": "elite",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "adaptive",
+      "intents": [
+        {"type": "attack_debuff", "damage": 10, "effect": "corruption", "value": 2},
+        {"type": "attack", "damage": 14},
+        {"type": "debuff", "effect": "vulnerable", "value": 2}
+      ],
+      "adaptiveRules": [
+        {
+          "trigger": "player_high_damage",
+          "intent": {"type": "defend", "block": 15}
+        },
+        {
+          "trigger": "player_defensive",
+          "intent": {"type": "attack_debuff", "damage": 15, "effect": "corruption", "value": 5}
+        }
+      ],
+      "description": "A Rustborn touched by the void's influence.",
+      "drops": {"credits": [20, 35], "cardChance": 0.8, "artifactChance": 0.2}
+    },
+    {
+      "id": "rust_titan",
+      "name": "Rust Titan",
+      "hp": 70,
+      "maxHp": 70,
+      "type": "elite",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "phased",
+      "phases": [
+        {
+          "name": "Defensive",
+          "hpThreshold": 100,
+          "intents": [
+            {"type": "defend", "block": 15},
+            {"type": "attack", "damage": 14},
+            {"type": "buff", "effect": "armor", "value": 2}
+          ]
+        },
+        {
+          "name": "Aggressive",
+          "hpThreshold": 50,
+          "intents": [
+            {"type": "attack", "damage": 20},
+            {"type": "attack", "damage": 16},
+            {"type": "attack_debuff", "damage": 12, "effect": "vulnerable", "value": 2}
+          ]
+        }
+      ],
+      "description": "A massive construct of rusted metal and ancient tech.",
+      "drops": {"credits": [30, 50], "cardChance": 1.0, "artifactChance": 0.35}
+    },
+    {
+      "id": "void_stalker",
+      "name": "Void Stalker",
+      "hp": 50,
+      "maxHp": 50,
+      "type": "elite",
+      "image": "assets/images/enemies/enemy_placeholder.svg",
+      "aiBehavior": "conditional",
+      "intents": [
+        {"type": "attack", "damage": 6, "hits": 3},
+        {"type": "debuff", "effect": "weak", "value": 2},
+        {"type": "attack", "damage": 18}
+      ],
+      "conditionalIntents": [
+        {
+          "type": "corruption_above",
+          "value": 25,
+          "intent": {"type": "attack_debuff", "damage": 20, "effect": "corruption", "value": 5}
+        },
+        {
+          "type": "player_has_status",
+          "status": "weak",
+          "intent": {"type": "attack", "damage": 22}
+        }
+      ],
+      "description": "An entity that hunts those touched by the void.",
+      "drops": {"credits": [25, 45], "cardChance": 0.9, "artifactChance": 0.3}
+    }
+  ],
+  "encounters": {
+    "normal": [
+      {"enemies": ["rustborn_raider"], "weight": 2},
+      {"enemies": ["sand_crawler", "sand_crawler"], "weight": 2},
+      {"enemies": ["scrap_golem"], "weight": 2},
+      {"enemies": ["rustborn_raider", "sand_crawler"], "weight": 2},
+      {"enemies": ["rust_prophet", "rustborn_raider"], "weight": 1},
+      {"enemies": ["feral_titan_shard"], "weight": 1},
+      {"enemies": ["rust_hound", "rust_hound", "rust_hound"], "weight": 1},
+      {"enemies": ["scrap_collector", "rust_hound"], "weight": 1},
+      {"enemies": ["void_touched"], "weight": 1},
+      {"enemies": ["rustborn_raider", "rustborn_raider"], "weight": 1}
+    ],
+    "elite": [
+      {"enemies": ["scrap_kings_champion"], "weight": 2},
+      {"enemies": ["corrupted_scavenger"], "weight": 2},
+      {"enemies": ["rust_titan"], "weight": 1},
+      {"enemies": ["void_stalker"], "weight": 1}
+    ],
+    "hard": [
+      {"enemies": ["rust_prophet", "rustborn_raider", "rustborn_raider"]},
+      {"enemies": ["scrap_golem", "sand_crawler", "sand_crawler"]},
+      {"enemies": ["feral_titan_shard", "rust_hound"]}
+    ]
+  },
+  "scaling": {
+    "floor_hp_bonus": 0.05,
+    "floor_damage_bonus": 0.03,
+    "elite_hp_multiplier": 1.0,
+    "elite_damage_multiplier": 1.0
+  }
+}
