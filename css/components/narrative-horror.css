@@ -1,0 +1,915 @@
+/**
+ * Narrative Horror CSS - Atmospheric Visual Effects
+ * 
+ * Styles for void whispers, dread visualization, corruption effects,
+ * enhanced events, and the overall cosmic horror atmosphere.
+ * 
+ * "Style is how you make the void beautiful."
+ */
+
+/* ============================================= */
+/* VOID WHISPER OVERLAY                          */
+/* ============================================= */
+
+.void-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9000;
+    overflow: hidden;
+    transition: opacity 0.5s ease;
+}
+
+.void-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Whisper Zones - positioned at corners */
+.whisper-zone {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.whisper-zone.top-left {
+    top: 80px;
+    left: 10px;
+    text-align: left;
+}
+
+.whisper-zone.top-right {
+    top: 80px;
+    right: 10px;
+    text-align: right;
+}
+
+.whisper-zone.bottom-left {
+    bottom: 120px;
+    left: 10px;
+    text-align: left;
+}
+
+.whisper-zone.bottom-right {
+    bottom: 120px;
+    right: 10px;
+    text-align: right;
+}
+
+/* Individual Whispers */
+.void-whisper {
+    font-family: 'VT323', monospace;
+    font-size: 0.85rem;
+    color: var(--color-corruption, #bf00ff);
+    opacity: 0;
+    transform: translateY(10px) translateX(var(--offset-x, 0)) rotate(-1deg);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-shadow: 0 0 5px rgba(191, 0, 255, 0.5);
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    margin: 5px 0;
+}
+
+.void-whisper.appearing {
+    opacity: 0.7;
+    transform: translateY(0) translateX(var(--offset-x, 0)) rotate(0deg);
+}
+
+.void-whisper.fading {
+    opacity: 0;
+    transform: translateY(-10px) translateX(var(--offset-x, 0));
+}
+
+/* Whisper Intensity Levels */
+.void-whisper.intensity-subtle {
+    opacity: 0;
+}
+.void-whisper.intensity-subtle.appearing {
+    opacity: 0.4;
+}
+
+.void-whisper.intensity-noticeable.appearing {
+    opacity: 0.6;
+    animation: whisperPulse 3s ease-in-out infinite;
+}
+
+.void-whisper.intensity-strong {
+    font-size: 0.95rem;
+    text-shadow: 0 0 10px rgba(191, 0, 255, 0.7);
+}
+.void-whisper.intensity-strong.appearing {
+    opacity: 0.8;
+    animation: whisperGlitch 2s ease-in-out infinite;
+}
+
+.void-whisper.intensity-overwhelming {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-shadow: 
+        0 0 10px rgba(191, 0, 255, 0.9),
+        0 0 20px rgba(191, 0, 255, 0.5);
+}
+.void-whisper.intensity-overwhelming.appearing {
+    opacity: 1;
+    animation: whisperGlitchIntense 1s ease-in-out infinite;
+}
+
+@keyframes whisperPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes whisperGlitch {
+    0%, 95%, 100% { transform: translateY(0) translateX(var(--offset-x, 0)); }
+    96% { transform: translateY(0) translateX(calc(var(--offset-x, 0) + 2px)); }
+    97% { transform: translateY(-1px) translateX(calc(var(--offset-x, 0) - 2px)); }
+    98% { transform: translateY(1px) translateX(var(--offset-x, 0)); }
+}
+
+@keyframes whisperGlitchIntense {
+    0%, 90% { transform: translateY(0) translateX(var(--offset-x, 0)); filter: blur(0); }
+    91% { transform: translateY(-2px) translateX(calc(var(--offset-x, 0) + 3px)); filter: blur(1px); }
+    92% { transform: translateY(1px) translateX(calc(var(--offset-x, 0) - 3px)); }
+    93% { transform: translateY(-1px) translateX(var(--offset-x, 0)); filter: blur(0); }
+    94%, 100% { transform: translateY(0) translateX(var(--offset-x, 0)); }
+}
+
+
+/* ============================================= */
+/* CORRUPTION VIGNETTE                           */
+/* ============================================= */
+
+.corruption-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    --corruption-intensity: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 50%,
+        rgba(100, 0, 150, calc(var(--corruption-intensity) * 0.15)) 75%,
+        rgba(50, 0, 100, calc(var(--corruption-intensity) * 0.3)) 100%
+    );
+    transition: background 2s ease;
+}
+
+/* High corruption adds pulse */
+.void-overlay.corruption-high .corruption-vignette,
+.void-overlay.corruption-critical .corruption-vignette {
+    animation: corruptionPulse 4s ease-in-out infinite;
+}
+
+@keyframes corruptionPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+
+/* ============================================= */
+/* VOID EYE (HIGH CORRUPTION)                    */
+/* ============================================= */
+
+.void-eye {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 1s ease, transform 1s ease;
+    pointer-events: none;
+}
+
+.void-eye.visible {
+    opacity: 0.5;
+    transform: scale(1);
+}
+
+.void-eye.watching {
+    opacity: 0.8;
+    animation: eyeWatch 5s ease-in-out infinite;
+}
+
+.eye-lid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--color-corruption, #bf00ff);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(-10deg);
+}
+
+.eye-iris {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(
+        circle,
+        #bf00ff 30%,
+        #6600aa 70%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.eye-pupil {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: #0a0a1a;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pupilLook 8s ease-in-out infinite;
+}
+
+@keyframes eyeWatch {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    10%, 90% { opacity: 0.8; }
+    15%, 85% { opacity: 0; }
+}
+
+@keyframes pupilLook {
+    0%, 100% { transform: translate(-50%, -50%); }
+    25% { transform: translate(-30%, -60%); }
+    50% { transform: translate(-70%, -40%); }
+    75% { transform: translate(-40%, -55%); }
+}
+
+
+/* ============================================= */
+/* ATMOSPHERE NOTIFICATION                       */
+/* ============================================= */
+
+.atmosphere-notification {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    padding: 20px 40px;
+    background: linear-gradient(
+        180deg,
+        rgba(10, 10, 26, 0.9) 0%,
+        rgba(10, 10, 26, 0.7) 100%
+    );
+    border: 1px solid rgba(100, 150, 255, 0.2);
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+    text-align: center;
+}
+
+.atmosphere-notification.active {
+    opacity: 1;
+    visibility: visible;
+    animation: atmosphereFadeIn 0.5s ease;
+}
+
+.atmosphere-notification .atmosphere-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #b8c5d9;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+/* Dread-based atmosphere styling */
+.atmosphere-notification.dread-calm {
+    border-color: rgba(100, 150, 200, 0.3);
+}
+
+.atmosphere-notification.dread-uneasy {
+    border-color: rgba(150, 120, 100, 0.4);
+}
+.atmosphere-notification.dread-uneasy .atmosphere-text {
+    color: #d9c5a8;
+}
+
+.atmosphere-notification.dread-dread {
+    border-color: rgba(180, 80, 80, 0.5);
+    box-shadow: 0 0 20px rgba(150, 50, 50, 0.2);
+}
+.atmosphere-notification.dread-dread .atmosphere-text {
+    color: #e8b8b8;
+}
+
+.atmosphere-notification.dread-terror {
+    border-color: rgba(191, 0, 255, 0.5);
+    box-shadow: 0 0 30px rgba(191, 0, 255, 0.3);
+    animation: atmosphereTerror 2s ease-in-out infinite;
+}
+.atmosphere-notification.dread-terror .atmosphere-text {
+    color: #e8b8e8;
+    text-shadow: 0 0 10px rgba(191, 0, 255, 0.3);
+}
+
+@keyframes atmosphereFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    to { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes atmosphereTerror {
+    0%, 100% { transform: translate(-50%, -50%); }
+    2% { transform: translate(-50.5%, -50%); }
+    4% { transform: translate(-49.5%, -50.5%); }
+    6%, 100% { transform: translate(-50%, -50%); }
+}
+
+
+/* ============================================= */
+/* DREAD INDICATOR                               */
+/* ============================================= */
+
+.dread-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: rgba(50, 50, 70, 0.5);
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
+}
+
+.void-overlay.dread-uneasy .dread-indicator,
+.void-overlay.dread-dread .dread-indicator,
+.void-overlay.dread-terror .dread-indicator {
+    opacity: 0.8;
+}
+
+.dread-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        #4a4a6a 0%, 
+        #8a5a5a 50%, 
+        #bf00ff 100%
+    );
+    transition: width 0.5s ease;
+    border-radius: 2px;
+}
+
+
+/* ============================================= */
+/* DREAD LEVEL EFFECTS                           */
+/* ============================================= */
+
+.void-overlay.dread-pulse {
+    animation: dreadPulseEffect 1s ease;
+}
+
+@keyframes dreadPulseEffect {
+    0%, 100% { 
+        background: transparent; 
+    }
+    50% { 
+        background: rgba(100, 50, 50, 0.1); 
+    }
+}
+
+/* Uneasy - subtle color shift */
+.void-overlay.dread-uneasy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 80, 60, 0.02);
+    pointer-events: none;
+}
+
+/* Dread - noticeable effects */
+.void-overlay.dread-dread::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(120, 50, 50, 0.04);
+    pointer-events: none;
+    animation: dreadAmbient 4s ease-in-out infinite;
+}
+
+@keyframes dreadAmbient {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Terror - intense effects */
+.void-overlay.dread-terror::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(150, 30, 80, 0.06);
+    pointer-events: none;
+    animation: terrorPulse 2s ease-in-out infinite;
+}
+
+.void-overlay.dread-terror::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, rgba(191, 0, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(191, 0, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: terrorScan 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes terrorPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes terrorScan {
+    from { transform: translateY(0); }
+    to { transform: translateY(50px); }
+}
+
+
+/* ============================================= */
+/* ACT INTRO OVERLAY                             */
+/* ============================================= */
+
+.act-intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(5, 5, 15, 0.95) 0%,
+        rgba(10, 10, 26, 0.95) 50%,
+        rgba(5, 5, 15, 0.95) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.act-intro-overlay.active {
+    opacity: 1;
+}
+
+.act-intro-content {
+    text-align: center;
+    max-width: 700px;
+    padding: 40px;
+}
+
+.act-intro-content .act-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--color-corruption, #bf00ff);
+    letter-spacing: 10px;
+    margin-bottom: 30px;
+    text-shadow: 
+        0 0 20px rgba(191, 0, 255, 0.5),
+        0 0 40px rgba(191, 0, 255, 0.3);
+    animation: actTitleGlow 2s ease-in-out infinite;
+}
+
+.act-intro-content .act-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #b8c5d9;
+    line-height: 1.8;
+    opacity: 0;
+    animation: actTextFade 1s ease forwards 0.5s;
+}
+
+@keyframes actTitleGlow {
+    0%, 100% { text-shadow: 0 0 20px rgba(191, 0, 255, 0.5), 0 0 40px rgba(191, 0, 255, 0.3); }
+    50% { text-shadow: 0 0 30px rgba(191, 0, 255, 0.7), 0 0 60px rgba(191, 0, 255, 0.4); }
+}
+
+@keyframes actTextFade {
+    to { opacity: 1; }
+}
+
+
+/* ============================================= */
+/* DEATH NARRATIVE OVERLAY                       */
+/* ============================================= */
+
+.death-narrative-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(50, 0, 50, 0.9) 0%,
+        rgba(10, 10, 26, 0.95) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.death-narrative-overlay.active {
+    opacity: 1;
+}
+
+.death-narrative-content {
+    text-align: center;
+    max-width: 600px;
+    padding: 40px;
+}
+
+.death-narrative-content .death-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: #bf00ff;
+    line-height: 1.8;
+    text-shadow: 0 0 20px rgba(191, 0, 255, 0.5);
+    font-style: italic;
+}
+
+
+/* ============================================= */
+/* EVENT SCREEN ENHANCEMENTS                     */
+/* ============================================= */
+
+#event-screen .event-container {
+    transition: all 0.5s ease;
+}
+
+/* Dread-based event styling */
+#event-screen .event-container.dread-calm {
+    /* Default styling */
+}
+
+#event-screen .event-container.dread-uneasy {
+    --event-border-color: rgba(180, 150, 100, 0.3);
+}
+
+#event-screen .event-container.dread-dread {
+    --event-border-color: rgba(180, 80, 80, 0.4);
+}
+
+#event-screen .event-container.dread-terror {
+    --event-border-color: rgba(191, 0, 255, 0.4);
+    animation: eventContainerTerror 3s ease-in-out infinite;
+}
+
+@keyframes eventContainerTerror {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.002); }
+}
+
+/* Event atmosphere text */
+#event-screen .atmosphere-text {
+    font-family: 'Cinzel', serif;
+    font-style: italic;
+    color: #8a9ab8;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+/* Event description typewriter effect container */
+#event-screen .event-description {
+    line-height: 1.7;
+}
+
+/* Event outcome styling */
+#event-screen .event-outcome {
+    font-style: italic;
+    color: #c5d5e5;
+    border-left: 2px solid var(--color-corruption, #bf00ff);
+    padding-left: 15px;
+    margin: 20px 0;
+    opacity: 0;
+    animation: outcomeReveal 0.8s ease forwards;
+}
+
+@keyframes outcomeReveal {
+    from { 
+        opacity: 0; 
+        transform: translateX(-10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced choice buttons */
+#event-screen .event-choice {
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 50, 0.8) 0%,
+        rgba(20, 20, 40, 0.9) 100%
+    );
+    border: 1px solid rgba(100, 150, 200, 0.3);
+    color: #b8c5d9;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+}
+
+#event-screen .event-choice:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(40, 40, 70, 0.9) 0%,
+        rgba(30, 30, 60, 0.95) 100%
+    );
+    border-color: rgba(150, 180, 255, 0.5);
+    transform: translateX(5px);
+}
+
+#event-screen .event-choice:active {
+    transform: translateX(5px) scale(0.98);
+}
+
+#event-screen .event-choice.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#event-screen .event-choice.disabled:hover {
+    transform: none;
+    border-color: rgba(100, 150, 200, 0.3);
+}
+
+#event-screen .event-choice.chosen {
+    border-color: rgba(100, 200, 150, 0.6);
+    background: linear-gradient(
+        180deg,
+        rgba(30, 50, 40, 0.9) 0%,
+        rgba(20, 40, 30, 0.95) 100%
+    );
+}
+
+#event-screen .event-choice.not-chosen {
+    opacity: 0.3;
+    transform: translateX(-10px);
+}
+
+/* Choice text */
+#event-screen .event-choice .choice-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Choice hint (consequences) */
+#event-screen .event-choice .choice-hint {
+    font-size: 0.75rem;
+    color: rgba(180, 180, 200, 0.7);
+    margin-top: 4px;
+    font-family: 'Source Code Pro', monospace;
+}
+
+/* Continue button */
+#event-screen .event-choice.continue-btn {
+    background: linear-gradient(
+        180deg,
+        rgba(50, 40, 70, 0.9) 0%,
+        rgba(40, 30, 60, 0.95) 100%
+    );
+    border-color: rgba(191, 150, 255, 0.4);
+    align-items: center;
+    margin-top: 20px;
+}
+
+#event-screen .event-choice.continue-btn:hover {
+    border-color: rgba(191, 150, 255, 0.7);
+}
+
+/* Combat warning */
+#event-screen .combat-warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(150, 50, 50, 0.2);
+    border: 1px solid rgba(200, 80, 80, 0.5);
+    border-radius: 4px;
+    margin-top: 20px;
+    animation: combatWarn 1s ease-in-out infinite;
+}
+
+.combat-warning .warning-icon {
+    font-size: 1.5rem;
+}
+
+.combat-warning .warning-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: #e88;
+    letter-spacing: 2px;
+}
+
+@keyframes combatWarn {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+
+/* ============================================= */
+/* EDGE AMBIENT EFFECTS                          */
+/* ============================================= */
+
+.edge-zone {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.edge-zone.left, .edge-zone.right {
+    top: 0;
+    width: 50px;
+    height: 100%;
+}
+
+.edge-zone.left {
+    left: 0;
+    background: linear-gradient(90deg, rgba(100, 50, 150, 0.1) 0%, transparent 100%);
+}
+
+.edge-zone.right {
+    right: 0;
+    background: linear-gradient(-90deg, rgba(100, 50, 150, 0.1) 0%, transparent 100%);
+}
+
+.edge-zone.top, .edge-zone.bottom {
+    left: 0;
+    width: 100%;
+    height: 30px;
+}
+
+.edge-zone.top {
+    top: 0;
+    background: linear-gradient(180deg, rgba(100, 50, 150, 0.1) 0%, transparent 100%);
+}
+
+.edge-zone.bottom {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(100, 50, 150, 0.1) 0%, transparent 100%);
+}
+
+/* Show edges at high dread/corruption */
+.void-overlay.dread-dread .edge-zone,
+.void-overlay.dread-terror .edge-zone,
+.void-overlay.corruption-high .edge-zone,
+.void-overlay.corruption-critical .edge-zone {
+    opacity: 1;
+}
+
+
+/* ============================================= */
+/* INTENSIFIED/CRITICAL ATMOSPHERE               */
+/* ============================================= */
+
+.void-overlay.intensified .edge-zone {
+    opacity: 0.8;
+    animation: edgePulse 3s ease-in-out infinite;
+}
+
+.void-overlay.critical .edge-zone {
+    opacity: 1;
+    animation: edgePulseIntense 1.5s ease-in-out infinite;
+}
+
+@keyframes edgePulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes edgePulseIntense {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+
+/* ============================================= */
+/* COMBAT MODE ADJUSTMENTS                       */
+/* ============================================= */
+
+.void-overlay.combat-active .whisper-zone {
+    opacity: 0.5;
+}
+
+.void-overlay.combat-active .atmosphere-notification {
+    top: 60%;
+}
+
+.void-overlay.combat-active .dread-indicator {
+    bottom: 150px;
+}
+
+
+/* ============================================= */
+/* MOBILE RESPONSIVE ADJUSTMENTS                 */
+/* ============================================= */
+
+@media (max-width: 768px) {
+    .whisper-zone {
+        width: 140px;
+        font-size: 0.75rem;
+    }
+    
+    .whisper-zone.top-left,
+    .whisper-zone.top-right {
+        top: 60px;
+    }
+    
+    .whisper-zone.bottom-left,
+    .whisper-zone.bottom-right {
+        bottom: 80px;
+    }
+    
+    .void-eye {
+        width: 30px;
+        height: 30px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .atmosphere-notification {
+        max-width: 90%;
+        padding: 15px 20px;
+    }
+    
+    .atmosphere-notification .atmosphere-text {
+        font-size: 0.9rem;
+    }
+    
+    .act-intro-content .act-number {
+        font-size: 2.5rem;
+    }
+    
+    .act-intro-content .act-text {
+        font-size: 0.95rem;
+    }
+}
+
+
+/* ============================================= */
+/* REDUCED MOTION PREFERENCE                     */
+/* ============================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .void-whisper,
+    .atmosphere-notification,
+    .corruption-vignette,
+    .void-eye,
+    .edge-zone {
+        animation: none;
+        transition: opacity 0.3s ease;
+    }
+}
