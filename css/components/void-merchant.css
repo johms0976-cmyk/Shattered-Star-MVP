@@ -1,0 +1,275 @@
+/**
+ * void-merchant.css - Void Merchant shop tab styling
+ * Shattered Star
+ */
+
+/* ============================================
+   SHOP TABS
+   ============================================ */
+
+.shop-tabs {
+    display: flex;
+    gap: 0;
+    margin: 12px 0;
+    border-bottom: 1px solid #303050;
+}
+
+.shop-tab {
+    flex: 1;
+    padding: 10px 16px;
+    background: rgba(20, 20, 35, 0.6);
+    border: 1px solid #303050;
+    border-bottom: none;
+    color: #606080;
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.shop-tab:first-child {
+    border-radius: 4px 0 0 0;
+}
+
+.shop-tab:last-child {
+    border-radius: 0 4px 0 0;
+}
+
+.shop-tab:hover {
+    color: #a0a0b0;
+    background: rgba(30, 30, 50, 0.8);
+}
+
+.shop-tab.active {
+    color: #00f5ff;
+    border-color: #00f5ff;
+    background: rgba(0, 100, 120, 0.15);
+}
+
+.shop-tab.void-tab {
+    color: #8040a0;
+}
+
+.shop-tab.void-tab:hover {
+    color: #bf60e0;
+}
+
+.shop-tab.void-tab.active {
+    color: #bf00ff;
+    border-color: #bf00ff;
+    background: rgba(80, 0, 120, 0.15);
+    text-shadow: 0 0 8px rgba(191, 0, 255, 0.3);
+}
+
+/* ============================================
+   VOID MERCHANT TAB CONTENT
+   ============================================ */
+
+.void-merchant-tab {
+    padding: 16px 0;
+}
+
+.void-merchant-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.void-merchant-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 8px rgba(191, 0, 255, 0.5));
+    animation: voidEyePulse 3s ease-in-out infinite;
+}
+
+@keyframes voidEyePulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+.void-merchant-title {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: #bf00ff;
+    text-shadow: 0 0 10px rgba(191, 0, 255, 0.3);
+}
+
+.void-merchant-greeting {
+    font-style: italic;
+    color: #8040a0;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border-left: 2px solid rgba(191, 0, 255, 0.3);
+    background: rgba(80, 0, 120, 0.08);
+}
+
+.void-discount-notice {
+    font-size: 0.7rem;
+    color: #bf00ff;
+    text-align: center;
+    padding: 4px 8px;
+    margin-bottom: 12px;
+    border: 1px dashed rgba(191, 0, 255, 0.3);
+    border-radius: 3px;
+}
+
+.void-section-label {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #6030a0;
+    text-transform: uppercase;
+    margin: 16px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(191, 0, 255, 0.15);
+}
+
+/* ============================================
+   VOID ITEMS
+   ============================================ */
+
+.void-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.void-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(191, 0, 255, 0.03) 0%, 
+        transparent 50%, 
+        rgba(191, 0, 255, 0.03) 100%
+    );
+    pointer-events: none;
+}
+
+.void-item:hover::before {
+    background: linear-gradient(135deg, 
+        rgba(191, 0, 255, 0.08) 0%, 
+        transparent 50%, 
+        rgba(191, 0, 255, 0.08) 100%
+    );
+}
+
+.void-item .item-name.void-name {
+    color: #df80ff;
+}
+
+.void-item .item-price.void-price {
+    color: #bf00ff;
+}
+
+.void-item .item-price.bargain-price {
+    color: #ff4060;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 64, 96, 0.3);
+}
+
+.void-corruption-cost {
+    font-size: 0.65rem;
+    color: #ff4060;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+/* Bargain items have a different feel */
+.bargain-item {
+    border-color: #602020 !important;
+}
+
+.bargain-item:hover {
+    border-color: #ff4060 !important;
+    box-shadow: 0 0 15px rgba(255, 64, 96, 0.2) !important;
+}
+
+/* ============================================
+   SHOP ITEM BASE (enhanced)
+   ============================================ */
+
+.shop-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(25, 25, 40, 0.9);
+    border: 1px solid #353555;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 6px;
+}
+
+.shop-item:hover {
+    border-color: #00c8ff;
+    background: rgba(0, 100, 120, 0.1);
+}
+
+.shop-item.unaffordable {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.shop-item .item-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.shop-item .item-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.shop-item .item-name {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #e0e0e8;
+}
+
+.shop-item .item-desc {
+    font-size: 0.7rem;
+    color: #808090;
+    margin-top: 2px;
+}
+
+.shop-item .item-rarity {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+}
+
+.shop-item .item-rarity.rarity-common { color: #606080; }
+.shop-item .item-rarity.rarity-uncommon { color: #00c8ff; }
+.shop-item .item-rarity.rarity-rare { color: #ffd700; }
+
+.shop-item .item-price {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.85rem;
+    color: #ffd700;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .shop-tab {
+        font-size: 0.65rem;
+        padding: 8px 10px;
+    }
+    
+    .void-merchant-greeting {
+        font-size: 0.75rem;
+    }
+}
