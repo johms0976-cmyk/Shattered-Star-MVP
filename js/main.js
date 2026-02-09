@@ -20,6 +20,7 @@ import { MapGenerator } from './systems/MapGenerator.js';
 import { CorruptionSystem } from './systems/CorruptionSystem.js';
 import { RewardSystem } from './systems/RewardSystem.js';
 import { NarrativeSystem } from './systems/NarrativeSystem.js';
+import { initializeNewFeatures } from './systems/FeatureIntegration.js';
 
 // Import UI components
 import { VoidWhisperOverlay } from './ui/VoidWhisperOverlay.js';
@@ -545,6 +546,10 @@ class ShatteredStar {
         // Initialize narrative horror systems
         this.narrativeSystem = new NarrativeSystem(this.eventBus, this.state);
         this.voidOverlay = new VoidWhisperOverlay(this.eventBus, this.state);
+
+        // After existing initialization...
+        initializeNewFeatures(game);
+
         
         // Make systems accessible globally for debugging
         window.game = this;
