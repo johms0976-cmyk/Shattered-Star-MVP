@@ -1,0 +1,182 @@
+/* =============================================
+   EVENT SYSTEM ENHANCEMENTS
+   - Locked/gated choices
+   - Effect summaries
+   - Atmosphere text
+   - Insight notifications
+   ============================================= */
+
+/* ── Atmosphere text ── */
+.event-narrative {
+    margin-bottom: var(--space-md, 12px);
+    line-height: 1.8;
+}
+
+.event-atmosphere {
+    color: var(--color-neon-purple, #a855f7);
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: var(--space-lg, 16px);
+    padding-left: var(--space-md, 12px);
+    border-left: 2px solid var(--color-neon-purple, #a855f7);
+}
+
+/* ── Choice previews ── */
+.choice-preview {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-dim, #888);
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* ── Locked choices ── */
+.event-choice.choice-locked {
+    opacity: 0.45;
+    cursor: not-allowed;
+    border-color: var(--color-surface-light, #333) !important;
+    background: var(--color-surface, #1a1a2e) !important;
+    position: relative;
+}
+
+.event-choice.choice-locked:hover {
+    border-color: var(--color-surface-light, #333) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.event-choice.choice-locked .choice-text {
+    color: var(--color-text-dim, #666);
+}
+
+.choice-locked-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-danger, #ef4444);
+    margin-top: 6px;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* ── Flag-unlocked bonus indicator ── */
+.choice-bonus {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--color-neon-cyan, #22d3ee);
+    margin-top: 4px;
+}
+
+/* ── Effect summary after choice ── */
+.event-effect-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--space-md, 12px);
+    padding: var(--space-sm, 8px) var(--space-md, 12px);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm, 4px);
+    font-size: 0.82rem;
+    justify-content: center;
+}
+
+.effect-positive {
+    color: var(--color-heal, #4ade80);
+}
+
+.effect-negative {
+    color: var(--color-danger, #ef4444);
+}
+
+.effect-corruption {
+    color: var(--color-corruption, #c084fc);
+}
+
+.effect-cleanse {
+    color: var(--color-neon-cyan, #22d3ee);
+}
+
+.effect-faction-up {
+    color: var(--color-warning, #fbbf24);
+}
+
+.effect-faction-down {
+    color: var(--color-danger, #ef4444);
+}
+
+.effect-lore {
+    color: var(--color-neon-purple, #a855f7);
+}
+
+.effect-separator {
+    color: var(--color-text-dim, #555);
+    margin: 0 2px;
+}
+
+/* ── Result narrative styling ── */
+.event-result {
+    line-height: 1.8;
+    color: var(--color-text-primary, #eee);
+    font-size: 1rem;
+    margin-bottom: var(--space-sm, 8px);
+}
+
+/* ── Insight notification (toast) ── */
+.insight-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(34, 211, 238, 0.15);
+    border: 1px solid var(--color-neon-cyan, #22d3ee);
+    border-radius: var(--radius-md, 8px);
+    padding: 10px 16px;
+    color: var(--color-neon-cyan, #22d3ee);
+    font-size: 0.85rem;
+    z-index: 1000;
+    animation: insightSlideIn 0.3s ease-out, insightFadeOut 0.5s ease-in 2.5s forwards;
+    pointer-events: none;
+    max-width: 300px;
+}
+
+.insight-toast .insight-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.insight-toast .insight-desc {
+    font-size: 0.78rem;
+    opacity: 0.8;
+}
+
+@keyframes insightSlideIn {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes insightFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* ── Chain event indicator ── */
+.event-chain-indicator {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--color-warning, #fbbf24);
+    margin-left: 8px;
+    opacity: 0.8;
+}
+
+/* ── Continue button enhancement ── */
+.event-choice.continue-btn {
+    background: var(--color-surface-light, #2a2a4a);
+    border-color: var(--color-neon-cyan, #22d3ee);
+    text-align: center;
+}
+
+.event-choice.continue-btn:hover {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: var(--color-neon-cyan, #22d3ee);
+}
