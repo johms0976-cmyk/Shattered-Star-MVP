@@ -1,0 +1,1383 @@
+{
+  "act": 1,
+  "region": "Ironspine Wastes",
+  "eventWeights": {
+    "default": 1,
+    "corruption_required": 0.8,
+    "hero_specific": 1.5,
+    "lore_event": 1.2
+  },
+  "events": [
+    {
+      "id": "dying_soldier",
+      "name": "The Last Breath",
+      "category": "encounter",
+      "text": "A Rustborn warrior lies against a rusted hull, their breathing shallow and wet. Their eyes plead for something—mercy, help, or perhaps just witness. They clutch a satchel to their chest as if it contains their soul.",
+      "image": "assets/images/events/dying_soldier.svg",
+      "atmosphere": "The rust-wind carries the smell of copper and endings.",
+      "choices": [
+        {
+          "text": "Help them (Lose 5 HP)",
+          "effects": {
+            "hp": -5,
+            "reputation": {"rustborn": 2},
+            "setsFlags": ["helped_dying_soldier", "knows_heralds_are_prisons"],
+            "unlocks": ["rustborn_gratitude"]
+          },
+          "result": "You bandage their wounds with scraps from your own supplies. Their eyes focus with terrible clarity. 'The Heralds,' they whisper. 'They're not guards. They're prisons. Walking prisons.' They press a tribal token into your hand before the light fades from their eyes."
+        },
+        {
+          "text": "Take their supplies",
+          "effects": {
+            "credits": 35,
+            "reputation": {"rustborn": -2},
+            "setsFlags": ["looted_dying_soldier"],
+            "unlocks": ["rustborn_hostility"]
+          },
+          "result": "You pry the satchel from their weakening grip. Inside: salvage credits and a worn photograph of children you'll never meet. Their eyes follow your hands as you work, understanding and resignation mingling in their final gaze."
+        },
+        {
+          "text": "Ask about the Heralds",
+          "effects": {
+            "lore": "herald_warning",
+            "corruption": 2,
+            "insight": 1,
+            "setsFlags": ["knows_heralds_are_prisons", "heard_architect_truth"]
+          },
+          "result": "'They weren't always monsters,' the warrior gasps. 'The Architects made them from... from pieces of something bigger. Something that's still alive. Still dreaming.' Their voice drops to nothing. The wind whispers the rest of the story, but in a language you can't understand. Yet."
+        },
+        {
+          "text": "Grant them a clean death",
+          "effects": {
+            "reputation": {"rustborn": 1},
+            "credits": 15,
+            "setsFlags": ["mercy_killed_soldier"]
+          },
+          "result": "You understand what they're asking. One quick motion, and their pain ends. The Tribes respect the mercy of a clean death. You salvage what you can, leaving their token on their chest. The void watches, but does not comment."
+        }
+      ]
+    },
+
+    {
+      "id": "void_mirror",
+      "name": "The Mirror That Lies",
+      "category": "corruption",
+      "text": "A pool of absolute darkness fills a crater in your path. Your reflection stares back—but it moves independently, mirroring gestures you haven't made yet. It holds something in its hand: a card, or perhaps a wound. It's hard to tell the difference.",
+      "image": "assets/images/events/void_mirror.svg",
+      "atmosphere": "Reality feels thin here. Like skin stretched over something wrong.",
+      "minCorruption": 0,
+      "choices": [
+        {
+          "text": "Reach into the reflection",
+          "effects": {
+            "corruption": 8,
+            "card": "void_fragment",
+            "setsFlags": ["touched_void_mirror", "has_void_card"]
+          },
+          "result": "Your hand passes through the surface like cold fire. For an instant, you ARE the reflection—seeing yourself from the outside, watching a puppet made of meat and denial. When you pull back, something new lives in your deck. And something new watches from behind your eyes."
+        },
+        {
+          "text": "Speak to your reflection",
+          "effects": {
+            "corruption": 3,
+            "lore": "echo_self",
+            "insight": 2,
+            "setsFlags": ["spoke_to_reflection", "knows_recursion"]
+          },
+          "result": "'We've done this before,' your reflection says. 'Many times. Every run is an echo. Every death is a recursion. The Pattern doesn't end—it iterates.' It smiles with your face. 'See you next time.' The pool evaporates, leaving only questions."
+        },
+        {
+          "text": "Shatter the mirror",
+          "effects": {
+            "hp": -10,
+            "corruption": -2,
+            "setsFlags": ["shattered_void_mirror"]
+          },
+          "result": "You drive your fist into the pool. Reality SCREAMS—a sound that bypasses your ears and hits your soul directly. Glass that doesn't exist cuts you in places that shouldn't bleed. But when you look again, the pool is gone. You hope it stays gone."
+        },
+        {
+          "text": "Walk around it",
+          "effects": {
+            "setsFlags": ["avoided_void_mirror"]
+          },
+          "result": "You navigate wide around the pool, keeping your eyes forward. Behind you, you hear a sigh of disappointment that might be the wind. Might be. When you finally look back, the pool is gone. But you can't shake the feeling that it's following you now, just out of sight."
+        }
+      ]
+    },
+
+    {
+      "id": "architects_terminal",
+      "name": "Echoes of the Builders",
+      "category": "lore",
+      "text": "An ancient terminal flickers to life as you approach, displaying symbols in a language that predates humanity. The screen shows a diagram—a planet, four marks around it, and something vast beneath. A recording crackles, its voice ancient and afraid.",
+      "image": "assets/images/events/architect_terminal.svg",
+      "atmosphere": "The technology here is millions of years old. It still works. That should worry you.",
+      "choices": [
+        {
+          "text": "Listen to the full recording",
+          "effects": {
+            "corruption": 4,
+            "lore": "architect_warning",
+            "insight": 2,
+            "setsFlags": ["heard_architect_recording", "knows_seals_are_lobotomies", "heard_architect_truth"],
+            "unlocks": ["architect_cache_discovery"]
+          },
+          "result": "'...the Seals are not prisons,' the ancient voice says. 'They are... lobotomies. We cut away pieces of the Pattern's mind. But consciousness finds ways. The Heralds are not guards. They are the wounds we made, infected and aware. We thought we were saving a world. We were only... delaying.' Static. Whispers. Then silence that feels like it's listening."
+        },
+        {
+          "text": "Download tactical data",
+          "effects": {
+            "upgrade": "random",
+            "setsFlags": ["has_architect_tactics"],
+            "status": {"strength": 1}
+          },
+          "result": "You filter the feed for combat-relevant data. Maps of weak points. Patrol predictions. The Architects knew how to fight—they studied their enemy for eons. One of your techniques sharpens with their ancient knowledge. But you wonder: if they knew so much, why did they lose?"
+        },
+        {
+          "text": "Search for coordinates",
+          "effects": {
+            "credits": 25,
+            "lore": "hidden_cache",
+            "setsFlags": ["has_cache_coordinates"],
+            "unlocks": ["architect_cache_discovery"]
+          },
+          "result": "The terminal reveals locations—caches hidden by the Architects, still sealed after millions of years. You mark the nearest one. But the terminal also shows what guards these caches: things that were human once, 'improved' by void-touch. The Architects called them 'volunteer containment units.'"
+        },
+        {
+          "text": "Destroy the terminal",
+          "effects": {
+            "credits": 30,
+            "setsFlags": ["destroyed_architect_terminal"]
+          },
+          "result": "Some knowledge is better left buried. You reduce the terminal to sparking scrap, salvaging valuable components. As it dies, the screen flashes one final message: 'THEY ARE ALREADY INSIDE YOU.' You tell yourself it's just corrupted data."
+        }
+      ]
+    },
+
+    {
+      "id": "rustborn_shrine",
+      "name": "The Titan's Altar",
+      "category": "faction",
+      "text": "A Rustborn shrine stands amid the wreckage—offerings of scrap and oil arranged around a stylized Titan skull twice your height. The eye sockets have been filled with burning coals. The air here feels heavy with something older than faith.",
+      "image": "assets/images/events/tribal_shrine.svg",
+      "atmosphere": "The skull seems to watch you. The coals in its eyes flicker in patterns that might be random.",
+      "choices": [
+        {
+          "text": "Leave an offering (Spend 20 credits)",
+          "effects": {
+            "credits": -20,
+            "reputation": {"rustborn": 2},
+            "maxHp": 3,
+            "setsFlags": ["honored_titan_shrine"]
+          },
+          "requirements": {"minCredits": 20},
+          "result": "You add your tribute to the shrine. The coals in the skull's eyes flare brighter—just for a moment. Just long enough for you to see something watching from inside them. Whether it's the Titan's spirit or something else, you feel... blessed. Protected. Marked."
+        },
+        {
+          "text": "Pray to the old gods",
+          "effects": {
+            "block": 10,
+            "lore": "titan_faith",
+            "setsFlags": ["prayed_to_titans"]
+          },
+          "result": "You kneel before the shrine. The Rustborn believe the Titans were gods—great beings of metal and fury who walked Vharos before the Fall. You feel something answer your prayer. It's not what the Rustborn think it is. But it wants to help. For now."
+        },
+        {
+          "text": "Take the offerings",
+          "effects": {
+            "credits": 50,
+            "reputation": {"rustborn": -4},
+            "corruption": 2,
+            "setsFlags": ["robbed_titan_shrine"],
+            "unlocks": ["rustborn_hostility"]
+          },
+          "result": "Desperation wins over respect. You pocket the valuables and flee before anyone notices. But the skull's eyes follow you. When you're far away, you realize the coal-light hasn't faded from your peripheral vision. The Titan remembers thieves."
+        },
+        {
+          "text": "Examine the skull closely",
+          "effects": {
+            "lore": "titan_truth",
+            "insight": 2,
+            "setsFlags": ["knows_titan_truth"]
+          },
+          "result": "The skull isn't natural. The bone has been shaped, carved with patterns that hurt to look at. This wasn't a Titan—it was something else, made to LOOK like one. The Rustborn have been worshipping a mask. But masks exist to hide faces. What's behind this one?"
+        }
+      ]
+    },
+
+    {
+      "id": "void_whispers",
+      "name": "The Voice from Nowhere",
+      "category": "corruption",
+      "text": "The air grows cold. Your breath fogs. A voice speaks from nowhere and everywhere, intimate as a lover's whisper: 'I can see your future. Every ending. Every failure. Would you like me to show you?' The void knows your name. It always has.",
+      "image": "assets/images/events/void_whispers.svg",
+      "atmosphere": "You can't tell if the voice is outside your head or inside it. Does the distinction matter?",
+      "minCorruption": 15,
+      "choices": [
+        {
+          "text": "Listen to the prophecy",
+          "effects": {
+            "corruption": 8,
+            "lore": "void_prophecy",
+            "insight": 3,
+            "setsFlags": ["heard_void_prophecy", "knows_multiple_endings"],
+            "viewNextNodes": true
+          },
+          "result": "Visions flood your mind—the path ahead, laid bare. You see battles won and lost, treasures found and traps sprung. But you also see endings. Dozens of them. 'Those are just the ones where you die,' the voice purrs. 'Want to see the ones where you wish you had?'"
+        },
+        {
+          "text": "Demand power instead",
+          "effects": {
+            "corruption": 15,
+            "status": {"strength": 3},
+            "setsFlags": ["bargained_with_void"]
+          },
+          "result": "Greed speaks to greed. The voice LAUGHS—a sound like reality tearing at the seams. 'We like you,' it says. 'We'll give you everything you want. Eventually, you'll want what we want. That's how it works.' Power floods into you. The price will come later."
+        },
+        {
+          "text": "Ask who's speaking",
+          "effects": {
+            "corruption": 5,
+            "lore": "void_identity",
+            "insight": 2,
+            "setsFlags": ["knows_void_identity"]
+          },
+          "result": "'We are the sum of everything that ended,' the voice says. 'Every collapsed timeline, every deleted possibility, every soul that fell into the Pattern's cracks. We're not your enemy. We're your future. All futures end in us.' The voice fades, but its absence feels like a wound."
+        },
+        {
+          "text": "Reject the voice completely",
+          "effects": {
+            "corruption": -5,
+            "setsFlags": ["rejected_void_whispers"],
+            "status": {"block": 5}
+          },
+          "result": "You steel your mind against the whispers, focusing on your heartbeat, your breath, the realness of your body. The voice screams as it's pushed out—a sound of frustration and hunger. 'Fine,' it hisses. 'We'll wait. We always do.' The cold fades. The voice doesn't."
+        }
+      ]
+    },
+
+    {
+      "id": "merchant_camp",
+      "name": "The Wandering Trader",
+      "category": "merchant",
+      "repeatable": true,
+      "text": "A small caravan has made camp in a defensible ruin. The merchant—face hidden by goggles and scarves—tends a cooking fire. The smell of actual food cuts through the rust-stink. They gesture toward their wares without looking up.",
+      "image": "assets/images/events/merchant_camp.svg",
+      "atmosphere": "Commerce survives even in hell. There's something reassuring about that. And something suspicious.",
+      "choices": [
+        {
+          "text": "Trade for supplies (Spend 25 credits)",
+          "effects": {"credits": -25, "hp": 15},
+          "requirements": {"minCredits": 25},
+          "result": "The food is real. The medical supplies are genuine. You don't ask where they came from—some questions are luxuries. The merchant watches you eat with eyes you can't see behind their goggles. 'Travel safe,' they say. 'The deep paths are hungry this cycle.'"
+        },
+        {
+          "text": "Ask about the region",
+          "effects": {
+            "lore": "wastes_knowledge",
+            "insight": 1,
+            "setsFlags": ["knows_ironspine_history"]
+          },
+          "result": "'The Ironspine was a shipyard once,' the merchant says. 'Before the Architects. Before the Seals. Ships that could sail between stars.' They gesture at the rusted horizon. 'Now it's a graveyard. Everything on this planet is a graveyard for something older than humans can imagine.'"
+        },
+        {
+          "text": "Buy information (Spend 15 credits)",
+          "effects": {
+            "credits": -15,
+            "lore": "scrap_king_intel",
+            "insight": 2,
+            "setsFlags": ["knows_scrap_king_plan"]
+          },
+          "requirements": {"minCredits": 15},
+          "result": "The merchant leans close. 'The Scrap-King is preparing something,' they whisper. 'His shamans have been communing with the rust-voices. They think they can wake a Titan.' They pull back. 'If I were you, I'd either leave this region or kill him first. No middle ground.'"
+        },
+        {
+          "text": "Share what you know about the Heralds",
+          "effects": {
+            "credits": 20,
+            "reputation": {"rustborn": 1},
+            "setsFlags": ["traded_herald_intel"]
+          },
+          "requirements": {"flags": ["knows_heralds_are_prisons"]},
+          "result": "The merchant's goggles flash as they lean forward. 'Walking prisons? That... changes things.' They press credits into your hand. 'That's worth more than money, stranger. The right people need to hear this. The wrong people too, probably.' They seem genuinely shaken."
+        },
+        {
+          "text": "Move on",
+          "effects": {},
+          "result": "You nod to the merchant and continue. They don't watch you go—they're already focused on the horizon, waiting for the next customer. Or the next threat. In the Wastes, they're often the same thing."
+        }
+      ]
+    },
+
+    {
+      "id": "echo_of_self",
+      "name": "The Other You",
+      "category": "corruption",
+      "text": "You see yourself—another you, standing at a crossroads. They look exhausted, wounded, but their eyes burn with determination. 'I know how this ends,' they say. 'I've done this run before. Many times. Let me help you get it right.'",
+      "image": "assets/images/events/echo_self.svg",
+      "atmosphere": "Are they from your past? Your future? Or a timeline that no longer exists?",
+      "minCorruption": 30,
+      "choices": [
+        {
+          "text": "Accept their guidance",
+          "effects": {
+            "corruption": 10,
+            "card": "echo_memory",
+            "setsFlags": ["accepted_echo_guidance", "knows_third_herald_lies"]
+          },
+          "result": "Your echo reaches out, and memories that aren't yours flood in—strategies, shortcuts, warnings. 'Remember the third Herald,' they say as they fade. 'It lies. The OTHERS don't.' You're left with power you didn't earn and questions you can't answer."
+        },
+        {
+          "text": "Fight for dominance",
+          "effects": {
+            "combat": "echo_self",
+            "corruption": -5,
+            "setsFlags": ["defeated_echo"]
+          },
+          "result": "If there can be only one of you, you'll be the real one. Your echo nods sadly—they expected this. 'We always fight,' they say. 'That's our flaw. See you next iteration.' You clash with yourself, and only one walks away. But which one?"
+        },
+        {
+          "text": "Ask about the Pattern",
+          "effects": {
+            "corruption": 5,
+            "lore": "pattern_truth",
+            "insight": 3,
+            "setsFlags": ["knows_pattern_truth", "knows_recursion"]
+          },
+          "result": "'Reality is a recording,' your echo says. 'The Pattern plays it over and over, looking for an outcome it likes. We're all echoes—some of us just remember more than others.' They smile with your face. 'Kill Xal'Korath. That's the only way to stop the recursion. That's what we learned. After dying a thousand times.'"
+        },
+        {
+          "text": "Walk past them",
+          "effects": {
+            "setsFlags": ["ignored_echo"]
+          },
+          "result": "'We'll meet again,' your echo says sadly. 'We always do. That's the tragedy of the recursion—nothing ever really ends.' You keep walking, trying not to think about how many times you've made this exact choice. How many times you'll make it again."
+        }
+      ]
+    },
+
+    {
+      "id": "corrupted_cache",
+      "name": "The Generous Dark",
+      "category": "corruption",
+      "text": "A supply cache lies open, its contents pulsing with void-light. The supplies look intact—better than intact. Enhanced. Tendrils of darkness curl from within like beckoning fingers. 'Take it,' something whispers. 'You've earned it.'",
+      "image": "assets/images/events/corrupted_cache.svg",
+      "atmosphere": "The void's gifts are never free. But they're always tempting.",
+      "minCorruption": 10,
+      "choices": [
+        {
+          "text": "Take everything",
+          "effects": {
+            "credits": 80,
+            "corruption": 12,
+            "card": "void_touched_blade",
+            "setsFlags": ["took_void_cache_full"]
+          },
+          "result": "You grab it all—credits, supplies, the strange crystallized darkness at the bottom. Power floods into you as the corruption takes root. 'Good,' something purrs in your mind. 'Now you understand. The void doesn't take. It invests.' You feel... changed. Improved. The word 'improved' echoes longer than it should."
+        },
+        {
+          "text": "Take only the credits",
+          "effects": {
+            "credits": 40,
+            "corruption": 3,
+            "setsFlags": ["took_void_cache_partial"]
+          },
+          "result": "You carefully extract the currency, avoiding the worst of the void-touched materials. Even so, the darkness clings to your fingers. 'Cautious,' the whisper says approvingly. 'Smart. We can work with smart.' The corruption is minor. The attention is not."
+        },
+        {
+          "text": "Purge the cache",
+          "effects": {
+            "corruption": -8,
+            "setsFlags": ["purged_void_cache"],
+            "status": {"block": 3}
+          },
+          "result": "You find fuel, make a torch, and burn it all. The void-stuff SCREAMS as it dies—a psychic shriek that leaves you with a nosebleed and a headache. But the corruption in you recoils from your defiance. You feel cleaner. More real. The void takes note."
+        },
+        {
+          "text": "Study it first",
+          "effects": {
+            "corruption": 5,
+            "lore": "void_nature",
+            "insight": 2,
+            "setsFlags": ["studied_void_nature"]
+          },
+          "result": "You examine the cache without touching it. The patterns in the darkness aren't random—they're fractal, recursive, infinite. 'We're not corruption,' the whisper explains. 'We're evolution. The void is just reality without all the limitations.' You leave the cache, but the knowledge stays."
+        }
+      ]
+    },
+
+    {
+      "id": "the_collector",
+      "name": "The Memory Merchant",
+      "category": "mysterious",
+      "text": "A hooded figure blocks your path. Their face is shadows within shadows. 'I trade in identities,' they rasp. 'Memories. Possibilities. Give me something you are, and I'll give you something you could be.' Their hands hold nothing. Their hands hold everything.",
+      "image": "assets/images/events/collector.svg",
+      "atmosphere": "The figure seems familiar. Like looking into a mirror that shows someone else.",
+      "choices": [
+        {
+          "text": "Trade a card",
+          "effects": {
+            "removeCard": "choice",
+            "card": "random_rare",
+            "setsFlags": ["traded_with_collector"]
+          },
+          "result": "The figure takes your card—and the part of you that knew how to use it. The memories dissolve like morning fog. In exchange, something new crystallizes in your mind. Different. Strange. Powerful. 'Pleasure doing business,' they say. 'See you next run.'"
+        },
+        {
+          "text": "Trade HP for power",
+          "effects": {
+            "maxHp": -5,
+            "card": "ancient_knowledge",
+            "setsFlags": ["traded_life_for_power"]
+          },
+          "result": "The collector touches your forehead, and years drain away—not age, but potential, futures you'll never have. In exchange, knowledge older than the Architects fills the space. 'You're dying faster now,' they observe. 'But you'll die knowing more. Fair trade, I'd say.'"
+        },
+        {
+          "text": "Ask who they are",
+          "effects": {
+            "lore": "collector_truth",
+            "insight": 3,
+            "setsFlags": ["knows_fifth_seal"],
+            "unlocks": ["fifth_seal_echo"]
+          },
+          "result": "'I'm what's left of the Fifth Seal,' they say. 'The Architects tried to create a Seal for consciousness itself. It shattered. I'm one of the pieces.' They tilt their head at an inhuman angle. 'We're all pieces, really. Fragments pretending to be whole. You're better at pretending than most.'"
+        },
+        {
+          "text": "Refuse and leave",
+          "effects": {},
+          "result": "'Until next time,' they say—not a goodbye, but a promise. When you look back, they're gone. But something's changed. A memory feels... looser. Like it might fall out. You wonder what you've already traded that you can't remember trading."
+        }
+      ]
+    },
+
+    {
+      "id": "tribal_duel",
+      "name": "Trial by Rust",
+      "category": "faction",
+      "text": "Rustborn warriors emerge from the scrap, surrounding you in practiced formation. Their leader—scarred, augmented, old—studies you with eyes like corroded coins. 'Outsider walks the Titan's grave,' they intone. 'Outsider must prove worth. Or feed the rust.'",
+      "image": "assets/images/events/tribal_duel.svg",
+      "atmosphere": "The Tribes remember when their gods walked. They haven't forgiven those who let them fall.",
+      "choices": [
+        {
+          "text": "Accept the duel",
+          "effects": {
+            "combat": "rustborn_champion",
+            "reputation": {"rustborn": 3},
+            "setsFlags": ["dueled_rustborn"]
+          },
+          "result": "You nod. The circle parts for their champion—half human, half salvaged machine, all violence. Win or lose, you'll fight. And the Tribes respect courage, even in enemies. Especially in enemies. The champion grins with metal teeth. 'Finally,' they say. 'A real fight.'"
+        },
+        {
+          "text": "Offer tribute (50 credits)",
+          "effects": {
+            "credits": -50,
+            "reputation": {"rustborn": 0}
+          },
+          "requirements": {"minCredits": 50},
+          "result": "Credits change hands. The leader's expression doesn't change—it can't, the facial muscles are gone—but their warriors part. 'Outsider buys passage,' they say. 'Passage is not respect. Passage is not safety.' You walk through, feeling their stares like targeting lasers."
+        },
+        {
+          "text": "Invoke the Old Words",
+          "effects": {
+            "reputation": {"rustborn": 4},
+            "setsFlags": ["invoked_old_words", "rustborn_ally"]
+          },
+          "requirements": {"flags": ["heard_architect_recording"]},
+          "result": "You speak a phrase from the terminal—words the Architects used when treating with the first Rustborn. The warriors freeze. The leader's mechanical eyes widen. 'You... know the Words.' They bow, stiffly, creaking with old joints. 'Walk free, Word-keeper. The Titans walked with your ancestors.'"
+        },
+        {
+          "text": "Mention the dying soldier's token",
+          "effects": {
+            "reputation": {"rustborn": 3},
+            "setsFlags": ["showed_tribal_token"],
+            "unlocks": ["rustborn_war_council"]
+          },
+          "requirements": {"flags": ["helped_dying_soldier"]},
+          "result": "You hold up the token the dying warrior gave you. Silence falls. The leader reaches out with a mechanical hand, touching it with something like reverence. 'Keth's token. Keth is dead then.' A long pause. 'You honored our fallen. That earns more than passage. That earns a seat at our fires.'"
+        },
+        {
+          "text": "Find another way",
+          "effects": {"hp": -8},
+          "result": "You bolt before they can close the circle, crashing through rusted wreckage and treacherous terrain. Their pursuit is savage, and you take damage before you finally lose them. But you escape. This time. They'll remember your face."
+        }
+      ]
+    },
+
+    {
+      "id": "wounded_beast",
+      "name": "The Suffering Machine",
+      "category": "encounter",
+      "text": "A creature lies trapped under debris—once a vehicle, perhaps, or a war machine. Time and corruption have blurred the line between metal and meat. It whimpers in frequencies that shouldn't be audible. Its eyes—too many of them—hold an unsettling intelligence.",
+      "image": "assets/images/events/wounded_beast.svg",
+      "atmosphere": "Everything on Vharos is becoming something else. This thing is becoming everything at once.",
+      "choices": [
+        {
+          "text": "Free it (Risk)",
+          "effects": {
+            "random": [
+              {"card": "grateful_beast", "setsFlags": ["saved_machine_beast"]},
+              {"hp": -12, "corruption": 3}
+            ]
+          },
+          "result": "You work to lift the debris. The creature watches, judging. When freed, it either nuzzles your hand with something like gratitude... or its too-many mouths open in hunger. Kindness is a coin flip in the Wastes."
+        },
+        {
+          "text": "End its suffering",
+          "effects": {
+            "credits": 20,
+            "setsFlags": ["killed_machine_beast"]
+          },
+          "result": "A quick, clean end. You salvage valuable components from its body—or bodies. Hard to tell. Mercy and pragmatism align for once. 'Thank you,' it seems to whisper as it dies. But mouths aren't supposed to form those words."
+        },
+        {
+          "text": "Examine it first",
+          "effects": {
+            "lore": "corruption_biology",
+            "insight": 2,
+            "setsFlags": ["studied_corruption_biology"]
+          },
+          "result": "The creature is a record of Vharos's corruption—layers of machinery and flesh, each addition more recent than the last. It's been changing for centuries, maybe longer. The corruption doesn't kill. It improves. According to its own terrible standards."
+        },
+        {
+          "text": "Leave it",
+          "effects": {},
+          "result": "Not your problem. The Wastes are full of suffering things. You can't save them all. Behind you, the creature's whimpers turn to screams, then to something else. You don't look back. You really, really don't look back."
+        }
+      ]
+    },
+
+    {
+      "id": "abandoned_mech",
+      "name": "The Broken Giant",
+      "category": "encounter",
+      "heroSpecific": "korvax",
+      "text": "A derelict war machine—one of your brothers, maybe. Or your cousins. The model is familiar: military frame, industrial reactor, deprecated consciousness buffer. Its chest cavity is open, revealing a still-pulsing core. It's not dead. It's waiting.",
+      "image": "assets/images/events/abandoned_mech.svg",
+      "atmosphere": "You recognize the design. Someone made you both. Someone who's still out there.",
+      "choices": [
+        {
+          "text": "Integrate the reactor core",
+          "effects": {
+            "maxHp": 5,
+            "status": {"overheat": 5},
+            "setsFlags": ["integrated_reactor"]
+          },
+          "result": "You feel the ancient power merge with your systems. Warnings flash—compatibility issues, overload risks. You ignore them. The core becomes part of you, bringing power and heat and something else: memories that aren't yours. Battles you never fought. Deaths you haven't died yet."
+        },
+        {
+          "text": "Salvage the armor plating",
+          "effects": {
+            "artifact": "scrap_plating",
+            "setsFlags": ["found_engineer_coordinates"],
+            "unlocks": ["engineer_trail"]
+          },
+          "result": "The armor is still good—better than good. It was designed to protect something important. It can protect you now. But as you strip it, you find something scratched into the inner surface: coordinates, and the words 'FIND THE ENGINEER.'"
+        },
+        {
+          "text": "Access its memory banks",
+          "effects": {
+            "lore": "korvax_origin",
+            "corruption": 3,
+            "insight": 3,
+            "setsFlags": ["knows_korvax_origin", "knows_replacement_seals"]
+          },
+          "result": "You jack in, and memories flood your consciousness—production line assembly, combat deployment, the moment of awakening when machine became mind. And then: the Fall. The moment the planet screamed. The moment your brother-machine fell. 'They're still making us,' the memory whispers. 'Making us to replace the Seals.'"
+        },
+        {
+          "text": "Give it a warrior's rest",
+          "effects": {
+            "credits": 35,
+            "setsFlags": ["honored_fallen_mech"]
+          },
+          "result": "You shut down the core properly—final system commands, power-down protocol, the soldier's farewell you both deserve. It's not destruction; it's release. You salvage what you can and move on. Somewhere, something notes your mercy."
+        }
+      ]
+    },
+
+    {
+      "id": "rest_site_choice",
+      "name": "Eye of the Storm",
+      "category": "rest",
+      "repeatable": true,
+      "text": "You find a protected alcove—ancient masonry, oddly intact. The rust-winds howl outside, but here there's stillness. Quiet. The first peace you've felt since the Dawnseeker fell. How will you use this precious moment?",
+      "image": "assets/images/events/rest_site.svg",
+      "atmosphere": "Even in hell, there are sanctuaries. The question is: what else found this one?",
+      "choices": [
+        {
+          "text": "Rest (Heal 25% Max HP)",
+          "effects": {"healPercent": 25},
+          "result": "You let exhaustion take you. Sleep comes hard, and dreams come harder—visions of the void, whispers in frequencies you can't consciously hear. But your body heals. Your wounds close. When you wake, you're stronger. The nightmares fade. Mostly."
+        },
+        {
+          "text": "Train (Upgrade a card)",
+          "effects": {"upgrade": "choice"},
+          "result": "You spend the time honing your techniques—repetition, refinement, perfection. One of your abilities sharpens into something more. The quiet helps you focus. The voices in your head help you imagine what you're fighting."
+        },
+        {
+          "text": "Meditate (Remove a card)",
+          "effects": {"removeCard": "choice"},
+          "requirements": {"deckSize": 6},
+          "result": "You center yourself, letting go of techniques that no longer serve you. Attachments are weaknesses in the Wastes. You feel lighter, cleaner, more focused. The void whispers that you're making room for better things. You try to ignore it."
+        },
+        {
+          "text": "Study the walls",
+          "effects": {
+            "lore": "sanctuary_truth",
+            "insight": 2,
+            "setsFlags": ["found_sanctuary_warnings"]
+          },
+          "result": "The masonry isn't Architect work. It's older. Much older. Symbols cover the inner walls—warnings, prayers, instructions. Someone built this place to hide from the very thing you're walking toward. They failed. But the knowledge they left might help you succeed."
+        }
+      ]
+    },
+
+    {
+      "id": "scrap_gamble",
+      "name": "Fortune's Grave",
+      "category": "faction",
+      "text": "A gambling den operates in the shell of a crashed transport. Rustborn gamblers hunch over their games, trading salvage and stories. The house master—a mechanical spider with a human head—beckons you with one of its too-many limbs. 'Test your luck, stranger?'",
+      "image": "assets/images/events/scrap_gamble.svg",
+      "atmosphere": "The click of dice sounds like distant gunfire. Or bones breaking.",
+      "choices": [
+        {
+          "text": "Bet small (15 credits)",
+          "effects": {
+            "credits": -15,
+            "random": [{"credits": 45}, {"credits": 0}]
+          },
+          "requirements": {"minCredits": 15},
+          "result": "The dice tumble—bones carved with void-symbols, probability itself corrupted. You either double your stake or lose it all. The house master watches without blinking. Its human eyes never blink."
+        },
+        {
+          "text": "Bet big (50 credits)",
+          "effects": {
+            "credits": -50,
+            "random": [
+              {"credits": 175, "artifact": "lucky_chip"},
+              {"credits": 0, "hp": -5}
+            ]
+          },
+          "requirements": {"minCredits": 50},
+          "result": "High stakes draw attention. The other gamblers watch. The house master's many limbs still. Fortune favors the bold—or punishes the foolish. There's no middle ground in the Wastes."
+        },
+        {
+          "text": "Work security",
+          "effects": {
+            "credits": 25,
+            "hp": -5,
+            "setsFlags": ["worked_gambling_den"]
+          },
+          "result": "The spider-master puts you to work dealing with troublemakers. Hard work, violent work. Your skills impress them. 'Come back anytime,' they offer. 'We can always use someone who fights like they've got nothing to lose.'"
+        },
+        {
+          "text": "Trade Scrap-King intel for credits",
+          "effects": {
+            "credits": 35,
+            "reputation": {"rustborn": -1},
+            "setsFlags": ["sold_scrap_king_intel"]
+          },
+          "requirements": {"flags": ["knows_scrap_king_plan"]},
+          "result": "You whisper what the merchant told you about the Scrap-King's plans. The gamblers lean in. Credits slide across the table. 'Information is the only currency that doesn't rust,' the spider-master says. 'Come back when you know more.'"
+        },
+        {
+          "text": "Walk away",
+          "effects": {},
+          "result": "'Your loss,' the spider-master calls after you. 'Literally!' Its laugh follows you out—a skittering sound that gets inside your head and nests there. You didn't gamble, but you still feel like you lost something."
+        }
+      ]
+    },
+
+    {
+      "id": "herald_whisper",
+      "name": "The Watcher's Voice",
+      "category": "corruption",
+      "text": "A sound that isn't a sound fills the air—pressure in your mind, a presence older than the rust. 'Little fragment,' something vast observes. 'Running so hard. Fighting so desperately. Do you even know why you're here?' A Herald is aware of you. It's not attacking. Yet.",
+      "image": "assets/images/events/herald_voice.svg",
+      "atmosphere": "This is what mountains feel like when they notice ants.",
+      "minCorruption": 25,
+      "choices": [
+        {
+          "text": "Demand answers",
+          "effects": {
+            "corruption": 8,
+            "lore": "herald_purpose",
+            "insight": 3,
+            "setsFlags": ["knows_herald_purpose"]
+          },
+          "result": "'Purpose?' the presence rumbles. 'We are the scars the Architects left. They cut the World-Eater's mind into four pieces. We grew from the wounds. We don't guard the Seals—we ARE the infection.' Knowledge burns into you. Understanding is its own form of corruption."
+        },
+        {
+          "text": "Offer defiance",
+          "effects": {
+            "corruption": 3,
+            "status": {"strength": 2},
+            "setsFlags": ["defied_herald"]
+          },
+          "result": "'Brave,' the presence observes. 'Stupid, but brave. Very well. Grow strong, little fragment. Fight. It's been so long since we had a real challenge.' The presence recedes, leaving something behind—a gift or a curse. With Heralds, they're often the same thing."
+        },
+        {
+          "text": "Share what you know about the Seals",
+          "effects": {
+            "corruption": 10,
+            "card": "herald_boon",
+            "setsFlags": ["shared_seal_knowledge_with_herald"]
+          },
+          "requirements": {"flags": ["knows_seals_are_lobotomies"]},
+          "result": "'You KNOW,' the presence breathes. Something like respect—or hunger—radiates from it. 'The Architects told you. Good. Then you understand why we can't be destroyed. Only... reorganized.' Power flows into you, dark and ancient. 'Use this. Break the pattern they built. We'll both be free.'"
+        },
+        {
+          "text": "Plead for mercy",
+          "effects": {
+            "corruption": -5
+          },
+          "result": "'There IS no mercy,' the presence says, almost gently. 'We don't have the capacity for it. We're not evil—we're purpose without choice. Run if you want. But we'll meet again.' The presence lifts, and you feel cleaner. Pitied. It's worse than being hated."
+        },
+        {
+          "text": "Close your mind",
+          "effects": {"hp": -5},
+          "result": "You force your thoughts into a tight ball, rejecting the contact. The psychic pressure breaks against your will—painful, but effective. 'Interesting,' the presence murmurs as it withdraws. 'You have secrets. We love secrets.' Silence. But not emptiness."
+        }
+      ]
+    },
+
+    {
+      "id": "dawnseeker_fragment",
+      "name": "Echoes of the Fall",
+      "category": "lore",
+      "text": "Wreckage from the Dawnseeker lies scattered across the rust—your ship, your crew, your mission. A data terminal still functions, its emergency beacon long exhausted. The ship's final moments are recorded here, waiting for someone to bear witness.",
+      "image": "assets/images/events/ship_wreckage.svg",
+      "atmosphere": "This is where everything changed. Where your old life ended.",
+      "choices": [
+        {
+          "text": "Review the final recording",
+          "effects": {
+            "lore": "dawnseeker_truth",
+            "insight": 2,
+            "setsFlags": ["knows_dawnseeker_truth", "knows_vharos_doesnt_exist"]
+          },
+          "result": "The last images play—the approach to Vharos, the sudden alarm, the THING that rose from the planet to drag you down. 'Emergency beacon activated,' the ship's voice reports calmly. 'Note: no response expected. Vharos is not on any current navigation charts. Vharos does not exist.' The recording ends. The planet very much exists."
+        },
+        {
+          "text": "Search for crew survivors",
+          "effects": {
+            "random": [
+              {"artifact": "crew_memento", "reputation": {"first_light": 1}, "setsFlags": ["found_crew_survivor"]},
+              {"corruption": 5, "hp": -5}
+            ]
+          },
+          "result": "You search the wreckage systematically. Either you find something valuable—a crewmate's possession, a sign of survival—or you find something worse. The void has been here. It took things. It left things behind."
+        },
+        {
+          "text": "Salvage the systems",
+          "effects": {
+            "credits": 40,
+            "upgrade": "random",
+            "setsFlags": ["salvaged_dawnseeker"]
+          },
+          "result": "You strip the wreckage for usable parts. The Dawnseeker was a good ship—advanced, sturdy. Its bones will serve your survival now. But as you work, you find a message scratched into the hull: 'THE PLANET CHOSE US. THE PLANET ALWAYS CHOOSES.'"
+        },
+        {
+          "text": "Say goodbye",
+          "effects": {
+            "hp": 10,
+            "setsFlags": ["mourned_dawnseeker"]
+          },
+          "result": "You take a moment to grieve—for the ship, for the mission, for the life you'll never return to. The emotion is cleansing, clarifying. You feel your resolve strengthen. Whatever brought you here, you'll make it regret the invitation."
+        }
+      ]
+    },
+
+    {
+      "id": "void_gift",
+      "name": "Something Left For You",
+      "category": "corruption",
+      "text": "You find it in the ruins—a gift, clearly placed. Clearly waiting. A card that hurts to look at, surrounded by a perfect circle of dead ground. A note accompanies it: 'FOR THE ONE WHO WILL REACH THE HEART. USE IT WELL.' The handwriting looks like yours.",
+      "image": "assets/images/events/void_gift.svg",
+      "atmosphere": "Time is broken here. Or you are. Or both.",
+      "minCorruption": 40,
+      "choices": [
+        {
+          "text": "Take the gift",
+          "effects": {
+            "corruption": 15,
+            "card": "void_inheritance",
+            "setsFlags": ["took_void_gift"]
+          },
+          "result": "The card settles into your deck like it was always meant to be there. Power cascades through you—knowledge of techniques you've never learned, memories of fights you haven't had. 'Good,' says a voice that sounds like yours. 'You're learning. Finally.'"
+        },
+        {
+          "text": "Read the note carefully",
+          "effects": {
+            "corruption": 8,
+            "lore": "recursion_evidence",
+            "insight": 4,
+            "setsFlags": ["knows_run_count", "knows_recursion"]
+          },
+          "result": "The note is longer than it first appeared—pages of cramped handwriting, dates that haven't happened, warnings and instructions. You've done this run before. Many times. And every time, you leave yourself clues. 'RUN 847,' it says. 'THIS ONE WORKS. I THINK.'"
+        },
+        {
+          "text": "Destroy it all",
+          "effects": {
+            "corruption": -10,
+            "setsFlags": ["destroyed_void_gift"]
+          },
+          "result": "You burn the note and shatter the card. Reality ripples—somewhere, another you screams in frustration. But the corruption in you recoils from the defiance. If the Pattern wants you to take this path, you'll find your own way. Even if it takes another 847 tries."
+        },
+        {
+          "text": "Leave it for someone else",
+          "effects": {},
+          "result": "Not your gift to take. You back away slowly, leaving the offering undisturbed. As you go, you feel something watching—disappointed, maybe, but also... respectful? 'Next time,' your own voice whispers. 'Next time you'll be ready.'"
+        }
+      ]
+    },
+
+    {
+      "id": "first_light_patrol",
+      "name": "The Pure Ones",
+      "category": "faction",
+      "text": "First Light soldiers emerge from cover—white armor, radiant weapons, the blazing eye insignia of their order. Their leader raises a fist: halt. 'Traveler. You carry the void's taint. Our sensors confirm it. You may plead your case, or accept purification. Choose.'",
+      "image": "assets/images/events/first_light.svg",
+      "atmosphere": "They're not evil. That's the worst part. They genuinely believe they're saving you.",
+      "choices": [
+        {
+          "text": "Accept their aid",
+          "effects": {
+            "corruption": -10,
+            "hp": -10,
+            "reputation": {"first_light": 2},
+            "setsFlags": ["accepted_purification"]
+          },
+          "result": "The 'purification' is brutal—holy light that burns out the void-touch along with parts of you. You scream, but it works. The corruption recedes. 'Welcome back to the light, traveler,' the leader says. 'Walk clean. Walk pure. Or we'll meet again.'"
+        },
+        {
+          "text": "Plead for passage",
+          "effects": {
+            "reputation": {"first_light": 1},
+            "setsFlags": ["allied_first_light"]
+          },
+          "result": "'I'm fighting the void,' you explain. 'We want the same thing.' The leader studies you with eyes that have seen too much corruption. Finally, they nod. 'For now, we are allies. But cross the line, and there will be no warning. Only cleansing.'"
+        },
+        {
+          "text": "Fight your way through",
+          "effects": {
+            "combat": "first_light_patrol",
+            "reputation": {"first_light": -3},
+            "setsFlags": ["fought_first_light"]
+          },
+          "result": "If they think they can judge you, they can test you too. You launch into action before they can form up. First Light soldiers are dangerous—zealous, well-equipped. But they underestimate the corrupted. That's their weakness."
+        },
+        {
+          "text": "Tell them about the Heralds",
+          "effects": {
+            "reputation": {"first_light": 2},
+            "lore": "first_light_mission",
+            "setsFlags": ["shared_herald_truth_with_first_light"],
+            "unlocks": ["first_light_alliance"]
+          },
+          "requirements": {"flags": ["knows_heralds_are_prisons"]},
+          "result": "'The Heralds are corrupted Seals,' you say. Their leader's eyes widen—recognition, horror. 'You know the truth,' they breathe. 'Then you know why we must be vigilant. The light is all that stands between Vharos and oblivion.' They let you pass. You've given them hope. Or ammunition."
+        },
+        {
+          "text": "Reveal the Architect recording",
+          "effects": {
+            "reputation": {"first_light": 3},
+            "corruption": -5,
+            "setsFlags": ["first_light_trusted"],
+            "unlocks": ["first_light_alliance"]
+          },
+          "requirements": {"flags": ["heard_architect_recording", "knows_seals_are_lobotomies"]},
+          "result": "You recite the Architect's words: 'The Seals are not prisons. They are lobotomies.' The patrol leader goes pale. Other soldiers murmur prayers. 'This changes everything,' the leader whispers. 'Come. The Commander needs to hear this.' They escort you as an honored guest, not a prisoner."
+        }
+      ]
+    },
+
+    {
+      "id": "the_dreamer",
+      "name": "The Sleeper Speaks",
+      "category": "corruption",
+      "text": "You find them in a sealed chamber—a figure suspended in preservative fluid, ancient beyond measure. An Architect, maybe. Or something older. Their eyes are closed, but their lips move. Words bubble through the fluid: 'You're here. Finally. I've been waiting. We all have.'",
+      "image": "assets/images/events/dreamer.svg",
+      "atmosphere": "They shouldn't be alive. Nothing this old should be alive.",
+      "minCorruption": 50,
+      "choices": [
+        {
+          "text": "Listen to their message",
+          "effects": {
+            "corruption": 10,
+            "lore": "architect_confession",
+            "insight": 4,
+            "setsFlags": ["heard_dreamer", "knows_xalkorath_dreaming"]
+          },
+          "result": "'We built the Seals to contain Xal'Korath's consciousness,' the sleeper says. 'Four lobotomies for a god. But we made a mistake. We thought it was sleeping. It's not. It's DREAMING. And everything you see—the Heralds, the corruption, the Pattern—that's all the dream. You're inside the dream. We all are.'"
+        },
+        {
+          "text": "Ask how to win",
+          "effects": {
+            "corruption": 8,
+            "card": "dreamer_blessing",
+            "setsFlags": ["knows_how_to_win"]
+          },
+          "result": "'Kill the Heralds. Break the Seals. Wake it up.' The sleeper's eyes open—solid void, no pupil or iris. 'It's better to face the World-Eater than live in its nightmares. Trust me. I've been dreaming with it for a million years.' Power flows from them to you. A blessing. Or a curse."
+        },
+        {
+          "text": "Shut down the chamber",
+          "effects": {
+            "corruption": -5,
+            "setsFlags": ["freed_dreamer"]
+          },
+          "result": "You find the controls and terminate the life support. The sleeper doesn't struggle—they smile, relieved. 'Thank you,' they whisper as the fluid drains. 'I wanted to stop dreaming. Now I can...' The chamber goes dark. The whispers in your head quiet, just a little."
+        },
+        {
+          "text": "Leave them to their dreams",
+          "effects": {},
+          "result": "Some knowledge is too heavy to carry. You back away from the chamber, leaving the sleeper to their eternal vigil. 'You'll be back,' they say through the fluid. 'Everyone comes back. That's the nature of dreams. They repeat.' You try not to think about what that means."
+        }
+      ]
+    },
+
+    {
+      "id": "scrap_king_scouts",
+      "name": "The Warlord's Eyes",
+      "category": "faction",
+      "text": "Scouts watch you from the ridge—Scrap-King's forces, judging by the crude insignia and salvaged weaponry. They don't attack. They just... watch. Then one calls down: 'You heading to the Throne? The King's been expecting someone like you.'",
+      "image": "assets/images/events/scrap_scouts.svg",
+      "atmosphere": "The Scrap-King unified the Tribes through fear. He keeps them unified through something worse.",
+      "choices": [
+        {
+          "text": "Accept their escort",
+          "effects": {
+            "reputation": {"rustborn": 2},
+            "lore": "scrap_king_intel",
+            "setsFlags": ["escorted_to_throne", "knows_scrap_king_plan"]
+          },
+          "result": "The scouts lead you through safe paths—shortcuts only the Tribes know. They're suspicious but professional. 'The King saw you in the rust-dreams,' one mutters. 'Says you're important. Says you're gonna change everything.' They don't sound happy about it."
+        },
+        {
+          "text": "Demand information",
+          "effects": {
+            "reputation": {"rustborn": 1},
+            "insight": 1,
+            "setsFlags": ["knows_titan_wake_plan"]
+          },
+          "result": "'The King's preparing something big,' the scout admits. 'His shamans have been talking to... things. Things from before. He wants to wake the Titans—make the Tribes unstoppable.' They shrug. 'It'll probably end badly. But that's life in the Wastes.'"
+        },
+        {
+          "text": "Warn them about the Titans",
+          "effects": {
+            "reputation": {"rustborn": 2},
+            "setsFlags": ["warned_scouts_about_titans"]
+          },
+          "requirements": {"flags": ["knows_titan_truth"]},
+          "result": "'The Titans aren't what you think,' you tell them. 'The skull at the shrine—it's a mask. Something else is underneath.' The scouts exchange uneasy glances. 'That's... the King needs to hear that. Or maybe he doesn't. Maybe nobody does.' They let you pass, troubled."
+        },
+        {
+          "text": "Attack the scouts",
+          "effects": {
+            "combat": "rustborn_scouts",
+            "reputation": {"rustborn": -2},
+            "setsFlags": ["attacked_scouts"]
+          },
+          "result": "If the Scrap-King is expecting you, that makes you a threat. Better to control the narrative. You strike before they can report. It's violent, messy, and necessary. The Tribes will hear about this. But they'll hear YOUR version."
+        },
+        {
+          "text": "Slip away unnoticed",
+          "effects": {
+            "credits": 20
+          },
+          "result": "You're done being watched. You melt into the ruins, using every trick you know to lose them. The scouts search, but the Wastes are vast. You'll approach the Throne on YOUR terms. After you've looted a few caches they didn't expect you to find."
+        }
+      ]
+    },
+
+    {
+      "id": "corruption_bloom",
+      "name": "Garden of Endings",
+      "category": "corruption",
+      "text": "Flowers grow here—impossible, beautiful, wrong. Their petals shift through colors that don't exist, their stems pulse with void-light. Bees made of static buzz between the blooms. At the garden's center, a single fruit ripens on a tree of crystallized darkness.",
+      "image": "assets/images/events/corruption_bloom.svg",
+      "atmosphere": "Life finds a way. Even when life is an inadequate word for what's happening.",
+      "minCorruption": 35,
+      "choices": [
+        {
+          "text": "Eat the fruit",
+          "effects": {
+            "corruption": 20,
+            "maxHp": 10,
+            "hp": 50,
+            "setsFlags": ["ate_void_fruit"]
+          },
+          "result": "The fruit tastes like the color of screaming. It fills parts of you that weren't empty before, making room by dissolving other things. Your body transforms—stronger, stranger. 'Good,' the garden whispers in pollinated breezes. 'Now you're ready for the deeper dark.'"
+        },
+        {
+          "text": "Collect samples",
+          "effects": {
+            "corruption": 5,
+            "card": "corruption_seed",
+            "setsFlags": ["collected_void_samples"]
+          },
+          "result": "You gather specimens carefully, wrapping void-touched blooms in scrap cloth. The flowers seem to appreciate the attention—they preen in your presence, turning toward you like you're their sun. 'Take us with you,' they whisper. 'Plant us in your enemies.'"
+        },
+        {
+          "text": "Burn it down",
+          "effects": {
+            "corruption": -8,
+            "setsFlags": ["burned_corruption_garden"]
+          },
+          "result": "You make fire from salvage and scrap, and you burn the garden to nothing. The flowers scream in frequencies that make your teeth ache. But when it's done, the corruption here is dead. The ground is just ground again. You feel cleaner. Emptier."
+        },
+        {
+          "text": "Study the growth patterns",
+          "effects": {
+            "lore": "corruption_ecology",
+            "insight": 3,
+            "corruption": 2,
+            "setsFlags": ["studied_corruption_ecology"]
+          },
+          "result": "You observe without touching. The growth follows fractal patterns identical to the ones in the void mirror, the corrupted cache, the machine-beast. It's all connected—one organism, one intelligence, wearing a thousand different faces. The corruption isn't spreading. It's waking up."
+        }
+      ]
+    },
+
+    {
+      "id": "memory_shard",
+      "name": "Fragment of Someone Else",
+      "category": "mysterious",
+      "text": "A crystal lies in the rust—perfectly cut, internally glowing with captured moments. When you touch it, you see through someone else's eyes: an Architect, working on the Seals millions of years ago. Their guilt and hope are overwhelming.",
+      "image": "assets/images/events/memory_shard.svg",
+      "atmosphere": "Memory outlasts flesh. Regret outlasts memory.",
+      "choices": [
+        {
+          "text": "Absorb the memory completely",
+          "effects": {
+            "corruption": 8,
+            "lore": "architect_guilt",
+            "card": "ancient_technique",
+            "setsFlags": ["absorbed_architect_memory", "heard_architect_truth"]
+          },
+          "result": "The Architect's life floods into you—years of work, of hope, of watching the Seals fail slowly. You understand now: they knew it wouldn't hold. They built them anyway. 'What else could we do?' the memory whispers. 'We were trying to save a world.' Their techniques are yours now. So is their guilt."
+        },
+        {
+          "text": "Take only what you need",
+          "effects": {
+            "corruption": 3,
+            "upgrade": "choice",
+            "setsFlags": ["filtered_architect_memory"]
+          },
+          "result": "You filter the memory, extracting useful knowledge while leaving the emotional weight behind. It feels like theft, somehow. The Architect spent their life on this work. You're just... taking the parts you want. But survival requires pragmatism."
+        },
+        {
+          "text": "Release it properly",
+          "effects": {
+            "lore": "architect_funeral",
+            "hp": 5,
+            "setsFlags": ["released_architect_memory"]
+          },
+          "result": "You perform what feels like a funeral—ancient words, half-remembered from somewhere. The crystal dims and cracks, its contents finally at peace. 'Thank you,' something whispers. 'I've been waiting so long to stop remembering.' You learn nothing. But you did something kind. And kindness heals."
+        },
+        {
+          "text": "Leave it untouched",
+          "effects": {
+            "credits": 25
+          },
+          "result": "Some things aren't meant to be taken. You mark the location and move on, selling the coordinates to traders who deal in such things. The crystal will find its way to someone. You hope they're worthy of what it contains."
+        }
+      ]
+    },
+
+
+    {
+      "id": "rustborn_gratitude",
+      "name": "Debts Repaid in Rust",
+      "category": "faction",
+      "chainOf": "dying_soldier",
+      "requirements": {"flags": ["helped_dying_soldier"]},
+      "text": "A Rustborn hunting party finds you—but they don't raise weapons. Their leader holds up a token identical to the one the dying warrior gave you. 'You helped Keth,' they say simply. 'Keth was family. That makes this personal. In a good way.' They gesture to their camp. 'Come. The Tribes pay their debts.'",
+      "image": "assets/images/events/rustborn_camp.svg",
+      "atmosphere": "Kindness echoes louder than violence in the Wastes. Sometimes.",
+      "choices": [
+        {
+          "text": "Accept their hospitality",
+          "effects": {
+            "hp": 20,
+            "reputation": {"rustborn": 2},
+            "setsFlags": ["rustborn_friend"]
+          },
+          "result": "Real food. Clean water. Actual rest among people who don't want to kill you. The hunters share stories of Keth—a good warrior, a better parent. They teach you paths through the Wastes that aren't on any map. 'You're Tribe-friend now,' the leader says. 'That means something.'"
+        },
+        {
+          "text": "Ask about the Scrap-King",
+          "effects": {
+            "lore": "scrap_king_weakness",
+            "insight": 3,
+            "reputation": {"rustborn": 1},
+            "setsFlags": ["knows_scrap_king_weakness"]
+          },
+          "result": "'The King is powerful,' the leader admits. 'But he's afraid. The rust-dreams show him things. He thinks waking the Titans will protect the Tribes. We think it'll destroy them.' They lean close. 'His reactor—the one in his throne. It's ancient. Architect-made. And it's unstable. Hit it hard enough, and the King falls.'"
+        },
+        {
+          "text": "Trade for supplies",
+          "effects": {
+            "credits": -10,
+            "artifact": "tribal_ward",
+            "reputation": {"rustborn": 1},
+            "setsFlags": ["has_tribal_ward"]
+          },
+          "requirements": {"minCredits": 10},
+          "result": "They offer you a tribal ward—a charm made from Titan-bone and void-touched crystal. 'It won't protect you from everything,' the leader warns. 'But it'll buy you a heartbeat. In the Wastes, that's everything.' A fair trade for a few credits."
+        },
+        {
+          "text": "Move on with thanks",
+          "effects": {
+            "reputation": {"rustborn": 1},
+            "hp": 5
+          },
+          "result": "You share a brief meal and continue. The hunters watch you go with something like respect. In the Wastes, where everything is transaction, a simple act of kindness bought you more than credits ever could."
+        }
+      ]
+    },
+
+    {
+      "id": "rustborn_hostility",
+      "name": "The Price of Theft",
+      "category": "faction",
+      "chainOf": "dying_soldier",
+      "requirements": {"flags": ["looted_dying_soldier"]},
+      "text": "Rustborn warriors block your path. Their eyes are hard, their weapons raised. 'We found Keth,' their leader snarls. 'Found him robbed. Stripped. Disrespected.' They know it was you. Somehow, they always know. 'The Tribes have a price for grave-robbers, outsider.'",
+      "image": "assets/images/events/rustborn_hostile.svg",
+      "atmosphere": "In the Wastes, reputation travels faster than rust-storms.",
+      "choices": [
+        {
+          "text": "Return the credits (Pay 35)",
+          "effects": {
+            "credits": -35,
+            "reputation": {"rustborn": 1},
+            "setsFlags": ["repaid_theft"]
+          },
+          "requirements": {"minCredits": 35},
+          "result": "You hand over what you took. It's not enough—it can never be enough—but the gesture matters. 'Credits don't buy back honor,' the leader says. 'But they buy back your life. This time.' They let you pass. The debt isn't settled. But it's smaller."
+        },
+        {
+          "text": "Fight your way through",
+          "effects": {
+            "combat": "rustborn_ambush",
+            "reputation": {"rustborn": -3}
+          },
+          "result": "Words won't help. You ready your weapons as the warriors close in. This won't be clean, and it won't be easy. The Rustborn fight with the fury of the betrayed. Win or lose, the Tribes will never forget. Never forgive."
+        },
+        {
+          "text": "Offer information instead",
+          "effects": {
+            "reputation": {"rustborn": 0},
+            "setsFlags": ["traded_info_for_forgiveness"]
+          },
+          "requirements": {"flags": ["knows_scrap_king_plan"]},
+          "result": "'I know what the Scrap-King is planning,' you say quickly. The warriors hesitate. Knowledge is currency in the Wastes. You tell them about the Titan-waking ritual. The leader's expression shifts from rage to calculation. 'This doesn't make us even. But it buys you today.'"
+        },
+        {
+          "text": "Run",
+          "effects": {"hp": -12},
+          "result": "You bolt. They chase. The Wastes are unforgiving terrain for sprinting, and Rustborn warriors know every shortcut. You escape, but not unscathed. Blood and bruises are the Wastes' own currency, and you just spent a fortune."
+        }
+      ]
+    },
+
+    {
+      "id": "architect_cache_discovery",
+      "name": "The Hidden Vault",
+      "category": "lore",
+      "chainOf": "architects_terminal",
+      "requirements": {"flags": ["has_cache_coordinates"]},
+      "text": "The coordinates from the Architect terminal lead here—a sealed vault, half-buried in rust. The door responds to your touch, recognizing... something. Inside, millions of years of silence break. Lights flicker on. Systems hum awake. Something has been waiting for you.",
+      "image": "assets/images/events/architect_cache.svg",
+      "atmosphere": "The Architects hid this for a reason. Opening it might be exactly what they feared.",
+      "choices": [
+        {
+          "text": "Take the weapon",
+          "effects": {
+            "card": "architect_weapon",
+            "corruption": 3,
+            "setsFlags": ["has_architect_weapon"]
+          },
+          "result": "A device that hums with controlled void-energy. The Architects didn't just contain the corruption—they weaponized it. The weapon feels alive in your hands, eager to be used. 'Target acquired,' it whispers. You don't remember giving it a target."
+        },
+        {
+          "text": "Access the Architect database",
+          "effects": {
+            "lore": "architect_master_plan",
+            "insight": 4,
+            "corruption": 5,
+            "setsFlags": ["knows_architect_master_plan"]
+          },
+          "result": "The database contains the Architects' final plan—not just the Seals, but what comes after. They knew the Seals would fail. They had a backup plan. And it requires exactly four individuals, stranded on exactly one planet. You. This was never an accident."
+        },
+        {
+          "text": "Seal it back up",
+          "effects": {
+            "corruption": -3,
+            "credits": 15,
+            "setsFlags": ["sealed_architect_cache"]
+          },
+          "result": "Some doors should stay closed. You take a few loose components for trade value and seal the vault. The lights die. The systems sleep. 'Thank you,' a voice whispers from the dark. 'We weren't ready. Not yet.' You leave with more questions than answers."
+        },
+        {
+          "text": "Sabotage the vault",
+          "effects": {
+            "credits": 50,
+            "setsFlags": ["destroyed_architect_cache"]
+          },
+          "result": "You strip the vault bare—components, circuits, materials. Everything has value to the right buyer. The Architects' secrets die with their technology. Or do they? As the last system fails, a final message plays: 'Plan B activated. Deploying... you.'"
+        }
+      ]
+    },
+
+    {
+      "id": "fifth_seal_echo",
+      "name": "The Shattered Fifth",
+      "category": "mysterious",
+      "chainOf": "the_collector",
+      "requirements": {"flags": ["knows_fifth_seal"]},
+      "text": "Reality cracks. Through the fissure, you see a space that shouldn't exist—a room made of broken mirrors, each showing a different version of Vharos. At the center sits a figure made of fragments, constantly assembling and disassembling. 'You know my name now,' it says. 'That changes things.'",
+      "image": "assets/images/events/fifth_seal.svg",
+      "atmosphere": "The Fifth Seal didn't just break. It shattered into every possible reality.",
+      "choices": [
+        {
+          "text": "Ask about the other Seals",
+          "effects": {
+            "lore": "seal_vulnerabilities",
+            "insight": 5,
+            "corruption": 5,
+            "setsFlags": ["knows_seal_vulnerabilities"]
+          },
+          "result": "'The four remaining Seals are weakening,' the fragment says. 'Each Herald accelerates the decay. But here's what the Architects never understood: the Seals aren't just containing the World-Eater. They're containing the solution.' Knowledge burns into you like acid."
+        },
+        {
+          "text": "Ask to be made whole",
+          "effects": {
+            "maxHp": 8,
+            "corruption": 8,
+            "setsFlags": ["blessed_by_fifth_seal"]
+          },
+          "result": "The fragment touches you with a hand made of broken possibilities. Pain and power surge through you. 'Whole?' it laughs. 'Nobody is whole. But I can make you... more. More broken. More powerful. Same thing, really.' Your body changes. Strengthens. Something else changes too."
+        },
+        {
+          "text": "Offer to help reassemble it",
+          "effects": {
+            "corruption": 3,
+            "reputation": {"rustborn": 1, "first_light": 1},
+            "setsFlags": ["allied_with_fifth_seal"]
+          },
+          "result": "'Help?' The fragment pauses its eternal reassembly. 'Nobody's offered that in... ever.' It considers. 'Find the other pieces. They're hiding in the factions—the Rustborn revere one, the Choir trapped another. Bring them to me, and I'll show you what the Architects really intended.'"
+        },
+        {
+          "text": "Back away slowly",
+          "effects": {
+            "hp": -3
+          },
+          "result": "Reality snaps shut. The fissure heals, leaving you with a headache and a nosebleed. The Fifth Seal's fragment watches from somewhere between possibilities, neither here nor gone. 'You'll be back,' it says. 'They always come back.'"
+        }
+      ]
+    },
+
+    {
+      "id": "rustborn_war_council",
+      "name": "The Tribal Council",
+      "category": "faction",
+      "chainOf": "tribal_duel",
+      "requirements": {"flags": ["showed_tribal_token"]},
+      "text": "The Rustborn have called a council—rare, dangerous, sacred. Tribal leaders gather around a fire fed by void-touched fuel that burns purple. They've invited you. Keth's token grants you the right to speak. The Scrap-King's empty throne looms at the edge of the firelight.",
+      "image": "assets/images/events/war_council.svg",
+      "atmosphere": "In the Tribes, councils end in alliance or blood. There is no middle ground.",
+      "choices": [
+        {
+          "text": "Warn them about the Titans",
+          "effects": {
+            "reputation": {"rustborn": 3},
+            "setsFlags": ["warned_council_about_titans"],
+            "insight": 2
+          },
+          "requirements": {"flags": ["knows_titan_truth"]},
+          "result": "You tell them what you found at the shrine—the skull is a mask, the Titans were never gods. The council erupts. Some believe you. Some want you dead for blasphemy. But the eldest shaman nods slowly. 'The dreams told us,' she whispers. 'We didn't want to listen.'"
+        },
+        {
+          "text": "Offer to fight the Scrap-King",
+          "effects": {
+            "reputation": {"rustborn": 4},
+            "setsFlags": ["champion_against_scrap_king"],
+            "status": {"strength": 2}
+          },
+          "result": "'I'll challenge the King,' you say. Silence. Then, slowly, fists pound on rust-metal in approval. 'The outsider has a warrior's heart,' the eldest says. 'If you defeat the King, the Tribes will follow you. If you die...' She shrugs. 'We'll find another champion.'"
+        },
+        {
+          "text": "Share Architect knowledge",
+          "effects": {
+            "reputation": {"rustborn": 2},
+            "lore": "tribal_architect_pact",
+            "setsFlags": ["tribal_scholar"]
+          },
+          "requirements": {"flags": ["heard_architect_recording"]},
+          "result": "You share what the terminal revealed. The council listens with growing horror. 'The Architects made the Seals,' the shaman translates for those who don't understand. 'And the Seals are failing.' A heavy silence. Then: 'What do we do?' For the first time, they're asking you."
+        },
+        {
+          "text": "Listen and learn",
+          "effects": {
+            "lore": "tribal_politics",
+            "insight": 2,
+            "setsFlags": ["understands_tribal_politics"]
+          },
+          "result": "You sit and observe. The politics of the Tribes are complex—blood feuds, resource disputes, disagreements about the Scrap-King's vision. You learn who holds real power, who's afraid, and who might be turned. Knowledge is the sharpest weapon in any arsenal."
+        }
+      ]
+    },
+
+    {
+      "id": "first_light_alliance",
+      "name": "The Commander's Offer",
+      "category": "faction",
+      "chainOf": "first_light_patrol",
+      "requirements": {"flags": ["shared_herald_truth_with_first_light"]},
+      "text": "A First Light messenger finds you—white armor, silver insignia, carrying a sealed letter. 'Commander Vasara requests your presence,' they say crisply. 'Your intelligence about the Heralds has reached the highest levels. The Commander wishes to discuss... an arrangement.'",
+      "image": "assets/images/events/first_light_commander.svg",
+      "atmosphere": "The First Light doesn't make offers lightly. This is either an honor or a trap.",
+      "choices": [
+        {
+          "text": "Accept the meeting",
+          "effects": {
+            "reputation": {"first_light": 3},
+            "corruption": -5,
+            "setsFlags": ["met_commander_vasara", "first_light_ally"],
+            "unlocks": ["first_light_mission"]
+          },
+          "result": "Commander Vasara is sharp-eyed and direct. 'The Heralds are our primary concern,' she says. 'If what you say is true, our entire strategy must change. We've been fighting symptoms, not the disease.' She offers resources—purification, supplies, intelligence. 'In exchange, we need eyes in places we can't go. Places the corruption has claimed.'"
+        },
+        {
+          "text": "Negotiate for better terms",
+          "effects": {
+            "reputation": {"first_light": 2},
+            "credits": 50,
+            "artifact": "first_light_beacon",
+            "setsFlags": ["first_light_contractor"]
+          },
+          "result": "'Information has value,' you say. 'So does risk.' Vasara's eyes narrow, then she nods. 'Fair. You'll receive supplies, credits, and a beacon—activate it in danger and we'll respond. But we expect results, traveler. The Light doesn't invest in failures.'"
+        },
+        {
+          "text": "Decline politely",
+          "effects": {
+            "reputation": {"first_light": 1},
+            "setsFlags": ["declined_first_light_alliance"]
+          },
+          "result": "'I work alone,' you say. The messenger's expression doesn't change. 'The Commander anticipated that response. She says: the offer remains open. The Light is patient.' They leave without another word. You're not sure if you just made a wise choice or a foolish one."
+        },
+        {
+          "text": "Ask about their corruption research",
+          "effects": {
+            "lore": "first_light_research",
+            "insight": 3,
+            "corruption": -3,
+            "setsFlags": ["knows_purification_secrets"]
+          },
+          "result": "The messenger hesitates, then shares what they can. 'The Commander's researchers have found that corruption isn't foreign—it's native to Vharos. The planet itself is corrupted. The Seals don't contain something from outside. They contain something that was always here.' That changes everything."
+        }
+      ]
+    }
+  ]
+}
