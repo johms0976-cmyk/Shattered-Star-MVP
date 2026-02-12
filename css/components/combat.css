@@ -1,0 +1,875 @@
+/* =============================================
+   COMBAT SCREEN STYLES
+   Shattered Star - Sci-Fi Noir Cosmic Horror Deckbuilder
+   FIXED: Enemy intent visibility and proper styling
+   ADDED: Layered parallax combat backgrounds
+   @version 0.3.0
+   ============================================= */
+
+#combat-screen {
+    background: linear-gradient(180deg, #1a0a0a 0%, #0a0a1a 50%, #0a1a1a 100%);
+}
+
+.combat-container {
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    height: 100%;
+    position: relative;
+}
+
+/* =============================================
+   LAYERED COMBAT BACKGROUND
+   Three PNG layers: far (sky), mid (architecture), floor (ground)
+   Inserted by setupCombatBackground() in CombatScreen.js
+   ============================================= */
+.combat-bg-layers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.combat-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.6s ease-in;
+}
+
+.combat-bg-layer.loaded {
+    opacity: 1;
+}
+
+/* Far layer: sky & distant landscape */
+.combat-bg-far {
+    z-index: 1;
+}
+
+/* Mid layer: architecture framing left/right */
+.combat-bg-mid {
+    z-index: 2;
+}
+
+/* Floor layer: ground plane + foreground debris */
+.combat-bg-floor {
+    z-index: 3;
+}
+
+/* ── All combat content must sit above background layers ── */
+.enemy-area,
+.effects-layer,
+.player-area,
+.hand-area,
+.combat-ui,
+.energy-display,
+.deck-piles,
+#biome-banner,
+#void-channel-panel {
+    position: relative;
+    z-index: 10;
+}
+
+/* =============================================
+   ENEMY AREA
+   ============================================= */
+.enemy-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+    padding-bottom: var(--space-2xl);
+}
+
+.enemy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 50px; /* Make room for intent above */
+    min-height: 180px;
+}
+
+/* =============================================
+   ENEMY INTENT - FIXED FOR VISIBILITY
+   ============================================= */
+.enemy-intent {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    font-size: 1rem;
+    z-index: 10;
+    white-space: nowrap;
+    min-width: 50px;
+}
+
+/* Intent icon styling */
+.enemy-intent .intent-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+/* Intent value (damage/block amount) */
+.enemy-intent .intent-value {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-text-primary, #e8e8f0);
+}
+
+/* Intent type specific colors - Attack */
+.enemy-intent.intent-attack {
+    border-color: var(--color-hp, #ff2d55);
+    background: rgba(255, 45, 85, 0.2);
+}
+
+.enemy-intent.intent-attack .intent-icon {
+    color: var(--color-hp, #ff2d55);
+}
+
+.enemy-intent.intent-attack .intent-value {
+    color: var(--color-hp, #ff2d55);
+}
+
+/* Intent type specific colors - Defend/Block */
+.enemy-intent.intent-defend,
+.enemy-intent.intent-block {
+    border-color: var(--color-block, #00a5ff);
+    background: rgba(0, 165, 255, 0.2);
+}
+
+.enemy-intent.intent-defend .intent-icon,
+.enemy-intent.intent-block .intent-icon {
+    color: var(--color-block, #00a5ff);
+}
+
+.enemy-intent.intent-defend .intent-value,
+.enemy-intent.intent-block .intent-value {
+    color: var(--color-block, #00a5ff);
+}
+
+/* Intent type specific colors - Buff */
+.enemy-intent.intent-buff {
+    border-color: var(--color-radiant-gold, #ffd700);
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.enemy-intent.intent-buff .intent-icon {
+    color: var(--color-radiant-gold, #ffd700);
+}
+
+/* Intent type specific colors - Debuff */
+.enemy-intent.intent-debuff {
+    border-color: var(--color-corruption, #bf00ff);
+    background: rgba(191, 0, 255, 0.2);
+}
+
+.enemy-intent.intent-debuff .intent-icon {
+    color: var(--color-corruption, #bf00ff);
+}
+
+/* Intent type specific colors - Unknown */
+.enemy-intent.intent-unknown {
+    border-color: var(--color-text-dim, #666);
+    background: rgba(100, 100, 100, 0.2);
+}
+
+.enemy-intent.intent-unknown .intent-icon {
+    color: var(--color-text-dim, #666);
+}
+
+/* Animation for attack intent - pulsing threat */
+@keyframes intentPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+}
+
+.enemy-intent.intent-attack {
+    animation: intentPulse 2s ease-in-out infinite;
+}
+
+/* =============================================
+   ENEMY SPRITE
+   ============================================= */
+.enemy-sprite {
+    width: 120px;
+    height: 120px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-text-dim);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    transition: all var(--transition-fast);
+}
+
+.enemy-icon {
+    font-size: 3rem;
+}
+
+.enemy.targeted .enemy-sprite {
+    border-color: var(--color-hp);
+    box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
+}
+
+.enemy.targetable .enemy-sprite {
+    border-color: var(--color-radiant-gold);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+}
+
+.enemy.targetable:hover .enemy-sprite {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.enemy.damaged .enemy-sprite {
+    animation: enemyDamage 0.3s ease;
+}
+
+.enemy.dead {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@keyframes enemyDamage {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* =============================================
+   ENEMY HP BAR
+   ============================================= */
+.enemy-hp-bar-container {
+    width: 100px;
+    height: 8px;
+    background: var(--color-void-black);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+    overflow: hidden;
+    position: relative;
+}
+
+.enemy-hp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal);
+}
+
+.enemy-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal);
+}
+
+.enemy-hp-text {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+    text-align: center;
+}
+
+/* Alternative HP text inside bar */
+.enemy-hp-bar-container .enemy-hp-text,
+.enemy-hp-bar .hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.625rem;
+    font-weight: bold;
+    text-shadow: 0 0 2px black;
+}
+
+.enemy-name {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    text-align: center;
+}
+
+/* =============================================
+   ENEMY BLOCK & STATUS
+   ============================================= */
+.enemy-block {
+    position: absolute;
+    top: 60px;
+    right: -10px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px;
+    background: var(--color-block);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}
+
+.enemy-debuff {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--color-text-primary, #e8e8f0);
+    margin-top: 4px;
+}
+
+.enemy-buff {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+.enemy-buff.strength-buff {
+    color: #ff6644;
+    border: 1px solid rgba(255, 102, 68, 0.4);
+}
+
+.enemy-statuses {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+}
+
+.status-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    position: relative;
+}
+
+.status-icon .status-count {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    font-size: 0.625rem;
+    background: var(--color-void-black);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* =============================================
+   EFFECTS LAYER
+   ============================================= */
+.effects-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.damage-number {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-hp);
+    text-shadow: 0 0 10px currentColor;
+    animation: damageFloat 1s ease-out forwards;
+    pointer-events: none;
+}
+
+.damage-number.block {
+    color: var(--color-block);
+}
+
+.damage-number.heal {
+    color: #4ade80;
+}
+
+@keyframes damageFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
+
+/* =============================================
+   PLAYER AREA
+   ============================================= */
+.player-area {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.player-character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-sprite {
+    width: 100px;
+    height: 100px;
+    background: var(--color-neon-cyan);
+    opacity: 0.2;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.player-stats-combat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+}
+
+.stat-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-block);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: white;
+}
+
+.stat-block.has-block {
+    display: flex;
+}
+
+.stat-hp-bar {
+    width: 200px;
+    height: 24px;
+    background: var(--color-void-black);
+    border: 2px solid var(--color-hp);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.hp-fill,
+#combat-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal);
+}
+
+.hp-text,
+#combat-hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    text-shadow: 0 0 4px black;
+}
+
+/* =============================================
+   HAND AREA
+   ============================================= */
+.hand-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: var(--space-md);
+    padding-bottom: var(--space-xl);
+    min-height: 200px;
+    perspective: 1000px;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+/* =============================================
+   COMBAT UI
+   ============================================= */
+.combat-ui {
+    position: absolute;
+    bottom: var(--space-lg);
+    left: var(--space-lg);
+    right: var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.combat-ui > * {
+    pointer-events: auto;
+}
+
+/* Energy Display */
+.energy-display {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface);
+    border: 2px solid var(--color-energy);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+}
+
+.energy-display.empty {
+    border-color: var(--color-text-dim);
+    opacity: 0.7;
+}
+
+.energy-display.low {
+    border-color: var(--color-rust-orange);
+}
+
+.energy-current,
+#energy-current {
+    font-size: 2.5rem;
+    color: var(--color-energy);
+    text-shadow: 0 0 10px var(--color-energy);
+}
+
+.energy-divider {
+    font-size: 1.5rem;
+    color: var(--color-text-dim);
+}
+
+.energy-max,
+#energy-max {
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+/* End Turn Button */
+.end-turn-btn,
+#btn-end-turn {
+    padding: var(--space-md) var(--space-xl);
+    background: linear-gradient(135deg, var(--color-rust-orange), var(--color-blood-red));
+    border: none;
+    border-radius: var(--radius-md);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+}
+
+.end-turn-btn:hover,
+#btn-end-turn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(255, 107, 53, 0.5);
+}
+
+.end-turn-btn:active,
+#btn-end-turn:active {
+    transform: translateY(0);
+}
+
+.end-turn-btn:disabled,
+#btn-end-turn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Deck Piles */
+.deck-piles {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.pile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.pile:hover {
+    background: var(--color-surface-light);
+}
+
+.pile-count {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.pile-label {
+    font-size: 0.625rem;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+}
+
+.draw-pile,
+#draw-pile {
+    border: 1px solid var(--color-neon-cyan);
+}
+
+.discard-pile,
+#discard-pile {
+    border: 1px solid var(--color-text-dim);
+}
+
+/* =============================================
+   TURN INDICATOR
+   ============================================= */
+.turn-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--color-neon-cyan);
+    text-shadow: 0 0 30px var(--color-neon-cyan);
+    opacity: 0;
+    animation: turnAnnounce 1.5s ease-out;
+    pointer-events: none;
+}
+
+@keyframes turnAnnounce {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* =============================================
+   COMBAT REWARD POPUP
+   ============================================= */
+.combat-reward {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-surface);
+    border: 2px solid var(--color-neon-cyan);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    z-index: var(--z-modal);
+    box-shadow: 0 0 50px rgba(0, 245, 255, 0.3);
+}
+
+/* =============================================
+   SCREEN SHAKE EFFECT
+   ============================================= */
+.screen-shake {
+    animation: screenShake 0.3s ease-out;
+}
+
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(5px, -5px); }
+    30% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, 5px); }
+    50% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, -3px); }
+    70% { transform: translate(-3px, 3px); }
+    80% { transform: translate(3px, 3px); }
+    90% { transform: translate(-1px, -1px); }
+}
+
+/* =============================================
+   KORVAX-SPECIFIC: OVERHEAT BAR
+   ============================================= */
+.overheat-bar {
+    width: 150px;
+    height: 12px;
+    background: var(--color-void-black);
+    border: 1px solid var(--color-rust-orange);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.overheat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-rust-orange), var(--color-hp));
+    transition: width var(--transition-fast);
+}
+
+.overheat-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.625rem;
+    font-weight: bold;
+}
+
+/* =============================================
+   RESPONSIVE STYLES
+   ============================================= */
+@media (max-width: 768px) {
+    .enemy-area {
+        gap: var(--space-md);
+        padding: var(--space-md);
+    }
+    
+    .enemy {
+        padding-top: 40px;
+        min-height: 150px;
+    }
+    
+    .enemy-intent {
+        padding: 4px 8px;
+        font-size: 0.875rem;
+    }
+    
+    .enemy-intent .intent-icon {
+        font-size: 1rem;
+    }
+    
+    .enemy-intent .intent-value {
+        font-size: 0.875rem;
+    }
+    
+    .enemy-sprite {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+    
+    .enemy-hp-bar-container {
+        width: 80px;
+    }
+    
+    .player-sprite {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .stat-hp-bar {
+        width: 150px;
+        height: 20px;
+    }
+    
+    .hand-area {
+        min-height: 150px;
+        padding: var(--space-sm);
+    }
+    
+    .combat-ui {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+    
+    .energy-display {
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .energy-current,
+    #energy-current {
+        font-size: 1.75rem;
+    }
+    
+    .end-turn-btn,
+    #btn-end-turn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 1rem;
+    }
+    
+    .deck-piles {
+        gap: var(--space-sm);
+    }
+    
+    .pile {
+        padding: var(--space-xs);
+    }
+    
+    .pile-count {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .enemy-sprite {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .enemy-hp-bar-container {
+        width: 60px;
+        height: 6px;
+    }
+    
+    .enemy-name {
+        font-size: 0.75rem;
+    }
+    
+    .enemy-intent {
+        padding: 3px 6px;
+        font-size: 0.75rem;
+    }
+    
+    .combat-ui {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        padding: var(--space-sm);
+        justify-content: center;
+    }
+}
