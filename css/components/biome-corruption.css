@@ -1,0 +1,435 @@
+/**
+ * biome-corruption.css - Biome effects banner + Void Channel panel
+ * Shattered Star
+ */
+
+/* ============================================
+   BIOME EFFECT BANNER
+   Shows at top of combat screen
+   ============================================ */
+
+.biome-effect-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: linear-gradient(90deg,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    border-bottom: 1px solid var(--biome-color, #606080);
+    font-size: 0.75rem;
+    color: #a0a0b0;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.biome-effect-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--biome-color, #606080) 50%,
+        transparent 100%
+    );
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+.biome-effect-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--biome-color, #606080) 50%,
+        transparent 100%
+    );
+    opacity: 0.5;
+}
+
+.biome-icon {
+    font-size: 1rem;
+    filter: drop-shadow(0 0 4px var(--biome-color, #606080));
+    animation: biomePulse 3s ease-in-out infinite;
+}
+
+@keyframes biomePulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.biome-name {
+    font-family: var(--font-display, 'Courier New', monospace);
+    letter-spacing: 0.15em;
+    color: var(--biome-color, #a0a0b0);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+.biome-desc {
+    color: #707080;
+    font-size: 0.65rem;
+    font-style: italic;
+    flex: 1;
+    text-align: right;
+}
+
+/* ── Temporal Flux card cost indicator ── */
+
+.card-cost.flux-increased {
+    color: #ff4060 !important;
+    text-shadow: 0 0 8px rgba(255, 64, 96, 0.5);
+    animation: fluxPulse 1s ease-in-out infinite;
+}
+
+.card-cost.flux-decreased {
+    color: #40ff60 !important;
+    text-shadow: 0 0 8px rgba(64, 255, 96, 0.5);
+    animation: fluxPulse 1s ease-in-out infinite;
+}
+
+@keyframes fluxPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* Small flux arrow indicator on card */
+.flux-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 0.6rem;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.flux-indicator.up { color: #ff4060; }
+.flux-indicator.down { color: #40ff60; }
+
+/* ── Shifting Faces intent glitch ── */
+
+@keyframes intentShift {
+    0% { transform: translateX(0); opacity: 1; }
+    25% { transform: translateX(-3px); opacity: 0.5; }
+    50% { transform: translateX(3px); opacity: 0.3; }
+    75% { transform: translateX(-1px); opacity: 0.7; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+.enemy-intent.shifting {
+    animation: intentShift 0.4s ease-out;
+}
+
+/* ── Biome-specific combat screen tints ── */
+
+#combat-screen.biome-ironspine {
+    background: linear-gradient(180deg, #1a0f05 0%, #0a0a1a 50%, #1a1008 100%);
+}
+
+#combat-screen.biome-eclipse {
+    background: linear-gradient(180deg, #0f0520 0%, #0a0a1a 50%, #100a20 100%);
+}
+
+#combat-screen.biome-radiant {
+    background: linear-gradient(180deg, #1a1a05 0%, #0a0a1a 50%, #15150a 100%);
+}
+
+#combat-screen.biome-obsidian {
+    background: linear-gradient(180deg, #0a0010 0%, #0a0a1a 50%, #08000f 100%);
+}
+
+#combat-screen.biome-abyss {
+    background: linear-gradient(180deg, #100020 0%, #0a0a1a 50%, #150030 100%);
+}
+
+/* ============================================
+   VOID CHANNEL PANEL
+   Corruption spending UI during combat
+   ============================================ */
+
+.void-channel-panel {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    background: rgba(15, 5, 25, 0.92);
+    border: 1px solid rgba(191, 0, 255, 0.25);
+    border-radius: 6px;
+    z-index: 100;
+    transition: width 0.25s ease, background 0.25s ease;
+    overflow: hidden;
+}
+
+.void-channel-panel:hover {
+    width: 180px;
+    background: rgba(15, 5, 25, 0.98);
+    border-color: rgba(191, 0, 255, 0.5);
+    box-shadow: 0 0 20px rgba(191, 0, 255, 0.15);
+}
+
+.void-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-bottom: 1px solid rgba(191, 0, 255, 0.15);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.void-panel-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px rgba(191, 0, 255, 0.5));
+    animation: voidPanelPulse 2s ease-in-out infinite;
+}
+
+@keyframes voidPanelPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.void-panel-title {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: #bf00ff;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.void-channel-panel:hover .void-panel-title {
+    opacity: 1;
+}
+
+.void-panel-corruption {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.65rem;
+    color: #ff4060;
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.void-channel-panel:hover .void-panel-corruption {
+    opacity: 1;
+}
+
+/* ── Void Abilities ── */
+
+.void-abilities {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+}
+
+.void-ability {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: rgba(30, 10, 50, 0.6);
+    border: 1px solid rgba(191, 0, 255, 0.15);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #c0c0d0;
+    font-size: 0.7rem;
+}
+
+.void-ability:hover:not(:disabled) {
+    background: rgba(60, 20, 100, 0.5);
+    border-color: rgba(191, 0, 255, 0.5);
+    transform: translateX(-2px);
+}
+
+.void-ability:active:not(:disabled) {
+    background: rgba(80, 30, 120, 0.6);
+    transform: translateX(-2px) scale(0.97);
+}
+
+.void-ability.locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.void-ability.locked:hover {
+    transform: none;
+}
+
+.ability-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.ability-name {
+    flex: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+}
+
+.void-channel-panel:hover .ability-name {
+    opacity: 1;
+}
+
+.ability-cost {
+    color: #bf00ff;
+    font-size: 0.6rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.void-channel-panel:hover .ability-cost {
+    opacity: 1;
+}
+
+.ability-new {
+    background: #bf00ff;
+    color: #000;
+    font-size: 0.5rem;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    animation: newPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes newPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* ── Empower Indicator ── */
+
+.empower-indicator {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+    color: #ff6b35;
+    text-align: center;
+    border-top: 1px solid rgba(255, 107, 53, 0.2);
+    background: rgba(255, 107, 53, 0.08);
+    animation: empowerGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes empowerGlow {
+    0%, 100% { background: rgba(255, 107, 53, 0.08); }
+    50% { background: rgba(255, 107, 53, 0.15); }
+}
+
+/* ── Corruption Spend VFX ── */
+
+@keyframes corruptionSpend {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2) translateY(-10px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-30px);
+    }
+}
+
+.corruption-spend-vfx {
+    position: fixed;
+    font-size: 1.5rem;
+    color: #bf00ff;
+    text-shadow: 0 0 15px rgba(191, 0, 255, 0.8);
+    pointer-events: none;
+    z-index: 2000;
+    animation: corruptionSpend 0.8s ease-out forwards;
+}
+
+/* ── Threshold Event Overlay ── */
+
+.threshold-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.threshold-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.threshold-title {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 1.5rem;
+    letter-spacing: 0.3em;
+    color: #bf00ff;
+    text-shadow: 0 0 30px rgba(191, 0, 255, 0.5);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.threshold-desc {
+    font-style: italic;
+    color: #a080c0;
+    font-size: 1rem;
+    max-width: 400px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 480px) {
+    .biome-effect-banner {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+    }
+    
+    .biome-desc {
+        display: none;
+    }
+    
+    .void-channel-panel {
+        right: 6px;
+        width: 44px;
+    }
+    
+    .void-channel-panel:hover {
+        width: 150px;
+    }
+    
+    .void-ability {
+        padding: 4px 6px;
+    }
+}
