@@ -1,0 +1,82 @@
+{
+  "act": 1,
+  "narrativeBookends": {
+    "preBoss": {
+      "id": "act1_pre_boss",
+      "name": "The Forge-Heart",
+      "type": "narrative",
+      "skippable": false,
+      "text": "The Forge-Heart rises from the rust desert like a clenched fist — a mountain of welded scrap and stolen machinery, pulsing with a light that shouldn't exist.\n\nAs you approach, the ground hums. Not vibration — resonance. Like standing inside a bell that was struck hours ago and hasn't stopped ringing.\n\nA Rustborn deserter crouches in the shadows near the gate, clutching his head.\n\n\"Don't go in there,\" he whispers. \"He found something under the scrap. Something that was buried. Something that sings.\"\n\nHis eyes are wrong — the pupils too wide, reflecting light that isn't there.\n\n\"The Scrap-King thinks he's using it. But it's using him. I can hear it in my teeth. In my dreams. It keeps saying the same word...\"\n\nHe looks at you with absolute terror.\n\n\"...'Open.'\"",
+      "image": "assets/images/events/forge_heart.svg",
+      "choices": [
+        {
+          "text": "Ask about the Seal",
+          "effects": {"flags": {"knows_about_seal": true}},
+          "result": "\"Seal?\" The deserter laughs — a broken sound. \"Is that what it is? He dug it up from under the Wastes. A disc of black metal with symbols that move when you're not looking.\"\n\nHe grabs your arm with surprising strength.\n\n\"He's been feeding it scrap. Feeding it people. And it's waking up. Whatever's behind it wants out.\"\n\nThe hum grows louder. The air tastes of copper and something older.\n\nYou pry his fingers loose and face the Forge-Heart gate.\n\nWhatever's inside, it knows you're here."
+        },
+        {
+          "text": "Push past — no time for fear",
+          "effects": {"flags": {"charged_in": true}},
+          "result": "You step over the deserter and approach the gate. Behind you, he curls into a ball and starts whispering numbers.\n\nThe gate is massive — welded shut from the inside, then blown open from within. Claw marks in the metal. Not human claws.\n\nThe hum is a chord now, harmonizing with something in your chest. Your artifacts vibrate.\n\nThe Scrap-King is waiting inside. But he's not what you should be afraid of."
+        },
+        {
+          "text": "Offer the deserter water (Lose 5 HP)",
+          "effects": {"hp": -5, "reputation": {"rustborn": 1}, "flags": {"helped_deserter": true}},
+          "result": "You kneel and offer your canteen. The deserter drinks in desperate gulps, then steadies.\n\n\"Thank you. I— there's a weak point. Left side of the throne room, where he welded the Seal into his armor. The metal there is thin. Stressed.\"\n\nHe presses a crude key into your hand.\n\n\"Service tunnel. Bypasses the main guard room. I won't go back in there, but you... you might make it.\"\n\nHis eyes clear for a moment.\n\n\"Kill him. Before it opens. Please.\""
+        }
+      ],
+      "varraVariants": {
+        "varra_loyal": {
+          "additionalText": "\n\nA Rustflank signal-arrow arcs overhead — three red sparks. Varra's scouts are in position.\n\nA scratched message is pinned to the gate: \"LEFT KNEE. HIT IT HARD. — V\"",
+          "additionalEffect": {"flags": {"varra_support_active": true}}
+        },
+        "varra_betrayed": {
+          "additionalText": "\n\nYou notice fresh tracks leading inside — Varra's distinctive boot print, alongside a squad of Rustflank soldiers.\n\nShe got here first. The question is: whose side is she on now?",
+          "additionalEffect": {"flags": {"varra_inside": true}}
+        }
+      }
+    },
+
+    "postBoss": {
+      "id": "act1_post_boss",
+      "name": "What the Scrap-King Found",
+      "type": "narrative",
+      "skippable": false,
+      "text": "The Scrap-King falls.\n\nHis welded armor splits open as he crashes to the floor, and something rolls free — a disc of absolute black, no bigger than your palm. The Seal.\n\nThe humming stops. The silence is worse.\n\nYou pick it up. It's cold — not cold like metal, cold like absence. Like holding a hole in the world.\n\nAnd then it speaks.\n\nNot in sound. In understanding. In a thought that was not yours but is now:\n\n\"ONE OF FOUR. YOU HAVE TOUCHED WHAT WAS MEANT TO HOLD ME. AND IN TOUCHING IT... YOU HAVE BEGUN TO UNDERSTAND.\"\n\nThe Seal pulses once. Your corruption meter spikes — then settles.\n\n\"THE OTHERS WAIT. IN THE MARSH. IN THE LIGHT. IN THE SHADOW. FIND THEM, LITTLE FRAGMENT. FIND THEM AND CHOOSE: BIND ME TIGHTER... OR SET ME FREE.\"\n\nThe voice fades. The disc goes inert in your hand.\n\nBut you can still feel it. Like a second heartbeat. Like a door left ajar.",
+      "image": "assets/images/events/seal_reveal.svg",
+      "choices": [
+        {
+          "text": "Study the Seal carefully",
+          "effects": {
+            "corruption": 3,
+            "flags": {"seal_studied": true, "seal_1_found": true}
+          },
+          "result": "You turn the disc in your hands. The symbols shift — not randomly, but in response to your attention. Like a language that teaches itself to be read.\n\nYou learn three things:\n\nFirst — the Seal is one of four, placed by beings called Architects to bind something called Xal'Korath.\n\nSecond — the Seals are weakening. Have been for centuries. The Scrap-King's meddling only accelerated what was already happening.\n\nThird — the Seal now responds to you. It has chosen you. Or been aimed at you.\n\nThe corruption you gained in studying it feels different. Older. Like it was always there, waiting to be noticed.\n\nThe way forward is clear: find the other Seals before someone else does.\n\nOr before what's behind them wakes up."
+        },
+        {
+          "text": "Pocket the Seal and move on — answers later",
+          "effects": {
+            "corruption": 1,
+            "flags": {"seal_pocketed": true, "seal_1_found": true}
+          },
+          "result": "You shove the disc into your pack. No time for cosmic riddles when you're still bleeding.\n\nBut as you leave the Forge-Heart, you notice things. The rust desert looks different — the sand patterns seem intentional, like circuits. The distant mountains cast shadows that point the same direction, regardless of where the sun is.\n\nVharos is not what you thought it was.\n\nThe Seal sits in your pack like a live coal, humming a note only you can hear.\n\nThe Marsh awaits. Something there is already expecting you."
+        },
+        {
+          "text": "Try to destroy the Seal",
+          "effects": {
+            "hp": -10,
+            "corruption": 5,
+            "flags": {"seal_attacked": true, "seal_1_found": true}
+          },
+          "result": "You slam the disc against the floor. Nothing. You fire at it. The shot ricochets. You try to bend it with your hands—\n\nThe Seal screams.\n\nNot sound. A pulse of wrongness that drops you to your knees. For one terrible second, you see through the Seal — into what's behind it.\n\nAn eye. Vast beyond comprehension. Looking at you with something worse than hunger.\n\nRecognition.\n\n\"GOOD,\" the thought-voice says. \"ANGER OPENS MORE DOORS THAN PATIENCE.\"\n\nThe vision fades. You're on the floor, bleeding from your nose, corruption spiking.\n\nThe Seal is undamaged. Of course it is.\n\nYou pocket it with shaking hands. Destroying it is not an option.\n\nBut the thing behind it just learned your name."
+        }
+      ],
+      "postChoiceText": "You leave the Forge-Heart as the sun sets over the Ironspine Wastes. The rust desert stretches behind you — conquered, but not understood.\n\nAhead, the landscape shifts. The air grows damp. Trees that shouldn't exist twist from ground that shouldn't be fertile.\n\nThe Eclipse Marsh. Where time goes to drown.\n\nAnd somewhere in its depths, another Seal is singing.",
+      "transition": {
+        "nextAct": 2,
+        "nextRegion": "Eclipse Marsh",
+        "screenTransition": "act-transition"
+      }
+    }
+  }
+}
