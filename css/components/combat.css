@@ -1,0 +1,1102 @@
+/* =============================================
+   COMBAT SCREEN STYLES
+   Shattered Star - Sci-Fi Noir Cosmic Horror Deckbuilder
+   FIXED: Enemy intent visibility and proper styling
+   ADDED: Layered parallax combat backgrounds
+   ADDED: First-person POV perspective system
+   @version 0.5.0
+   ============================================= */
+
+#combat-screen {
+    background: linear-gradient(180deg, #1a0a0a 0%, #0a0a1a 50%, #0a1a1a 100%);
+}
+
+.combat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* =============================================
+   VIGNETTE OVERLAY - Claustrophobic darkness
+   ============================================= */
+.combat-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 70% 60% at 50% 55%,
+        transparent 30%,
+        rgba(0, 0, 0, 0.55) 100%
+    );
+    pointer-events: none;
+    z-index: 90;
+}
+
+/* =============================================
+   LAYERED COMBAT BACKGROUND
+   Three PNG layers: far (sky), mid (architecture), floor (ground)
+   Inserted by setupCombatBackground() in CombatScreen.js
+   ============================================= */
+.combat-bg-layers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.combat-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.6s ease-in;
+}
+
+.combat-bg-layer.loaded {
+    opacity: 1;
+}
+
+/* Far layer: sky & distant landscape */
+.combat-bg-far {
+    z-index: 1;
+}
+
+/* Mid layer: architecture framing left/right */
+.combat-bg-mid {
+    z-index: 2;
+}
+
+/* Floor layer: ground plane + foreground debris */
+.combat-bg-floor {
+    z-index: 3;
+}
+
+/* ── All combat content must sit above background layers ── */
+.enemy-area,
+.effects-layer,
+.player-area,
+.hand-area,
+.combat-hud,
+.combat-ui,
+.energy-display,
+.deck-piles,
+#biome-banner,
+#void-channel-panel {
+    position: relative;
+    z-index: 10;
+}
+
+/* =============================================
+   ENEMY AREA — First-Person Perspective Stage
+   Enemies are positioned absolutely with depth tiers
+   ============================================= */
+.enemy-area {
+    position: relative;
+    flex: 1;
+    perspective: 900px;
+    perspective-origin: 50% 90%;
+    overflow: hidden;
+    z-index: 10;
+}
+
+/* Atmospheric fog — depth fades to dark at top */
+.enemy-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    background: linear-gradient(
+        to bottom,
+        rgba(8, 4, 12, 0.75) 0%,
+        rgba(10, 5, 15, 0.3) 60%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ground plane receding into distance */
+.enemy-area::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -30%;
+    width: 160%;
+    height: 55%;
+    background: linear-gradient(
+        to top,
+        rgba(25, 12, 8, 0.6) 0%,
+        rgba(15, 8, 5, 0.3) 50%,
+        transparent 100%
+    );
+    transform: perspective(600px) rotateX(25deg);
+    transform-origin: bottom center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =============================================
+   ENEMY — Depth-based positioning
+   JS assigns data-depth="front|mid|back"
+   ============================================= */
+.enemy {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    z-index: 10;
+    /* Offset left by half width so `left: X%` centers the enemy */
+    transform: translateX(-50%);
+    padding-top: 50px; /* Room for intent above sprite */
+}
+
+/* ── DEPTH: FRONT — Large, bright, close ── */
+.enemy[data-depth="front"] {
+    bottom: 5%;
+    z-index: 30;
+    filter: brightness(1.1);
+}
+
+.enemy[data-depth="front"] .enemy-sprite {
+    width: 200px;
+    height: 240px;
+}
+
+.enemy[data-depth="front"] .enemy-hp-bar-container {
+    width: 130px;
+}
+
+/* Idle sway — front enemies feel alive */
+.enemy[data-depth="front"] {
+    animation: idleSwayFront 4s ease-in-out infinite;
+}
+
+@keyframes idleSwayFront {
+    0%, 100% { margin-left: 0; }
+    50% { margin-left: 3px; }
+}
+
+/* ── DEPTH: MID — Medium, slightly dimmed ── */
+.enemy[data-depth="mid"] {
+    bottom: 18%;
+    z-index: 20;
+    filter: brightness(0.82) saturate(0.9);
+}
+
+.enemy[data-depth="mid"] .enemy-sprite {
+    width: 150px;
+    height: 180px;
+}
+
+.enemy[data-depth="mid"] .enemy-hp-bar-container {
+    width: 100px;
+}
+
+.enemy[data-depth="mid"] {
+    animation: idleSwayMid 5s ease-in-out infinite;
+}
+
+@keyframes idleSwayMid {
+    0%, 100% { margin-left: 0; }
+    50% { margin-left: -2px; }
+}
+
+/* ── DEPTH: BACK — Small, dark, distant ── */
+.enemy[data-depth="back"] {
+    bottom: 30%;
+    z-index: 10;
+    filter: brightness(0.6) saturate(0.65);
+}
+
+.enemy[data-depth="back"] .enemy-sprite {
+    width: 110px;
+    height: 130px;
+}
+
+.enemy[data-depth="back"] .enemy-hp-bar-container {
+    width: 80px;
+}
+
+.enemy[data-depth="back"] .enemy-name {
+    font-size: 0.7rem;
+}
+
+.enemy[data-depth="back"] .enemy-intent {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+}
+
+/* ── BOSS OVERRIDE — Towering presence ── */
+.enemy.enemy-boss[data-depth="front"] .enemy-sprite {
+    width: 280px;
+    height: 340px;
+}
+
+.enemy.enemy-boss[data-depth="front"] .enemy-hp-bar-container {
+    width: 180px;
+}
+
+.enemy.enemy-boss[data-depth="front"] {
+    bottom: 0%;
+    animation: bossIdle 3s ease-in-out infinite;
+}
+
+@keyframes bossIdle {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -4px; }
+}
+
+/* ── ELITE OVERRIDE — Slightly larger ── */
+.enemy.enemy-elite[data-depth="front"] .enemy-sprite {
+    width: 220px;
+    height: 270px;
+}
+
+.enemy.enemy-elite[data-depth="mid"] .enemy-sprite {
+    width: 170px;
+    height: 200px;
+}
+
+/* =============================================
+   ENEMY INTENT - FIXED FOR VISIBILITY
+   ============================================= */
+.enemy-intent {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    font-size: 1rem;
+    z-index: 10;
+    white-space: nowrap;
+    min-width: 50px;
+}
+
+/* Intent icon styling */
+.enemy-intent .intent-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+/* Intent value (damage/block amount) */
+.enemy-intent .intent-value {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-text-primary, #e8e8f0);
+}
+
+/* Intent type specific colors - Attack */
+.enemy-intent.intent-attack {
+    border-color: var(--color-hp, #ff2d55);
+    background: rgba(255, 45, 85, 0.2);
+}
+
+.enemy-intent.intent-attack .intent-icon {
+    color: var(--color-hp, #ff2d55);
+}
+
+.enemy-intent.intent-attack .intent-value {
+    color: var(--color-hp, #ff2d55);
+}
+
+/* Intent type specific colors - Defend/Block */
+.enemy-intent.intent-defend,
+.enemy-intent.intent-block {
+    border-color: var(--color-block, #00a5ff);
+    background: rgba(0, 165, 255, 0.2);
+}
+
+.enemy-intent.intent-defend .intent-icon,
+.enemy-intent.intent-block .intent-icon {
+    color: var(--color-block, #00a5ff);
+}
+
+.enemy-intent.intent-defend .intent-value,
+.enemy-intent.intent-block .intent-value {
+    color: var(--color-block, #00a5ff);
+}
+
+/* Intent type specific colors - Buff */
+.enemy-intent.intent-buff {
+    border-color: var(--color-radiant-gold, #ffd700);
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.enemy-intent.intent-buff .intent-icon {
+    color: var(--color-radiant-gold, #ffd700);
+}
+
+/* Intent type specific colors - Debuff */
+.enemy-intent.intent-debuff {
+    border-color: var(--color-corruption, #bf00ff);
+    background: rgba(191, 0, 255, 0.2);
+}
+
+.enemy-intent.intent-debuff .intent-icon {
+    color: var(--color-corruption, #bf00ff);
+}
+
+/* Intent type specific colors - Unknown */
+.enemy-intent.intent-unknown {
+    border-color: var(--color-text-dim, #666);
+    background: rgba(100, 100, 100, 0.2);
+}
+
+.enemy-intent.intent-unknown .intent-icon {
+    color: var(--color-text-dim, #666);
+}
+
+/* Animation for attack intent - pulsing threat */
+@keyframes intentPulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+}
+
+.enemy-intent.intent-attack {
+    animation: intentPulse 2s ease-in-out infinite;
+}
+
+/* =============================================
+   ENEMY SPRITE - Image-based with fallback
+   ============================================= */
+.enemy-sprite {
+    width: 140px;
+    height: 180px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transition: all var(--transition-fast, 0.15s);
+    position: relative;
+}
+
+.enemy-sprite-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    image-rendering: auto;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+    transition: filter var(--transition-fast, 0.15s), transform 0.3s ease;
+}
+
+/* Fallback emoji when image fails to load */
+.enemy-icon-fallback {
+    width: 100%;
+    height: 100%;
+    background: var(--color-surface);
+    border: 2px solid var(--color-text-dim);
+    border-radius: var(--radius-md);
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.enemy-icon {
+    font-size: 3rem;
+}
+
+/* ── Targeted enemy looms forward ── */
+.enemy.targeted .enemy-sprite {
+    filter: drop-shadow(0 0 16px rgba(255, 45, 85, 0.7));
+}
+
+.enemy.targeted .enemy-sprite-img {
+    filter: drop-shadow(0 0 16px rgba(255, 45, 85, 0.7));
+    transform: scale(1.08) translateY(-4px);
+}
+
+.enemy.targetable .enemy-sprite {
+    cursor: crosshair;
+}
+
+.enemy.targetable .enemy-sprite-img {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.enemy.targetable:hover .enemy-sprite-img {
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    transform: scale(1.08) translateY(-6px);
+}
+
+.enemy.damaged .enemy-sprite {
+    animation: enemyDamage 0.3s ease;
+}
+
+.enemy.dead {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@keyframes enemyDamage {
+    0%, 100% { transform: translateX(-50%); }
+    25% { transform: translateX(calc(-50% - 10px)); }
+    75% { transform: translateX(calc(-50% + 10px)); }
+}
+
+/* =============================================
+   ENEMY HP BAR
+   ============================================= */
+.enemy-hp-bar-container {
+    width: 100px;
+    height: 8px;
+    background: var(--color-void-black, #0a0a0a);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+    overflow: hidden;
+    position: relative;
+}
+
+.enemy-hp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal, 0.3s);
+}
+
+.enemy-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal, 0.3s);
+}
+
+.enemy-hp-text {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+    text-align: center;
+}
+
+/* Alternative HP text inside bar */
+.enemy-hp-bar-container .enemy-hp-text,
+.enemy-hp-bar .hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.625rem;
+    font-weight: bold;
+    text-shadow: 0 0 2px black;
+}
+
+.enemy-name {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* =============================================
+   ENEMY BLOCK & STATUS
+   ============================================= */
+.enemy-block {
+    position: absolute;
+    top: 70px;
+    right: -10px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px;
+    background: var(--color-block);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}
+
+.enemy-debuff {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--color-text-primary, #e8e8f0);
+    margin-top: 4px;
+}
+
+.enemy-buff {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+.enemy-buff.strength-buff {
+    color: #ff6644;
+    border: 1px solid rgba(255, 102, 68, 0.4);
+}
+
+.enemy-statuses {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+}
+
+.status-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    position: relative;
+}
+
+.status-icon .status-count {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    font-size: 0.625rem;
+    background: var(--color-void-black);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* =============================================
+   EFFECTS LAYER
+   ============================================= */
+.effects-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.damage-number {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-hp);
+    text-shadow: 0 0 10px currentColor;
+    animation: damageFloat 1s ease-out forwards;
+    pointer-events: none;
+}
+
+.damage-number.block {
+    color: var(--color-block);
+}
+
+.damage-number.heal {
+    color: #4ade80;
+}
+
+@keyframes damageFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
+
+/* =============================================
+   PLAYER AREA — HIDDEN in first-person mode
+   Stats are moved to the HUD overlay
+   ============================================= */
+.player-area {
+    display: none !important;
+}
+
+/* =============================================
+   COMBAT HUD — First-person stat overlay
+   Replaces the old player-area with a bottom HUD
+   ============================================= */
+.combat-hud {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: var(--space-sm, 8px) var(--space-lg, 24px);
+    padding-bottom: var(--space-sm, 8px);
+    pointer-events: none;
+    z-index: 95;
+}
+
+.combat-hud > * {
+    pointer-events: auto;
+}
+
+/* HUD Left — Energy */
+.hud-left {
+    display: flex;
+    align-items: center;
+}
+
+/* HUD Center — HP bar + Block */
+.hud-center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md, 12px);
+}
+
+.hud-center .stat-hp-bar {
+    width: 220px;
+    height: 26px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--color-hp, #ff2d55);
+    border-radius: var(--radius-sm, 4px);
+    position: relative;
+    overflow: hidden;
+}
+
+.hud-center .stat-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs, 4px);
+    padding: var(--space-xs, 4px) var(--space-sm, 8px);
+    background: rgba(0, 165, 255, 0.3);
+    border: 1px solid var(--color-block, #00a5ff);
+    border-radius: var(--radius-sm, 4px);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: white;
+}
+
+/* HUD Right — End Turn + Piles */
+.hud-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md, 12px);
+}
+
+/* HP bar in HUD */
+.hp-fill,
+#combat-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-hp-fill, #ff6b6b), var(--color-hp, #ff2d55));
+    transition: width var(--transition-normal, 0.3s);
+}
+
+.hp-text,
+#combat-hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    text-shadow: 0 0 4px black;
+}
+
+/* =============================================
+   HAND AREA — Cards at the bottom
+   ============================================= */
+.hand-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: var(--space-sm, 8px) var(--space-md, 12px);
+    padding-bottom: var(--space-lg, 24px);
+    min-height: 180px;
+    perspective: 1000px;
+    gap: var(--space-sm, 8px);
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 95;
+}
+
+/* =============================================
+   ENERGY DISPLAY
+   ============================================= */
+.energy-display {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--color-energy);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+}
+
+.energy-display.empty {
+    border-color: var(--color-text-dim);
+    opacity: 0.7;
+}
+
+.energy-display.low {
+    border-color: var(--color-rust-orange);
+}
+
+.energy-current,
+#energy-current {
+    font-size: 2.5rem;
+    color: var(--color-energy);
+    text-shadow: 0 0 10px var(--color-energy);
+}
+
+.energy-divider {
+    font-size: 1.5rem;
+    color: var(--color-text-dim);
+}
+
+.energy-max,
+#energy-max {
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+/* End Turn Button */
+.end-turn-btn,
+#btn-end-turn {
+    padding: var(--space-md) var(--space-xl);
+    background: linear-gradient(135deg, var(--color-rust-orange), var(--color-blood-red));
+    border: none;
+    border-radius: var(--radius-md);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+}
+
+.end-turn-btn:hover,
+#btn-end-turn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(255, 107, 53, 0.5);
+}
+
+.end-turn-btn:active,
+#btn-end-turn:active {
+    transform: translateY(0);
+}
+
+.end-turn-btn:disabled,
+#btn-end-turn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Deck Piles */
+.deck-piles {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.pile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.pile:hover {
+    background: var(--color-surface-light);
+}
+
+.pile-count {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.pile-label {
+    font-size: 0.625rem;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+}
+
+.draw-pile,
+#draw-pile {
+    border: 1px solid var(--color-neon-cyan);
+}
+
+.discard-pile,
+#discard-pile {
+    border: 1px solid var(--color-text-dim);
+}
+
+/* =============================================
+   COMBAT UI — Legacy layout (kept for compat)
+   ============================================= */
+.combat-ui {
+    display: none;
+}
+
+/* =============================================
+   TURN INDICATOR
+   ============================================= */
+.turn-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--color-neon-cyan);
+    text-shadow: 0 0 30px var(--color-neon-cyan);
+    opacity: 0;
+    animation: turnAnnounce 1.5s ease-out;
+    pointer-events: none;
+}
+
+@keyframes turnAnnounce {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* =============================================
+   COMBAT REWARD POPUP
+   ============================================= */
+.combat-reward {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-surface);
+    border: 2px solid var(--color-neon-cyan);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    z-index: var(--z-modal);
+    box-shadow: 0 0 50px rgba(0, 245, 255, 0.3);
+}
+
+/* =============================================
+   SCREEN SHAKE EFFECT
+   ============================================= */
+.screen-shake {
+    animation: screenShake 0.3s ease-out;
+}
+
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(5px, -5px); }
+    30% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, 5px); }
+    50% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, -3px); }
+    70% { transform: translate(-3px, 3px); }
+    80% { transform: translate(3px, 3px); }
+    90% { transform: translate(-1px, -1px); }
+}
+
+/* =============================================
+   KORVAX-SPECIFIC: OVERHEAT BAR
+   ============================================= */
+.overheat-bar {
+    width: 150px;
+    height: 12px;
+    background: var(--color-void-black);
+    border: 1px solid var(--color-rust-orange);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.overheat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-rust-orange), var(--color-hp));
+    transition: width var(--transition-fast);
+}
+
+.overheat-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.625rem;
+    font-weight: bold;
+}
+
+/* =============================================
+   RESPONSIVE STYLES
+   ============================================= */
+@media (max-width: 768px) {
+    .enemy-area {
+        perspective: 600px;
+    }
+
+    .enemy[data-depth="front"] .enemy-sprite {
+        width: 150px;
+        height: 180px;
+    }
+
+    .enemy[data-depth="mid"] .enemy-sprite {
+        width: 110px;
+        height: 130px;
+    }
+
+    .enemy[data-depth="back"] .enemy-sprite {
+        width: 80px;
+        height: 95px;
+    }
+
+    .enemy.enemy-boss[data-depth="front"] .enemy-sprite {
+        width: 200px;
+        height: 240px;
+    }
+
+    .enemy-intent {
+        padding: 4px 8px;
+        font-size: 0.875rem;
+    }
+
+    .enemy-intent .intent-icon {
+        font-size: 1rem;
+    }
+
+    .enemy-intent .intent-value {
+        font-size: 0.875rem;
+    }
+
+    .enemy-hp-bar-container {
+        width: 80px;
+    }
+
+    .combat-hud {
+        padding: var(--space-xs, 4px) var(--space-md, 12px);
+    }
+
+    .hud-center .stat-hp-bar {
+        width: 150px;
+        height: 20px;
+    }
+
+    .hand-area {
+        min-height: 150px;
+        padding: var(--space-sm);
+    }
+
+    .energy-display {
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    .energy-current,
+    #energy-current {
+        font-size: 1.75rem;
+    }
+
+    .end-turn-btn,
+    #btn-end-turn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 1rem;
+    }
+
+    .deck-piles {
+        gap: var(--space-sm);
+    }
+
+    .pile {
+        padding: var(--space-xs);
+    }
+
+    .pile-count {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .enemy[data-depth="front"] .enemy-sprite {
+        width: 110px;
+        height: 130px;
+    }
+
+    .enemy[data-depth="mid"] .enemy-sprite {
+        width: 80px;
+        height: 95px;
+    }
+
+    .enemy[data-depth="back"] .enemy-sprite {
+        width: 60px;
+        height: 70px;
+    }
+
+    .enemy.enemy-boss[data-depth="front"] .enemy-sprite {
+        width: 150px;
+        height: 180px;
+    }
+
+    .enemy-hp-bar-container {
+        width: 60px;
+        height: 6px;
+    }
+
+    .enemy-name {
+        font-size: 0.7rem;
+    }
+
+    .enemy-intent {
+        padding: 3px 6px;
+        font-size: 0.75rem;
+    }
+
+    .combat-hud {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        justify-content: center;
+    }
+
+    .hud-center .stat-hp-bar {
+        width: 120px;
+        height: 18px;
+    }
+}
