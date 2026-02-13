@@ -31,18 +31,22 @@ export function setupEventScreen(game) {
     let currentEvent = null;
     let atmosphereText = null;
     
+    // Guard to prevent double initialization (same pattern as CombatScreen)
+    let isInitializing = false;
+    let lastInitTime = 0;
+    
     // Listen for screen transitions
     game.eventBus.on('screen:show', (screenId) => {
         if (screenId === 'event-screen') {
             console.log('[EventScreen] Screen shown, initializing...');
-            initializeEventScreen();
+            safeInitializeEvent();
         }
     });
     
     game.eventBus.on('screen:changed', (data) => {
         const targetScreen = typeof data === 'string' ? data : (data?.to || data);
         if (targetScreen === 'event-screen') {
-            initializeEventScreen();
+            safeInitializeEvent();
         }
     });
     
@@ -50,6 +54,25 @@ export function setupEventScreen(game) {
     game.eventBus.on('narrative:atmosphere', (text) => {
         atmosphereText = text;
     });
+    
+    /**
+     * Safe wrapper to prevent double initialization
+     */
+    function safeInitializeEvent() {
+        const now = Date.now();
+        if (isInitializing || (now - lastInitTime) < 500) {
+            console.log('[EventScreen] Skipping duplicate initialization');
+            return;
+        }
+        isInitializing = true;
+        lastInitTime = now;
+        
+        try {
+            initializeEventScreen();
+        } finally {
+            isInitializing = false;
+        }
+    }
     
     /**
      * Initialize the event screen
