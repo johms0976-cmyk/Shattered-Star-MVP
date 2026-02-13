@@ -1,0 +1,32 @@
+{
+  "id": "lyria",
+  "name": "Lyria Voss",
+  "title": "The Fractured Mind",
+  "description": "A temporal mage experiencing nonlinear time. The Marsh amplifies her abilities and her instability. She sees futures that haven't happened and pasts that were erased.",
+  "hp": 70,
+  "maxHp": 70,
+  "energy": 3,
+  "locked": false,
+  "startingArtifact": "astral_conduit",
+  "archetypes": [
+    { "name": "Astral", "description": "Scaling cosmic damage that builds over time" },
+    { "name": "Temporal", "description": "Draw and cost manipulation, engine-building" },
+    { "name": "Void", "description": "High-risk corruption magic, all-or-nothing" }
+  ],
+  "portrait": "assets/images/heroes/lyria.svg",
+  "color": "#a855f7",
+  "startingDeck": [
+    "lyria_strike", "lyria_strike", "lyria_strike",
+    "lyria_defend", "lyria_defend", "lyria_defend",
+    "temporal_slip", "astral_lance"
+  ],
+  "lore": "Soft-spoken, eerie, insightful, fragmented. Lyria speaks as if she's holding multiple conversations at once. Her warnings are often cryptic because she's not sure which timeline she's describing.",
+  "uniqueResource": {
+    "id": "astral_charge",
+    "name": "Astral Charge",
+    "icon": "✨",
+    "description": "Empowers Astral abilities. Consumed by finishers.",
+    "max": 99,
+    "startValue": 0
+  }
+}
