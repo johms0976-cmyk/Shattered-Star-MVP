@@ -1,0 +1,164 @@
+{
+  "npc": "varra",
+  "name": "Scrap-Chief Varra",
+  "faction": "rustborn",
+  "description": "War-chief of the Rustflank tribe, the smallest of the three. She survived the Scrap-King's unification by being more useful alive than dead.",
+  "encounters": [
+    {
+      "id": "varra_first_meeting",
+      "name": "The Scrap-Chief's Offer",
+      "triggerCondition": {
+        "minNode": 3,
+        "maxNode": 8,
+        "actRequired": 1,
+        "priority": "high"
+      },
+      "text": "A campfire burns behind a wall of scrap-metal shields. A woman in patchwork armor steps out — one eye replaced by a glowing red lens, her jaw set like a trap.\n\n\"You're the one from the sky-wreck,\" she says. Not a question. \"I'm Varra. Rustflank tribe. And before you reach for a weapon — I'm the only reason the Scrap-King doesn't know where you are.\"\n\nShe drops a bundle at your feet.\n\n\"That's supplies. Free. What I want in return is your attention. The Scrap-King is planning something at the Forge-Heart — something that involves a Seal. If you're heading that way anyway, maybe we can help each other.\"",
+      "image": "assets/images/events/varra_meeting.svg",
+      "choices": [
+        {
+          "text": "Accept her help openly",
+          "effects": {
+            "hp": 10,
+            "credits": 25,
+            "reputation": {"rustborn": 2},
+            "flags": {"varra_allied": true, "varra_met": true}
+          },
+          "result": "You take the supplies and listen to her intel. Varra's good eye studies you the whole time, deciding something.\n\n\"Alright. I'll have my scouts mark safe paths for you. Look for the Rustflank sigil — three bolts in a circle.\"\n\nShe offers a calloused hand. You shake it.\n\n\"Don't make me regret this, sky-wreck.\""
+        },
+        {
+          "text": "Take the supplies, promise nothing",
+          "effects": {
+            "hp": 10,
+            "credits": 15,
+            "flags": {"varra_cautious": true, "varra_met": true}
+          },
+          "result": "You take the bundle but keep your plans to yourself. Varra's red eye lens whirs as it refocuses.\n\n\"Smart. Or stupid. I'll find out which.\"\n\nShe turns back to her fire.\n\n\"The offer stands. But the Scrap-King won't wait forever, and neither will I.\""
+        },
+        {
+          "text": "Refuse — you don't need tribal politics",
+          "effects": {
+            "reputation": {"rustborn": -1},
+            "flags": {"varra_refused": true, "varra_met": true}
+          },
+          "result": "You push the bundle back with your foot. Varra's expression doesn't change, but her hand drifts to her belt.\n\n\"Your funeral, sky-wreck. When the Scrap-King finds you — and he will — remember I tried.\"\n\nShe melts back into the scrap-wall shadows. The campfire goes out as if it was never there."
+        }
+      ]
+    },
+    {
+      "id": "varra_second_meeting",
+      "name": "Varra's Gambit",
+      "triggerCondition": {
+        "minNode": 9,
+        "maxNode": 14,
+        "actRequired": 1,
+        "requiresFlag": "varra_met",
+        "priority": "high"
+      },
+      "variants": {
+        "varra_allied": {
+          "text": "Varra is waiting for you at a collapsed bridge, her Rustflank scouts keeping watch. She looks tired — there's fresh blood on her shoulder guard.\n\n\"The Scrap-King found my scouts. Killed three of them.\" Her voice is steady, but her fist is clenched. \"He's getting desperate. Whatever he's doing at the Forge-Heart, it's almost ready.\"\n\nShe pulls out a satchel — it's heavy.\n\n\"Explosive charges. Enough to crack the Forge-Heart gate open without fighting through his full army. But I need something from you first — there's a supply cache he stole from my tribe. I need it back, or my people don't survive the week.\"",
+          "choices": [
+            {
+              "text": "Help her retrieve the cache (Lose 15 HP from the raid)",
+              "effects": {
+                "hp": -15,
+                "reputation": {"rustborn": 3},
+                "flags": {"varra_loyal": true},
+                "addCard": "scrap_bomb",
+                "artifact": "rustflank_sigil"
+              },
+              "result": "The raid is bloody and fast. You take a hit covering Varra's retreat, but the cache is secured.\n\nBack at her camp, she hands you the explosive charges and something else — a crude iron badge.\n\n\"Rustflank sigil. My people will fight for you when the time comes. Not many of us left, but we don't break.\"\n\nShe almost smiles.\n\n\"Go kill that bastard for all of us.\""
+            },
+            {
+              "text": "Take the charges now — her tribe isn't your problem",
+              "effects": {
+                "addCard": "scrap_bomb",
+                "reputation": {"rustborn": -2},
+                "flags": {"varra_betrayed": true}
+              },
+              "result": "You reach for the satchel. Varra's hand clamps down on it.\n\n\"That's not what I—\"\n\nBut she sees it in your eyes. She lets go.\n\n\"Fine. Take them. But when this is over, don't come to Rustflank territory looking for friends.\"\n\nHer scouts escort you out at spear-point. The charges feel heavier than they should."
+            },
+            {
+              "text": "The Scrap-King's too dangerous — we should run",
+              "effects": {
+                "reputation": {"rustborn": -1},
+                "flags": {"varra_disappointed": true}
+              },
+              "result": "Varra stares at you for a long moment. The red lens in her eye socket dims.\n\n\"Run where? He controls every exit from the Wastes. There is no 'away.'\"\n\nShe pulls the satchel back.\n\n\"I'll find someone with a spine. Try not to die on the way out.\"\n\nYou leave with nothing. The sound of her scouts loading crossbows follows you into the dust."
+            }
+          ]
+        },
+        "varra_cautious": {
+          "text": "You hear Varra before you see her — arguing with someone behind a scrap-wall.\n\n\"—told you the sky-wreck would come through here. Pay up.\"\n\nShe rounds the corner and tosses you a canteen.\n\n\"You didn't commit last time. I respect caution. But caution has an expiration date, and yours just hit it.\"\n\nShe lays out a rough map in the dust.\n\n\"The Scrap-King is funneling scrap into the Forge-Heart. Something big. Something that hums. My scouts can get you past his outer patrols, but I need to know — are you going to deal with him, or are you just passing through?\"",
+          "choices": [
+            {
+              "text": "I'm going to end him. What do you need?",
+              "effects": {
+                "reputation": {"rustborn": 2},
+                "credits": 20,
+                "flags": {"varra_allied_late": true}
+              },
+              "result": "Varra's expression shifts — not quite a smile, but close.\n\n\"About time.\" She whistles, and two scouts emerge carrying supplies.\n\n\"Rations, a map of his patrol routes, and my personal recommendation — which is worth more than you think in these wastes.\"\n\nShe marks the Forge-Heart on the map.\n\n\"Hit him hard. Hit him fast. And if you find out what he's building in there... I want to know.\""
+            },
+            {
+              "text": "I'm just trying to survive",
+              "effects": {
+                "flags": {"varra_dismissed": true}
+              },
+              "result": "Varra picks up her map and rolls it tight.\n\n\"Then survive somewhere else. I don't have resources to waste on tourists.\"\n\nShe walks away without looking back. Her scouts close ranks behind her.\n\nThe dust swallows them in seconds."
+            }
+          ]
+        },
+        "varra_refused": {
+          "text": "An arrow thuds into the ground at your feet. A warning shot.\n\nVarra steps out from behind a rusted hull, her crossbow still raised.\n\n\"You turned me down. Fine. But things have changed.\"\n\nShe lowers the crossbow slowly.\n\n\"The Scrap-King killed Torren — chief of the Ironjaw tribe. He's consolidating. If he finishes whatever he's building at the Forge-Heart, nobody leaves these wastes alive. Including you.\"\n\nShe spits in the dust.\n\n\"So. Changed your mind yet?\"",
+          "choices": [
+            {
+              "text": "I was wrong. Let's work together.",
+              "effects": {
+                "reputation": {"rustborn": 1},
+                "credits": 15,
+                "flags": {"varra_allied_late": true}
+              },
+              "result": "Varra studies you. The crossbow doesn't move.\n\nThen she lowers it.\n\n\"Took you long enough.\" She tosses you a small pouch of credits. \"Consider that an advance on the Scrap-King's skull.\"\n\nNot forgiveness. But a start."
+            },
+            {
+              "text": "I'll deal with the Scrap-King my way",
+              "effects": {
+                "flags": {"varra_rival": true}
+              },
+              "result": "Varra's jaw tightens.\n\n\"Your way. Right.\"\n\nShe raises the crossbow again — not at you, but past you, firing into a sand crawler that was creeping up behind.\n\n\"That one's free. Next time you're on your own.\"\n\nShe vanishes into the scrap-maze. You have the distinct feeling you've made an enemy of someone who was trying to be a friend."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "bossModifiers": {
+    "varra_loyal": {
+      "preBossDialogue": "Varra's voice crackles through a salvaged comm-link: \"My people are drawing his reserves west. You'll have a window. Make it count, sky-wreck.\"",
+      "effect": "Scrap-King starts with 10 fewer HP. Rustflank scouts deal 5 damage at start of Phase 2.",
+      "mechanicalEffect": {"bossHpReduction": 10, "phase2Damage": 5}
+    },
+    "varra_allied": {
+      "preBossDialogue": "A Rustflank scout meets you at the gate: \"Varra says to hit the left knee joint. The armor's thin there.\"",
+      "effect": "Scrap-King starts with Vulnerable (2).",
+      "mechanicalEffect": {"bossVulnerable": 2}
+    },
+    "varra_betrayed": {
+      "preBossDialogue": "As you approach the Forge-Heart, you hear Varra's voice — but it's coming from inside, amplified. \"The sky-wreck is here, my King. As promised.\"",
+      "effect": "Ambush! You start with 0 Energy on turn 1. The Scrap-King knows you're coming.",
+      "mechanicalEffect": {"playerStartEnergy": 0}
+    },
+    "varra_refused": {
+      "preBossDialogue": "",
+      "effect": "No modifier.",
+      "mechanicalEffect": {}
+    }
+  },
+  "postBossDialogue": {
+    "varra_loyal": "Varra finds you after the dust settles. She looks at the Scrap-King's broken crown and picks it up.\n\n\"I'm not going to wear this. But someone needs to hold the tribes together.\"\n\nShe looks at you with her one good eye.\n\n\"You did good, sky-wreck. Whatever's past the Wastes... you've got friends here now.\"",
+    "varra_betrayed": "You find Varra in the wreckage, pinned under a collapsed wall. The Scrap-King's death shattered whatever deal she'd made.\n\n\"Guess we both made bad choices,\" she coughs.\n\nYou can pull her out. Or you can walk away. Like she did.",
+    "default": "The Forge-Heart falls silent. Somewhere in the wastes, the Rustborn tribes are already fighting over what's left."
+  }
+}
