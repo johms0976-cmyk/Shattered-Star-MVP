@@ -1,0 +1,293 @@
+{
+  "heroId": "lyria",
+  "cards": [
+    {
+      "id": "lyria_strike",
+      "name": "Fracture",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "starter",
+      "damage": 5,
+      "description": "Deal 5 damage.",
+      "effects": [{"type": "damage", "value": 5}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Fracture+",
+        "upgradedName": "Shattered Fracture",
+        "damage": 8,
+        "description": "Deal 8 damage.",
+        "flavor": "The cracks spread further each time."
+      }
+    },
+    {
+      "id": "lyria_defend",
+      "name": "Foresight",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "block": 5,
+      "description": "Gain 5 Block.",
+      "effects": [{"type": "block", "value": 5}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Foresight+",
+        "upgradedName": "Perfect Foresight",
+        "block": 8,
+        "description": "Gain 8 Block.",
+        "flavor": "She saw the blow three seconds before it landed."
+      }
+    },
+    {
+      "id": "temporal_slip",
+      "name": "Temporal Slip",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "starter",
+      "draw": 2,
+      "description": "Draw 2 cards. Discard 1. Gain 1 Temporal Flux.",
+      "effects": [{"type": "draw", "value": 2}, {"type": "discard", "value": 1}, {"type": "temporal_flux", "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Temporal Slip+",
+        "upgradedName": "Temporal Rift",
+        "draw": 3,
+        "description": "Draw 3 cards. Discard 1. Gain 1 Temporal Flux.",
+        "flavor": "Time didn't slip — it tore."
+      }
+    },
+    {
+      "id": "astral_lance",
+      "name": "Astral Lance",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "starter",
+      "damage": 6,
+      "description": "Deal 6 damage + Astral Charge. Gain 1 Astral Charge.",
+      "effects": [{"type": "damage", "value": 6, "scaling": "astral_charge"}, {"type": "astral_charge", "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Astral Lance+",
+        "upgradedName": "Astral Impaler",
+        "damage": 9,
+        "description": "Deal 9 damage + Astral Charge. Gain 2 Astral Charge.",
+        "flavor": "It was not a weapon. It was a goodbye."
+      }
+    },
+    {
+      "id": "chronofracture",
+      "name": "Chronofracture",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "description": "At the end of your turn, gain 1 extra Energy next turn.",
+      "effects": [{"type": "energy_per_turn", "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Chronofracture+",
+        "upgradedName": "Broken Chronology",
+        "cost": 2,
+        "description": "At the end of your turn, gain 1 extra Energy next turn.",
+        "flavor": "Time doesn't flow here. It pools."
+      }
+    },
+    {
+      "id": "void_glimpse",
+      "name": "Void Glimpse",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "draw": 3,
+      "description": "Draw 3 cards. Gain 1 Corruption.",
+      "effects": [{"type": "draw", "value": 3}, {"type": "corruption", "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Void Glimpse+",
+        "upgradedName": "Void Stare",
+        "draw": 4,
+        "description": "Draw 4 cards. Gain 1 Corruption.",
+        "flavor": "She looked into the void. The void looked back and smiled."
+      }
+    },
+    {
+      "id": "temporal_recursion",
+      "name": "Temporal Recursion",
+      "type": "power",
+      "cost": 3,
+      "rarity": "rare",
+      "description": "At the end of your turn, return a random card from discard to hand. It costs 0 next turn.",
+      "effects": [{"type": "trigger", "on": "turn_end", "apply": {"type": "return_discard", "costOverride": 0}}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Temporal Recursion+",
+        "upgradedName": "Infinite Loop",
+        "cost": 2,
+        "description": "At the end of your turn, return a random card from discard to hand. It costs 0 next turn.",
+        "flavor": "She had seen this moment before. Many times."
+      }
+    },
+    {
+      "id": "astral_surge",
+      "name": "Astral Surge",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "damage": 4,
+      "description": "Deal 4 damage. Gain 2 Astral Charge.",
+      "effects": [{"type": "damage", "value": 4}, {"type": "astral_charge", "value": 2}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Astral Surge+",
+        "upgradedName": "Cosmic Surge",
+        "damage": 6,
+        "description": "Deal 6 damage. Gain 3 Astral Charge.",
+        "flavor": "The stars don't shine. They scream."
+      }
+    },
+    {
+      "id": "starfire",
+      "name": "Starfire",
+      "type": "attack",
+      "cost": 2,
+      "rarity": "uncommon",
+      "damage": 3,
+      "description": "Deal 3 damage to ALL enemies. Gain 1 Astral Charge per enemy hit.",
+      "effects": [{"type": "damage", "value": 3, "target": "all"}, {"type": "astral_charge", "value": 1, "perTarget": true}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Starfire+",
+        "upgradedName": "Supernova",
+        "damage": 5,
+        "description": "Deal 5 damage to ALL enemies. Gain 2 Astral Charge per enemy hit.",
+        "flavor": "Every sun dies. She just accelerates the process."
+      }
+    },
+    {
+      "id": "time_dilation",
+      "name": "Time Dilation",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "block": 6,
+      "draw": 1,
+      "description": "Gain 6 Block. Draw 1 card.",
+      "effects": [{"type": "block", "value": 6}, {"type": "draw", "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Time Dilation+",
+        "upgradedName": "Temporal Cocoon",
+        "block": 9,
+        "draw": 1,
+        "description": "Gain 9 Block. Draw 1 card.",
+        "flavor": "A second stretched into an hour of safety."
+      }
+    },
+    {
+      "id": "memory_leak",
+      "name": "Memory Leak",
+      "type": "attack",
+      "cost": 1,
+      "rarity": "common",
+      "damage": 7,
+      "description": "Deal 7 damage. If this is the 3rd+ card played this turn, draw 1.",
+      "effects": [{"type": "damage", "value": 7}, {"type": "draw_conditional", "minCardsPlayed": 3, "value": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Memory Leak+",
+        "upgradedName": "Cascade Failure",
+        "damage": 10,
+        "description": "Deal 10 damage. If this is the 2nd+ card played this turn, draw 1.",
+        "flavor": "The memories aren't hers. Not anymore."
+      }
+    },
+    {
+      "id": "reality_anchor",
+      "name": "Reality Anchor",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "common",
+      "block": 8,
+      "description": "Gain 8 Block. Reduce Corruption by 1.",
+      "effects": [{"type": "block", "value": 8}, {"type": "corruption", "value": -1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Reality Anchor+",
+        "upgradedName": "Anchor of the Real",
+        "block": 11,
+        "description": "Gain 11 Block. Reduce Corruption by 2.",
+        "flavor": "Something to hold onto when the world dissolves."
+      }
+    },
+    {
+      "id": "future_echo",
+      "name": "Future Echo",
+      "type": "skill",
+      "cost": 0,
+      "rarity": "uncommon",
+      "draw": 1,
+      "description": "Draw 1 card. It costs 1 less this turn. Exhaust.",
+      "effects": [{"type": "draw", "value": 1}, {"type": "cost_reduction", "value": 1, "duration": "turn"}],
+      "exhaust": true,
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Future Echo+",
+        "upgradedName": "Prophecy Fragment",
+        "draw": 2,
+        "description": "Draw 2 cards. They cost 1 less this turn. Exhaust.",
+        "flavor": "Tomorrow's weapons, wielded today."
+      }
+    },
+    {
+      "id": "void_communion",
+      "name": "Void Communion",
+      "type": "power",
+      "cost": 2,
+      "rarity": "rare",
+      "description": "Whenever you gain Corruption, gain 2 Astral Charge. Gain 3 Corruption.",
+      "effects": [{"type": "trigger", "on": "corruption_gained", "apply": {"type": "astral_charge", "value": 2}}, {"type": "corruption", "value": 3}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Void Communion+",
+        "upgradedName": "Pact of Unmaking",
+        "description": "Whenever you gain Corruption, gain 3 Astral Charge. Gain 2 Corruption.",
+        "flavor": "The price was steep. She paid it twice."
+      }
+    },
+    {
+      "id": "astral_nova",
+      "name": "Astral Nova",
+      "type": "attack",
+      "cost": 3,
+      "rarity": "rare",
+      "damage": 5,
+      "description": "Deal 5 damage. Consume ALL Astral Charge: deal that much additional damage.",
+      "effects": [{"type": "damage", "value": 5}, {"type": "consume_astral_charge", "damagePerCharge": 1}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Astral Nova+",
+        "upgradedName": "Cosmic Annihilation",
+        "damage": 8,
+        "cost": 2,
+        "description": "Deal 8 damage. Consume ALL Astral Charge: deal that much additional damage.",
+        "flavor": "When enough starlight converges, even gods flinch."
+      }
+    },
+    {
+      "id": "voidguard",
+      "name": "Voidguard",
+      "type": "skill",
+      "cost": 1,
+      "rarity": "uncommon",
+      "block": 4,
+      "description": "Gain 4 Block. Gain 1 Corruption. Draw 2 cards.",
+      "effects": [{"type": "block", "value": 4}, {"type": "corruption", "value": 1}, {"type": "draw", "value": 2}],
+      "upgraded": false,
+      "upgradeData": {
+        "name": "Voidguard+",
+        "upgradedName": "Abyssal Barrier",
+        "block": 7,
+        "description": "Gain 7 Block. Gain 1 Corruption. Draw 2 cards.",
+        "flavor": "Protection from something worse than enemies."
+      }
+    }
+  ]
+}
