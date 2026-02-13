@@ -1,0 +1,261 @@
+/* =============================================
+   CARD PLAY ANIMATIONS
+   Shattered Star — Juice Layer
+   Handles: card fly-to-target, impact flash, 
+   block shatter, heal glow, power pulse
+   @version 1.0.0
+   ============================================= */
+
+/* ── Card flying to target ── */
+.card-flying {
+    position: fixed !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+    transition: none !important;
+    /* Dimensions set by JS */
+}
+
+.card-flying.fly-to-target {
+    animation: cardFlyToTarget 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.0) forwards;
+}
+
+.card-flying.fly-to-player {
+    animation: cardFlyToPlayer 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.0) forwards;
+}
+
+.card-flying.fly-shrink {
+    animation: cardFlyShrink 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cardFlyToTarget {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(0.6) rotate(-3deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-5deg);
+    }
+}
+
+@keyframes cardFlyToPlayer {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    60% {
+        opacity: 0.8;
+        transform: scale(0.7) rotate(3deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.4) rotate(5deg);
+    }
+}
+
+@keyframes cardFlyShrink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+}
+
+/* ── Enemy impact flash ── */
+.enemy-impact-flash {
+    animation: impactFlash 0.25s ease-out;
+}
+
+@keyframes impactFlash {
+    0%   { filter: brightness(1); }
+    30%  { filter: brightness(3) saturate(0.5); }
+    60%  { filter: brightness(1.5); }
+    100% { filter: brightness(1); }
+}
+
+/* Override depth brightness during flash */
+.enemy[data-depth="front"].enemy-impact-flash  { animation: impactFlashFront 0.25s ease-out; }
+.enemy[data-depth="mid"].enemy-impact-flash    { animation: impactFlashMid 0.25s ease-out; }
+.enemy[data-depth="back"].enemy-impact-flash   { animation: impactFlashBack 0.25s ease-out; }
+
+@keyframes impactFlashFront {
+    0%   { filter: brightness(1.1); }
+    30%  { filter: brightness(3) saturate(0.5); }
+    100% { filter: brightness(1.1); }
+}
+@keyframes impactFlashMid {
+    0%   { filter: brightness(0.8) saturate(0.85); }
+    30%  { filter: brightness(2.5) saturate(0.5); }
+    100% { filter: brightness(0.8) saturate(0.85); }
+}
+@keyframes impactFlashBack {
+    0%   { filter: brightness(0.55) saturate(0.6); }
+    30%  { filter: brightness(2) saturate(0.5); }
+    100% { filter: brightness(0.55) saturate(0.6); }
+}
+
+/* ── Enemy recoil on hit ── */
+.enemy-hit-recoil {
+    animation: enemyRecoil 0.3s ease-out !important;
+}
+
+@keyframes enemyRecoil {
+    0%   { transform: translateX(-50%) scale(1); }
+    20%  { transform: translateX(calc(-50% + 8px)) scale(0.95); }
+    50%  { transform: translateX(calc(-50% - 4px)) scale(1.02); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+/* ── Block gain pulse on player HUD ── */
+.block-gain-pulse {
+    animation: blockPulse 0.4s ease-out;
+}
+
+@keyframes blockPulse {
+    0%   { transform: scale(1); box-shadow: 0 0 0 rgba(0, 165, 255, 0); }
+    40%  { transform: scale(1.2); box-shadow: 0 0 20px rgba(0, 165, 255, 0.6); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(0, 165, 255, 0); }
+}
+
+/* ── Block shatter when broken ── */
+.block-shatter {
+    animation: blockShatter 0.5s ease-out;
+}
+
+@keyframes blockShatter {
+    0%   { transform: scale(1); filter: brightness(1); }
+    20%  { transform: scale(1.3); filter: brightness(2); }
+    40%  { transform: scale(0.8); filter: brightness(0.5) hue-rotate(20deg); }
+    100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* ── Player hit flash (combat HUD) ── */
+.player-hit-flash {
+    animation: playerHitFlash 0.3s ease-out;
+}
+
+@keyframes playerHitFlash {
+    0%   { background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 100%); }
+    30%  { background: linear-gradient(to top, rgba(255,45,85,0.4) 0%, rgba(255,45,85,0.1) 50%, transparent 100%); }
+    100% { background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 100%); }
+}
+
+/* ── Power card activation glow ── */
+.power-activate-glow {
+    animation: powerGlow 0.6s ease-out;
+}
+
+@keyframes powerGlow {
+    0%   { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+    30%  { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3); }
+    100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+/* ── Corruption gain vignette pulse ── */
+.corruption-vignette-pulse .combat-container::after {
+    animation: corruptionVignette 0.8s ease-out;
+}
+
+@keyframes corruptionVignette {
+    0%   { background: radial-gradient(ellipse 65% 55% at 50% 50%, transparent 25%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.75) 100%); }
+    30%  { background: radial-gradient(ellipse 55% 45% at 50% 50%, transparent 15%, rgba(80,0,120,0.5) 70%, rgba(40,0,60,0.8) 100%); }
+    100% { background: radial-gradient(ellipse 65% 55% at 50% 50%, transparent 25%, rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.75) 100%); }
+}
+
+/* ── Card played from hand — brief lift before fly ── */
+.card-played-lift {
+    animation: cardLift 0.15s ease-out forwards;
+}
+
+@keyframes cardLift {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-20px) scale(1.05); opacity: 1; }
+}
+
+/* ── Screen shake (already may exist, but ensure it's here) ── */
+.screen-shake {
+    animation: screenShake 0.2s ease-in-out;
+}
+
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    20%      { transform: translate(-3px, 2px); }
+    40%      { transform: translate(3px, -2px); }
+    60%      { transform: translate(-2px, 3px); }
+    80%      { transform: translate(2px, -1px); }
+}
+
+/* ── Upgraded card glow in hand ── */
+.combat-card.card.upgraded {
+    border-color: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.3), inset 0 0 4px rgba(74, 222, 128, 0.1);
+}
+
+.combat-card.card.upgraded .card-name {
+    color: #4ade80;
+}
+
+/* ── Card upgrade shimmer during upgrade ceremony ── */
+.card-upgrade-shimmer {
+    animation: upgradeShimmer 1s ease-in-out;
+}
+
+@keyframes upgradeShimmer {
+    0%   { filter: brightness(1); box-shadow: 0 0 0 transparent; }
+    25%  { filter: brightness(1.5); box-shadow: 0 0 20px rgba(74, 222, 128, 0.5); }
+    50%  { filter: brightness(2) hue-rotate(-10deg); box-shadow: 0 0 40px rgba(74, 222, 128, 0.7); }
+    75%  { filter: brightness(1.5); box-shadow: 0 0 20px rgba(74, 222, 128, 0.5); }
+    100% { filter: brightness(1); box-shadow: 0 0 8px rgba(74, 222, 128, 0.3); }
+}
+
+/* ── Flavor text display for upgraded cards ── */
+.card-flavor {
+    font-style: italic;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+    padding: 0 var(--space-sm, 8px);
+    line-height: 1.3;
+    max-height: 2em;
+    overflow: hidden;
+}
+
+/* ── Heal effect glow on HP bar ── */
+.hp-heal-glow .hp-fill,
+.hp-heal-glow #combat-hp-fill {
+    animation: healGlow 0.5s ease-out;
+}
+
+@keyframes healGlow {
+    0%   { box-shadow: none; filter: brightness(1); }
+    40%  { box-shadow: 0 0 15px rgba(74, 222, 128, 0.6); filter: brightness(1.3); }
+    100% { box-shadow: none; filter: brightness(1); }
+}
+
+/* ── Energy spend flash ── */
+.energy-spend-flash .energy-current {
+    animation: energyFlash 0.3s ease-out;
+}
+
+@keyframes energyFlash {
+    0%   { color: inherit; transform: scale(1); }
+    30%  { color: #ff6b6b; transform: scale(1.3); }
+    100% { color: inherit; transform: scale(1); }
+}
+
+/* ── Draw card appear animation ── */
+.card-draw-appear {
+    animation: cardDrawIn 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.0) forwards;
+}
+
+@keyframes cardDrawIn {
+    0%   { opacity: 0; transform: translateY(40px) scale(0.8) rotate(-5deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
