@@ -1,0 +1,237 @@
+{
+    "fragments": [
+        {
+            "id": "void_echo_amplifier",
+            "name": "Echo Amplifier",
+            "description": "Cards played in descending cost order deal +30% damage on the final card.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 2,
+            "type": "sequencing",
+            "effect": {
+                "trigger": "onCardPlay",
+                "condition": "descendingCostSequence",
+                "bonus": { "finalCardDamageMultiplier": 1.3 }
+            },
+            "lore": "A fragment of reversed time. It rewards those who unravel from complexity to simplicity."
+        },
+        {
+            "id": "void_lethal_siphon",
+            "name": "Lethal Siphon",
+            "description": "Attacks that deal exactly lethal damage refund 1 Energy.",
+            "rarity": "rare",
+            "corruptionPerCombat": 3,
+            "type": "precision",
+            "effect": {
+                "trigger": "onEnemyKill",
+                "condition": "exactLethal",
+                "bonus": { "energyRefund": 1 }
+            },
+            "lore": "The void savors precision. Excess is wasteful; exactness is art."
+        },
+        {
+            "id": "void_chain_resonance",
+            "name": "Chain Resonance",
+            "description": "Chain multiplier starts at x1.2 instead of x1.0.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 2,
+            "type": "chain",
+            "effect": {
+                "trigger": "passive",
+                "condition": "always",
+                "bonus": { "chainBaseMultiplier": 1.2 }
+            },
+            "lore": "Resonance is the void's native tongue. Every repetition strengthens the signal."
+        },
+        {
+            "id": "void_type_bleed",
+            "name": "Type Bleed",
+            "description": "Skill cards continue Attack chains (do not break the chain).",
+            "rarity": "rare",
+            "corruptionPerCombat": 4,
+            "type": "chain",
+            "effect": {
+                "trigger": "onChainCheck",
+                "condition": "skillContinuesAttack",
+                "bonus": { "chainBridge": ["skill", "attack"] }
+            },
+            "lore": "In the void, categories dissolve. Defense becomes offense becomes void."
+        },
+        {
+            "id": "void_suffering_echo",
+            "name": "Suffering Echo",
+            "description": "Whenever you take damage, your next Attack deals +3 damage.",
+            "rarity": "common",
+            "corruptionPerCombat": 1,
+            "type": "reactive",
+            "effect": {
+                "trigger": "onPlayerDamaged",
+                "condition": "always",
+                "bonus": { "nextAttackBonus": 3 }
+            },
+            "lore": "Pain echoes outward. The void ensures nothing is wasted."
+        },
+        {
+            "id": "void_overkill_cascade",
+            "name": "Overkill Cascade",
+            "description": "Excess damage from a killing blow splashes to a random enemy.",
+            "rarity": "rare",
+            "corruptionPerCombat": 3,
+            "type": "damage",
+            "effect": {
+                "trigger": "onEnemyKill",
+                "condition": "excessDamage",
+                "bonus": { "splashExcessDamage": true }
+            },
+            "lore": "The void abhors a vacuum. Energy must flow somewhere."
+        },
+        {
+            "id": "void_entropy_tax",
+            "name": "Entropy Tax",
+            "description": "The first card you play each turn costs 0 Energy, but the last card costs +1.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 2,
+            "type": "economy",
+            "effect": {
+                "trigger": "onTurnStart",
+                "condition": "always",
+                "bonus": { "firstCardFree": true, "lastCardTax": 1 }
+            },
+            "lore": "Entropy is a tax on existence. The void merely collects what is owed."
+        },
+        {
+            "id": "void_mirror_intent",
+            "name": "Mirror Intent",
+            "description": "When an enemy buffs itself, you gain 2 Block.",
+            "rarity": "common",
+            "corruptionPerCombat": 1,
+            "type": "reactive",
+            "effect": {
+                "trigger": "onEnemyBuff",
+                "condition": "always",
+                "bonus": { "blockGain": 2 }
+            },
+            "lore": "The void mirrors everything. Intent reflects intent."
+        },
+        {
+            "id": "void_corruption_feast",
+            "name": "Corruption Feast",
+            "description": "Corrupted cards deal +50% damage but gain +2 corruption per play.",
+            "rarity": "rare",
+            "corruptionPerCombat": 5,
+            "type": "corruption",
+            "effect": {
+                "trigger": "onCardPlay",
+                "condition": "corruptedCard",
+                "bonus": { "damageMultiplier": 1.5, "extraCorruption": 2 }
+            },
+            "lore": "Feed the void and the void feeds you. A fair trade, it whispers."
+        },
+        {
+            "id": "void_temporal_stutter",
+            "name": "Temporal Stutter",
+            "description": "Every 4th card played each combat is played twice.",
+            "rarity": "legendary",
+            "corruptionPerCombat": 6,
+            "type": "sequencing",
+            "effect": {
+                "trigger": "onCardPlay",
+                "condition": "everyNthCard",
+                "bonus": { "nthCard": 4, "replayCard": true }
+            },
+            "lore": "Time stutters in the void's grip. Every fourth heartbeat echoes."
+        },
+        {
+            "id": "void_glass_cannon",
+            "name": "Glass Cannon",
+            "description": "All damage dealt +25%. All damage received +25%.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 3,
+            "type": "damage",
+            "effect": {
+                "trigger": "passive",
+                "condition": "always",
+                "bonus": { "allDamageDealtMultiplier": 1.25, "allDamageReceivedMultiplier": 1.25 }
+            },
+            "lore": "The void strips away armor and pretense alike."
+        },
+        {
+            "id": "void_discard_harvest",
+            "name": "Discard Harvest",
+            "description": "Whenever you discard a card at end of turn, gain 1 Block per card discarded.",
+            "rarity": "common",
+            "corruptionPerCombat": 1,
+            "type": "economy",
+            "effect": {
+                "trigger": "onTurnEnd",
+                "condition": "cardsDiscarded",
+                "bonus": { "blockPerDiscard": 1 }
+            },
+            "lore": "Nothing is wasted in the void. Even what you throw away returns."
+        },
+        {
+            "id": "void_void_sight",
+            "name": "Void Sight",
+            "description": "See the top card of your draw pile at all times.",
+            "rarity": "common",
+            "corruptionPerCombat": 1,
+            "type": "information",
+            "effect": {
+                "trigger": "passive",
+                "condition": "always",
+                "bonus": { "revealTopDraw": true }
+            },
+            "lore": "The void sees through the deck as through glass."
+        },
+        {
+            "id": "void_hungry_void",
+            "name": "Hungry Void",
+            "description": "Cards that cost 0 deal +4 damage. Cards that cost 3+ gain +4 Block.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 2,
+            "type": "economy",
+            "effect": {
+                "trigger": "onCardPlay",
+                "condition": "costBased",
+                "bonus": { "zeroCostDamageBonus": 4, "highCostBlockBonus": 4, "highCostThreshold": 3 }
+            },
+            "lore": "The void hungers for extremes. Moderation is invisible to it."
+        },
+        {
+            "id": "void_death_rattle",
+            "name": "Death Rattle",
+            "description": "When an enemy dies, all other enemies lose 3 Block.",
+            "rarity": "uncommon",
+            "corruptionPerCombat": 2,
+            "type": "reactive",
+            "effect": {
+                "trigger": "onEnemyKill",
+                "condition": "always",
+                "bonus": { "stripEnemyBlock": 3 }
+            },
+            "lore": "Death rattles through the void, weakening all who hear it."
+        },
+        {
+            "id": "void_paradox_engine",
+            "name": "Paradox Engine",
+            "description": "If you play exactly 5 cards in a turn, draw 2 cards at start of next turn.",
+            "rarity": "rare",
+            "corruptionPerCombat": 4,
+            "type": "sequencing",
+            "effect": {
+                "trigger": "onTurnEnd",
+                "condition": "exactCardsPlayed",
+                "bonus": { "exactCount": 5, "bonusDraw": 2 }
+            },
+            "lore": "Five is the number of the seals. Five is the shape of collapse."
+        }
+    ],
+    "maxSlots": 4,
+    "slotUnlockThresholds": [0, 15, 35, 60],
+    "acquisitionSources": {
+        "corruptionEvent": { "chance": 0.4, "pool": "all" },
+        "voidShop": { "chance": 1.0, "pool": "all", "cost": "50-200 credits" },
+        "bossReward": { "chance": 0.25, "pool": "rare,legendary" },
+        "heraldDrop": { "chance": 0.5, "pool": "legendary" },
+        "abyssalWhisperers": { "chance": 0.3, "pool": "corruption" }
+    }
+}
