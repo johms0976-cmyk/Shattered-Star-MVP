@@ -1,0 +1,715 @@
+/* =============================================
+   CORRUPTION CASCADE SYSTEMS — Visual Layer
+   Covers: DamageCascade, CorruptionCascade events,
+           UnreliableInterface, NearMissDisplay
+   @version 1.0.0
+   ============================================= */
+
+
+/* ═══════════════════════════════════════════
+   1. DAMAGE CASCADE — Balatro-style sequential display
+   ═══════════════════════════════════════════ */
+
+.damage-cascade-overlay {
+    position: fixed;
+    z-index: 3000;
+    transform: translate(-50%, -100%);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    font-family: 'Bebas Neue', 'Oswald', monospace;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
+}
+
+/* Individual step row */
+.cascade-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    background: rgba(0, 0, 0, 0.85);
+    border-left: 3px solid var(--step-color, #888);
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.15s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.cascade-step-enter {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.cascade-step-fade {
+    opacity: 0.3;
+    transform: scale(0.9);
+    transition: all 0.2s ease;
+}
+
+.cascade-step-icon {
+    font-size: 0.85rem;
+    width: 20px;
+    text-align: center;
+}
+
+.cascade-step-label {
+    font-size: 0.65rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 55px;
+}
+
+.cascade-step-value {
+    font-size: 0.85rem;
+    color: var(--step-color, #e2e8f0);
+    font-weight: 700;
+    min-width: 35px;
+    text-align: right;
+}
+
+.cascade-step-arrow {
+    font-size: 0.7rem;
+    color: #4b5563;
+}
+
+.cascade-step-running {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    min-width: 30px;
+    text-align: right;
+    text-shadow: 0 0 8px var(--step-color, #fff);
+}
+
+/* Multiply steps get extra emphasis */
+.cascade-step-multiply .cascade-step-value {
+    color: #fbbf24;
+    text-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+}
+
+.cascade-negative .cascade-step-value {
+    color: #ef4444;
+}
+
+.cascade-negative .cascade-step-running {
+    color: #fca5a5;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* Final damage impact */
+.cascade-final-damage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+    opacity: 0;
+    transform: scale(2.5);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cascade-final-enter {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cascade-final-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #ff4444;
+    text-shadow:
+        0 0 10px rgba(255, 68, 68, 0.8),
+        0 0 30px rgba(255, 68, 68, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.9);
+    line-height: 1;
+}
+
+.cascade-final-label {
+    font-size: 0.65rem;
+    color: #ef4444;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* Floating enemy damage number */
+.cascade-enemy-damage {
+    position: fixed;
+    z-index: 3001;
+    font-family: 'Bebas Neue', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ff4444;
+    pointer-events: none;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.cascade-enemy-damage-animate {
+    animation: cascadeEnemyDamage 0.8s ease-out forwards;
+}
+
+@keyframes cascadeEnemyDamage {
+    0% { opacity: 0; transform: translate(-50%, 0) scale(2); }
+    15% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -60px) scale(0.8); }
+}
+
+
+/* ═══════════════════════════════════════════
+   2. CORRUPTION CASCADE EVENTS — The void intervenes
+   ═══════════════════════════════════════════ */
+
+/* Cascade event banner that appears center-screen */
+.cascade-event-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2500;
+    pointer-events: none;
+    text-align: center;
+    animation: cascadeBannerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+               cascadeBannerOut 0.4s ease-in 2s forwards;
+}
+
+@keyframes cascadeBannerIn {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes cascadeBannerOut {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.8) translateY(-30px); opacity: 0; }
+}
+
+.cascade-event-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 0 12px var(--cascade-color, #a855f7));
+}
+
+.cascade-event-name {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    color: var(--cascade-color, #a855f7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px var(--cascade-color, #a855f7);
+}
+
+.cascade-event-flavor {
+    font-family: 'Georgia', serif;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 4px;
+    max-width: 250px;
+}
+
+.cascade-event-result {
+    font-family: 'Bebas Neue', monospace;
+    font-size: 0.85rem;
+    color: #e2e8f0;
+    margin-top: 8px;
+    padding: 4px 12px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    border: 1px solid var(--cascade-color, #a855f7)40;
+}
+
+/* Screen flash when cascade triggers */
+.cascade-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 2499;
+    pointer-events: none;
+    animation: cascadeFlash 0.4s ease-out forwards;
+}
+
+@keyframes cascadeFlash {
+    0% { background: var(--cascade-color, #a855f7); opacity: 0.3; }
+    100% { opacity: 0; }
+}
+
+
+/* ═══════════════════════════════════════════
+   3. UNRELIABLE INTERFACE — The game lies to you
+   ═══════════════════════════════════════════ */
+
+/* Card whisper text (appended to descriptions) */
+.card-whisper {
+    display: block;
+    font-style: italic;
+    font-size: 0.65rem;
+    color: #7c3aed;
+    opacity: 0;
+    animation: whisperFadeIn 1s ease-in 0.5s forwards;
+    margin-top: 2px;
+}
+
+@keyframes whisperFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 0.7; }
+}
+
+/* Intent glitch effect */
+.intent-glitch {
+    animation: intentGlitch 0.15s steps(2) infinite;
+    color: #ff4444 !important;
+    text-shadow: 0 0 4px #ff0000;
+}
+
+.intent-corrected {
+    animation: intentCorrect 0.2s ease-out;
+}
+
+@keyframes intentGlitch {
+    0% { transform: translate(0, 0); opacity: 1; }
+    50% { transform: translate(2px, -1px); opacity: 0.8; }
+    100% { transform: translate(-1px, 1px); opacity: 1; }
+}
+
+@keyframes intentCorrect {
+    0% { color: #ff4444; transform: scale(1.2); }
+    100% { color: inherit; transform: scale(1); }
+}
+
+/* Card cost glitch */
+.cost-glitch {
+    animation: costGlitch 0.2s steps(3) infinite;
+    color: #ff4444 !important;
+}
+
+@keyframes costGlitch {
+    0% { transform: rotate(0deg); opacity: 1; }
+    33% { transform: rotate(3deg) scale(1.1); opacity: 0.7; }
+    66% { transform: rotate(-2deg) scale(0.95); opacity: 0.9; }
+    100% { transform: rotate(0deg); opacity: 1; }
+}
+
+/* Energy display glitch */
+.energy-glitch {
+    animation: energyGlitch 0.3s steps(4) infinite;
+}
+
+@keyframes energyGlitch {
+    0% { filter: none; }
+    25% { filter: hue-rotate(180deg) brightness(1.5); }
+    50% { filter: blur(1px) brightness(0.8); }
+    75% { filter: hue-rotate(90deg); }
+    100% { filter: none; }
+}
+
+/* Card name glitch text */
+.name-glitch {
+    animation: nameGlitch 0.4s steps(2) infinite;
+    color: #a855f7 !important;
+    text-shadow: 
+        2px 0 #ff0000,
+        -2px 0 #00ff00;
+}
+
+@keyframes nameGlitch {
+    0% { clip-path: inset(0 0 50% 0); transform: translate(-2px, 0); }
+    50% { clip-path: inset(50% 0 0 0); transform: translate(2px, 0); }
+}
+
+/* HP display glitch */
+.hp-glitch {
+    color: #ff4444 !important;
+    animation: hpGlitch 0.25s steps(2) infinite;
+}
+
+@keyframes hpGlitch {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; transform: translateX(1px); }
+}
+
+/* Random noise artifacts on screen */
+.interface-noise {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 95;
+    pointer-events: none;
+    animation: noiseFlash 0.15s steps(1) forwards;
+}
+
+@keyframes noiseFlash {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0; }
+}
+
+/* Void whisper text floating across combat screen */
+.void-whisper-text {
+    position: absolute;
+    z-index: 91;
+    pointer-events: none;
+    font-family: 'Georgia', serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: rgba(124, 58, 237, 0);
+    white-space: nowrap;
+    animation: voidWhisper 3s ease-in-out forwards;
+}
+
+@keyframes voidWhisper {
+    0% { 
+        opacity: 0;
+        transform: translateX(0) translateY(0);
+    }
+    20% { 
+        opacity: 0.4;
+        color: rgba(124, 58, 237, 0.4);
+    }
+    80% { 
+        opacity: 0.3;
+        color: rgba(124, 58, 237, 0.3);
+    }
+    100% { 
+        opacity: 0;
+        transform: translateX(var(--drift-x, 20px)) translateY(-20px);
+    }
+}
+
+
+/* ═══════════════════════════════════════════
+   4. NEAR-MISS DEATH SCREEN
+   ═══════════════════════════════════════════ */
+
+.near-miss-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.6s ease;
+    font-family: 'Bebas Neue', 'Oswald', monospace;
+}
+
+.near-miss-enter {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.near-miss-exit {
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+.near-miss-exit .near-miss-container {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.near-miss-container {
+    max-width: 480px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+}
+
+.near-miss-enter .near-miss-container {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header */
+.near-miss-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.near-miss-static {
+    height: 4px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 2px,
+        #333 2px, #333 4px
+    );
+    margin-bottom: 16px;
+    animation: staticNoise 0.1s steps(5) infinite;
+}
+
+@keyframes staticNoise {
+    0% { background-position: 0 0; }
+    100% { background-position: 10px 0; }
+}
+
+.near-miss-title {
+    font-size: 2.5rem;
+    color: #ef4444;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    margin: 0;
+    line-height: 1;
+}
+
+.near-miss-subtitle {
+    font-size: 0.8rem;
+    color: #6b7280;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
+
+/* Sections */
+.near-miss-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+}
+
+.near-miss-section-title {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* "SO CLOSE" highlight section */
+.near-miss-so-close.near-miss-highlight {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.near-miss-so-close.near-miss-highlight .near-miss-section-title {
+    color: #ef4444;
+    animation: soClosePulse 2s ease-in-out infinite;
+}
+
+@keyframes soClosePulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+}
+
+.near-miss-enemy-remaining {
+    text-align: center;
+    margin: 8px 0;
+}
+
+.near-miss-big-number {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ef4444;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.near-miss-big-label {
+    font-size: 0.65rem;
+    color: #6b7280;
+    letter-spacing: 2px;
+}
+
+.near-miss-detail {
+    font-family: 'Georgia', sans-serif;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.near-miss-emphasis {
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+.near-miss-cruel {
+    color: #ef4444;
+    opacity: 0.8;
+}
+
+/* Stat grid */
+.near-miss-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.near-miss-stat {
+    text-align: center;
+}
+
+.near-miss-stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    line-height: 1;
+}
+
+.near-miss-stat-value.near-miss-counted {
+    color: #fbbf24;
+    transition: color 0.3s ease;
+}
+
+.near-miss-stat-label {
+    font-size: 0.55rem;
+    color: #6b7280;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Corruption bar */
+.near-miss-corruption-bar {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow: visible;
+    margin: 8px 0;
+}
+
+.near-miss-corruption-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #a855f7, #ef4444);
+    border-radius: 4px;
+    transition: width 1.5s ease-out 0.5s;
+    box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
+}
+
+.near-miss-corruption-marker {
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-50%);
+}
+
+.near-miss-corruption-marker.reached {
+    background: #fbbf24;
+    box-shadow: 0 0 4px rgba(251, 191, 36, 0.5);
+}
+
+/* Footer */
+.near-miss-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.near-miss-quote {
+    font-family: 'Georgia', serif;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-style: italic;
+    margin-bottom: 16px;
+    opacity: 0.8;
+}
+
+.near-miss-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    margin: 4px 6px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-family: 'Bebas Neue', monospace;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.near-miss-btn-retry {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.near-miss-btn-retry:hover {
+    background: rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.near-miss-btn-menu {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #4b5563;
+    color: #9ca3af;
+}
+
+.near-miss-btn-menu:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #6b7280;
+    color: #e2e8f0;
+}
+
+
+/* ═══════════════════════════════════════════
+   5. SHARED UTILITIES & ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+/* Screen shake utility class */
+.screen-shake-light {
+    animation: shakeLight 0.15s ease-out;
+}
+
+.screen-shake-heavy {
+    animation: shakeHeavy 0.2s ease-out;
+}
+
+@keyframes shakeLight {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 1px); }
+    50% { transform: translate(2px, -1px); }
+    75% { transform: translate(-1px, 1px); }
+}
+
+@keyframes shakeHeavy {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-5px, 3px); }
+    30% { transform: translate(5px, -2px); }
+    45% { transform: translate(-3px, 2px); }
+    60% { transform: translate(3px, -3px); }
+    75% { transform: translate(-2px, 1px); }
+}
+
+/* Status float animation (for showStatusFloater) */
+@keyframes statusFloat {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-40px); }
+}
+
+/* Corruption-level global tint overlay */
+.combat-corruption-tint {
+    position: absolute;
+    inset: 0;
+    z-index: 89;
+    pointer-events: none;
+    transition: background 2s ease;
+}
+
+.combat-corruption-tint.tier-low {
+    background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(124, 58, 237, 0.05) 100%);
+}
+
+.combat-corruption-tint.tier-mid {
+    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(124, 58, 237, 0.1) 100%);
+}
+
+.combat-corruption-tint.tier-high {
+    background: radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(124, 58, 237, 0.2) 100%);
+    animation: corruptionPulse 4s ease-in-out infinite;
+}
+
+@keyframes corruptionPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
