@@ -1,0 +1,531 @@
+/**
+ * reward-shimmer.css - Rarity shimmer effects, corrupted card styling, reward animations
+ * Shattered Star
+ */
+
+/* ============================================
+   REWARD SCREEN ENHANCEMENTS
+   ============================================ */
+
+#reward-screen .reward-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+#reward-screen h2 {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 1.8rem;
+    letter-spacing: 0.3em;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Credits reveal animation */
+#gold-reward {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ffd700;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: creditsReveal 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes creditsReveal {
+    0% { opacity: 0; transform: scale(0.8); }
+    60% { opacity: 1; transform: scale(1.15); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   CARD CHOICES LAYOUT
+   ============================================ */
+
+#card-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   REWARD CARD FLIP CONTAINER
+   ============================================ */
+
+.reward-card-container {
+    position: relative;
+    width: 180px;
+    min-height: 260px;
+    perspective: 800px;
+    cursor: pointer;
+}
+
+.reward-card-container:hover .reward-card-flipper.flipped {
+    transform: rotateY(180deg) scale(1.05);
+}
+
+.reward-card-flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.reward-card-flipper.flipped {
+    transform: rotateY(180deg);
+}
+
+/* ── Card Back (face-down state) ── */
+
+.reward-card-back {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(145deg, #1a1a2e, #0d0d1a);
+    border: 2px solid #404060;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.reward-card-back.rarity-rare { border-color: #ffd700; }
+.reward-card-back.rarity-legendary { border-color: #ff6b00; }
+.reward-card-back.rarity-corrupted { border-color: #bf00ff; }
+.reward-card-back.rarity-uncommon { border-color: #00c8ff; }
+
+.card-back-pattern { text-align: center; }
+
+.card-back-symbol {
+    font-size: 3rem;
+    color: rgba(0, 200, 255, 0.3);
+    animation: backSymbolPulse 2s ease-in-out infinite;
+}
+
+.card-back-label {
+    font-family: 'Bebas Neue', 'Courier New', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: rgba(200, 200, 220, 0.3);
+    margin-top: 8px;
+}
+
+@keyframes backSymbolPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* ── Card Face (revealed state) ── */
+
+.reward-card-face {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    background: rgba(20, 20, 35, 0.95);
+    border: 2px solid #404060;
+    border-radius: 8px;
+    padding: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* ── Rarity Glow Burst (fires on flip for rare+) ── */
+
+.rarity-glow-burst {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.rarity-glow-burst.active.rarity-rare {
+    animation: glowBurstGold 0.8s ease-out forwards;
+}
+.rarity-glow-burst.active.rarity-legendary {
+    animation: glowBurstOrange 0.8s ease-out forwards;
+}
+.rarity-glow-burst.active.rarity-corrupted {
+    animation: glowBurstPurple 0.8s ease-out forwards;
+}
+
+@keyframes glowBurstGold {
+    0% { opacity: 1; width: 10px; height: 10px; box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.8); }
+    100% { opacity: 0; width: 300px; height: 300px; box-shadow: 0 0 60px 30px rgba(255, 215, 0, 0); }
+}
+@keyframes glowBurstOrange {
+    0% { opacity: 1; width: 10px; height: 10px; box-shadow: 0 0 20px 10px rgba(255, 107, 0, 0.8); }
+    100% { opacity: 0; width: 300px; height: 300px; box-shadow: 0 0 60px 30px rgba(255, 107, 0, 0); }
+}
+@keyframes glowBurstPurple {
+    0% { opacity: 1; width: 10px; height: 10px; box-shadow: 0 0 20px 10px rgba(191, 0, 255, 0.8); }
+    100% { opacity: 0; width: 300px; height: 300px; box-shadow: 0 0 60px 30px rgba(191, 0, 255, 0); }
+}
+
+/* Selected card feedback */
+.reward-card-container.card-selected .reward-card-flipper {
+    animation: cardPickPulse 0.3s ease-out;
+}
+@keyframes cardPickPulse {
+    0% { transform: rotateY(180deg) scale(1); }
+    50% { transform: rotateY(180deg) scale(1.08); }
+    100% { transform: rotateY(180deg) scale(1); }
+}
+
+/* ============================================
+   RARITY BORDER COLORS (on card face)
+   ============================================ */
+
+.reward-card-face.rarity-common {
+    border-color: #606080;
+}
+.reward-card-container:hover .reward-card-face.rarity-common {
+    box-shadow: 0 4px 20px rgba(96, 96, 128, 0.3);
+}
+
+.reward-card-face.rarity-uncommon {
+    border-color: #00c8ff;
+}
+.reward-card-container:hover .reward-card-face.rarity-uncommon {
+    box-shadow: 0 4px 25px rgba(0, 200, 255, 0.4);
+}
+
+.reward-card-face.rarity-rare {
+    border-color: #ffd700;
+    background: linear-gradient(180deg, rgba(40, 35, 15, 0.95), rgba(20, 20, 35, 0.95));
+}
+.reward-card-container:hover .reward-card-face.rarity-rare {
+    box-shadow: 0 4px 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.15);
+}
+
+.reward-card-face.rarity-legendary {
+    border-color: #ff6b00;
+    background: linear-gradient(180deg, rgba(50, 25, 10, 0.95), rgba(20, 20, 35, 0.95));
+}
+.reward-card-container:hover .reward-card-face.rarity-legendary {
+    box-shadow: 0 4px 35px rgba(255, 107, 0, 0.6), 0 0 80px rgba(255, 107, 0, 0.2);
+}
+
+.reward-card-face.rarity-corrupted {
+    border-color: #bf00ff;
+    background: linear-gradient(180deg, rgba(40, 10, 50, 0.95), rgba(15, 5, 25, 0.95));
+}
+.reward-card-container:hover .reward-card-face.rarity-corrupted {
+    box-shadow: 0 4px 35px rgba(191, 0, 255, 0.5), 0 0 80px rgba(191, 0, 255, 0.2);
+}
+
+/* ============================================
+   SHIMMER OVERLAY (Rare+ cards)
+   ============================================ */
+
+.card-shimmer-overlay {
+    display: none;
+}
+
+.has-shimmer .card-shimmer-overlay {
+    display: block;
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        transparent 70%
+    );
+    animation: shimmerSweep 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.rarity-corrupted .card-shimmer-overlay {
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(191, 0, 255, 0.1) 40%,
+        rgba(191, 0, 255, 0.2) 50%,
+        rgba(191, 0, 255, 0.1) 60%,
+        transparent 70%
+    );
+    animation: shimmerSweep 2.5s ease-in-out infinite;
+}
+
+.rarity-legendary .card-shimmer-overlay {
+    background: linear-gradient(
+        45deg,
+        transparent 25%,
+        rgba(255, 160, 50, 0.1) 35%,
+        rgba(255, 215, 0, 0.2) 50%,
+        rgba(255, 160, 50, 0.1) 65%,
+        transparent 75%
+    );
+}
+
+@keyframes shimmerSweep {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(0deg); }
+}
+
+/* Rarity flash on reveal */
+.rarity-flash {
+    animation: rarityFlash 0.6s ease-out;
+}
+
+@keyframes rarityFlash {
+    0% { filter: brightness(1); }
+    30% { filter: brightness(2.5); }
+    100% { filter: brightness(1); }
+}
+
+/* ============================================
+   CARD INNER ELEMENTS
+   ============================================ */
+
+.reward-card-face .card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.reward-card-face .card-cost {
+    position: static;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: rgba(0, 200, 255, 0.25);
+    border: 2px solid #00c8ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #00f5ff;
+    text-shadow: 0 0 6px rgba(0, 245, 255, 0.5);
+}
+
+.rarity-corrupted .card-cost {
+    position: static;
+    background: rgba(191, 0, 255, 0.25);
+    border-color: #bf00ff;
+    color: #df80ff;
+    text-shadow: 0 0 6px rgba(191, 0, 255, 0.5);
+}
+
+.reward-card-face .card-type-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #808090;
+    padding: 4px 8px;
+    border: 1px solid #404050;
+    border-radius: 3px;
+}
+
+.reward-card-face .card-art {
+    font-size: 2rem;
+    margin: 8px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.reward-card-face .card-name {
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #e0e0e8;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.rarity-rare .card-name { color: #ffd700; }
+.rarity-legendary .card-name { color: #ff8c00; }
+.rarity-corrupted .card-name { color: #df80ff; }
+
+.reward-card-face .card-description {
+    font-size: 0.75rem;
+    color: #a0a0b0;
+    line-height: 1.4;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.reward-card-face .card-flavor {
+    font-size: 0.65rem;
+    font-style: italic;
+    color: #606070;
+    margin-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.rarity-corrupted .card-flavor {
+    color: #8040a0;
+}
+
+/* ============================================
+   CORRUPTED BADGE & WARNING
+   ============================================ */
+
+.corrupted-badge {
+    background: rgba(191, 0, 255, 0.2);
+    border: 1px solid #bf00ff;
+    color: #df80ff;
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    animation: corruptedPulse 2s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes corruptedPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: 0 0 8px rgba(191, 0, 255, 0.5); }
+}
+
+.corruption-warning {
+    font-size: 0.7rem;
+    color: #ff4060;
+    font-weight: bold;
+    margin-top: 4px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================
+   RARITY INDICATOR
+   ============================================ */
+
+.card-rarity-indicator {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+.card-rarity-indicator.rarity-common { color: #606080; }
+.card-rarity-indicator.rarity-uncommon { color: #00c8ff; }
+.card-rarity-indicator.rarity-rare { color: #ffd700; }
+.card-rarity-indicator.rarity-legendary { color: #ff6b00; }
+.card-rarity-indicator.rarity-corrupted { color: #bf00ff; }
+
+/* ============================================
+   ARTIFACT REWARD
+   ============================================ */
+
+.artifact-reward-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(30, 30, 45, 0.9);
+    border: 1px solid #ffd700;
+    border-radius: 6px;
+    margin: 12px auto;
+    max-width: 400px;
+    animation: artifactReveal 0.5s ease-out 0.8s both;
+}
+
+.artifact-reward-item.rarity-rare {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.artifact-icon-large {
+    font-size: 2rem;
+}
+
+.artifact-info .artifact-name {
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 0.9rem;
+}
+
+.artifact-info .artifact-desc {
+    font-size: 0.75rem;
+    color: #a0a0b0;
+    margin-top: 4px;
+}
+
+@keyframes artifactReveal {
+    0% { opacity: 0; transform: scale(0.8); }
+    60% { transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   SKIP REWARD BUTTON
+   ============================================ */
+
+#skip-reward {
+    display: block;
+    margin: 16px auto 0;
+    padding: 8px 24px;
+    background: transparent;
+    border: 1px solid #404050;
+    color: #606070;
+    font-family: var(--font-display, 'Courier New', monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#skip-reward:hover {
+    border-color: #808090;
+    color: #a0a0b0;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 600px) {
+    .reward-card-container {
+        width: 140px;
+        min-height: 220px;
+    }
+    .reward-card-flipper {
+        min-height: 220px;
+    }
+    .reward-card-face {
+        padding: 8px;
+    }
+    
+    .reward-card-face .card-art { font-size: 1.5rem; }
+    .reward-card-face .card-name { font-size: 0.75rem; }
+    .reward-card-face .card-description { font-size: 0.65rem; }
+    
+    #card-choices {
+        gap: 8px;
+    }
+}
