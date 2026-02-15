@@ -26,6 +26,10 @@ import DamageCascadeRenderer from '../systems/DamageCascadeRenderer.js';
 import CascadeEventRenderer from '../systems/CascadeEventRenderer.js';
 import UnreliableInterface from '../systems/UnreliableInterface.js';
 
+// Card Preview
+import { CardPreview } from './ui/CardPreview.js';
+import { setupHeroResourcesToggle } from './ui/HeroResourcesToggle.js';
+
 export function setupCombatScreen(game) {
     const screen = document.getElementById('combat-screen');
     
@@ -704,6 +708,10 @@ export function setupCombatScreen(game) {
             intent: enemy.intent || (enemy.intents && enemy.intents.length > 0 ? { ...enemy.intents[0] } : { type: 'attack', damage: 8 })
         };
     }
+
+ //   After combat screen setup:
+const cardPreview = new CardPreview(game);
+setupHeroResourcesToggle()
     
     // ═══════════════════════════════════════════
     // STATUS EFFECT PROCESSING SYSTEM
